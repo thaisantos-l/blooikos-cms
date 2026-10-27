@@ -1,0 +1,19 @@
+# Frontend possui outro repositório
+/blooikos-frontend/
+
+# WordPress: versionar somente wp-content
+/cms/*
+!/cms/wp-content/
+
+# Uploads e arquivos temporários
+/cms/wp-content/uploads/
+/cms/wp-content/cache/
+/cms/wp-content/upgrade/
+/cms/wp-content/upgrade-temp-backup/
+
+# Arquivos locais e privados
+.DS_Store
+Thumbs.db
+*.log
+.env*
+!.env.example
