@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<ruleset name="Blooikos Core">
+	<description>WordPress Coding Standards para o código próprio do Blooikos.</description>
+	<file>.</file>
+	<arg name="extensions" value="php"/>
+	<arg name="basepath" value="."/>
+	<rule ref="WordPress"/>
+	<rule ref="WordPress.NamingConventions.PrefixAllGlobals">
+		<properties>
+			<property name="prefixes" type="array">
+				<element value="blooikos_core"/>
+				<element value="BLOOIKOS_CORE"/>
+			</property>
+		</properties>
+	</rule>
+	<rule ref="WordPress.WP.I18n">
+		<properties>
+			<property name="text_domain" type="array">
+				<element value="blooikos-core"/>
+			</property>
+		</properties>
+	</rule>
+</ruleset>
