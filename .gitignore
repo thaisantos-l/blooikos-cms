@@ -1,19 +1,30 @@
-# Frontend possui outro repositório
-/blooikos-frontend/
+# Raiz deste repositório: cms/
+# Versionar somente configuração Git e wp-content
+/*
+!/.gitignore
+!/wp-content/
 
-# WordPress: versionar somente wp-content
-/cms/*
-!/cms/wp-content/
+# Documentação e SPECs permanecem somente no computador
+/docs/
+/specs/
 
 # Uploads e arquivos temporários
-/cms/wp-content/uploads/
-/cms/wp-content/cache/
-/cms/wp-content/upgrade/
-/cms/wp-content/upgrade-temp-backup/
+/wp-content/uploads/
+/wp-content/cache/
+/wp-content/upgrade/
+/wp-content/upgrade-temp-backup/
+
+# Backups e dumps locais
+/wp-content/ai1wm-backups/
+/wp-content/updraft/
+*.sql
+*.sql.gz
+*.sql.bz2
+*.sql.xz
 
 # Arquivos locais e privados
 .DS_Store
 Thumbs.db
 *.log
 .env*
-!.env.example
+!/wp-content/**/.env.example
