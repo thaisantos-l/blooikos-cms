@@ -2,7 +2,7 @@
 /**
  * Plugin Name: Blooikos Core
  * Description: Fundação das regras e integrações do CMS Blooikos.
- * Version: 0.1.0
+ * Version: 0.2.0
  * Requires at least: 7.1.3
  * Requires PHP: 8.2.4
  * Text Domain: blooikos-core
@@ -14,7 +14,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'BLOOIKOS_CORE_VERSION', '0.1.0' );
+define( 'BLOOIKOS_CORE_VERSION', '0.2.0' );
 
 require_once __DIR__ . '/includes/dependencies.php';
 require_once __DIR__ . '/includes/admin-notices.php';
@@ -22,7 +22,7 @@ require_once __DIR__ . '/includes/admin-notices.php';
 /**
  * Verifica dependências uma vez, após a inicialização dos plugins externos.
  *
- * Nenhuma integração de domínio ou persistência é criada nesta fundação.
+ * Carrega o modelo editorial somente quando as dependências estão prontas.
  *
  * @return void
  */
@@ -41,6 +41,14 @@ function blooikos_core_bootstrap() {
 		}
 		return;
 	}
+
+	require_once __DIR__ . '/includes/post-types/company.php';
+	require_once __DIR__ . '/includes/navigation.php';
+	require_once __DIR__ . '/includes/acf/options.php';
+	require_once __DIR__ . '/includes/acf/company.php';
+	require_once __DIR__ . '/includes/acf/home.php';
+	require_once __DIR__ . '/includes/acf/site.php';
+	require_once __DIR__ . '/includes/acf/validation.php';
 }
 
 add_action( 'plugins_loaded', 'blooikos_core_bootstrap', 100 );
