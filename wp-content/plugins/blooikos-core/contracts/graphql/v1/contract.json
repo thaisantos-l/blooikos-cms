@@ -1,0 +1,1000 @@
+{
+    "contractVersion": "1.0.0",
+    "pluginVersion": "0.3.0",
+    "dependencies": {
+        "wordpress": "7.1.3",
+        "php": "8.2.4",
+        "wpgraphql": "2.25.0",
+        "acfPro": "6.8.10",
+        "wpgraphqlAcf": "3.0.0"
+    },
+    "sha256": {
+        "schema.graphql": "1f07948e402653cc36fa97fbdc514deaba74f2b46233dc831c8dbe88e217606e",
+        "operations.graphql": "72d39fddb81890c65ffd3c631bda384f3f1927c2690f19346f1c5d73d9107c05"
+    },
+    "document": "Single document with shared fragments. Send the complete file and select operationName.",
+    "profiles": {
+        "poc": "BlooikosHeaderFooter",
+        "home": "BlooikosHome"
+    },
+    "groups": {
+        "group_blooikos_home_hero": {
+            "type": "BlooikosHomeHero",
+            "owner": "Page",
+            "field": "blooikosHomeHero"
+        },
+        "group_blooikos_home_about": {
+            "type": "BlooikosHomeAbout",
+            "owner": "Page",
+            "field": "blooikosHomeAbout"
+        },
+        "group_blooikos_home_institutional": {
+            "type": "BlooikosHomeInstitutional",
+            "owner": "Page",
+            "field": "blooikosHomeInstitutional"
+        },
+        "group_blooikos_home_indicators": {
+            "type": "BlooikosHomeIndicators",
+            "owner": "Page",
+            "field": "blooikosHomeIndicators"
+        },
+        "group_blooikos_home_services": {
+            "type": "BlooikosHomeServices",
+            "owner": "Page",
+            "field": "blooikosHomeServices"
+        },
+        "group_blooikos_home_companies": {
+            "type": "BlooikosHomeCompanies",
+            "owner": "Page",
+            "field": "blooikosHomeCompanies"
+        },
+        "group_blooikos_home_contact": {
+            "type": "BlooikosHomeContact",
+            "owner": "Page",
+            "field": "blooikosHomeContact"
+        },
+        "group_blooikos_company": {
+            "type": "BlooikosCompanyFields",
+            "owner": "BlooikosCompany",
+            "field": "blooikosCompanyFields"
+        },
+        "group_blooikos_site_identity": {
+            "type": "BlooikosSiteIdentity",
+            "owner": "BlooikosSettings",
+            "field": "blooikosSiteIdentity"
+        },
+        "group_blooikos_site_contact": {
+            "type": "BlooikosSiteContact",
+            "owner": "BlooikosSettings",
+            "field": "blooikosSiteContact"
+        },
+        "group_blooikos_site_footer": {
+            "type": "BlooikosSiteFooter",
+            "owner": "BlooikosSettings",
+            "field": "blooikosSiteFooter"
+        }
+    },
+    "fields": {
+        "field_blooikos_home_hero_eyebrow": {
+            "name": "eyebrow",
+            "owner": "BlooikosHomeHero",
+            "type": "String",
+            "nullable": true,
+            "acfType": "text",
+            "maxlength": 100
+        },
+        "field_blooikos_home_hero_title_before": {
+            "name": "titleBefore",
+            "owner": "BlooikosHomeHero",
+            "type": "String",
+            "nullable": true,
+            "acfType": "text",
+            "maxlength": 100
+        },
+        "field_blooikos_home_hero_title_highlight": {
+            "name": "titleHighlight",
+            "owner": "BlooikosHomeHero",
+            "type": "String",
+            "nullable": true,
+            "acfType": "text",
+            "maxlength": 100
+        },
+        "field_blooikos_home_hero_title_after": {
+            "name": "titleAfter",
+            "owner": "BlooikosHomeHero",
+            "type": "String",
+            "nullable": true,
+            "acfType": "text",
+            "maxlength": 140
+        },
+        "field_blooikos_home_hero_description": {
+            "name": "description",
+            "owner": "BlooikosHomeHero",
+            "type": "String",
+            "nullable": true,
+            "acfType": "textarea",
+            "maxlength": 400
+        },
+        "field_blooikos_home_hero_background": {
+            "name": "background",
+            "owner": "BlooikosHomeHero",
+            "type": "AcfMediaItemConnectionEdge",
+            "nullable": true,
+            "acfType": "image",
+            "mime_types": "jpg,jpeg,png,webp"
+        },
+        "field_blooikos_home_hero_primary_cta": {
+            "name": "primaryCta",
+            "owner": "BlooikosHomeHero",
+            "type": "AcfLink",
+            "nullable": true,
+            "acfType": "link"
+        },
+        "field_blooikos_home_hero_secondary_cta": {
+            "name": "secondaryCta",
+            "owner": "BlooikosHomeHero",
+            "type": "AcfLink",
+            "nullable": true,
+            "acfType": "link"
+        },
+        "field_blooikos_home_about_eyebrow": {
+            "name": "eyebrow",
+            "owner": "BlooikosHomeAbout",
+            "type": "String",
+            "nullable": true,
+            "acfType": "text",
+            "maxlength": 80
+        },
+        "field_blooikos_home_about_title": {
+            "name": "title",
+            "owner": "BlooikosHomeAbout",
+            "type": "String",
+            "nullable": true,
+            "acfType": "text",
+            "maxlength": 160
+        },
+        "field_blooikos_home_about_body": {
+            "name": "body",
+            "owner": "BlooikosHomeAbout",
+            "type": "String",
+            "nullable": true,
+            "acfType": "wysiwyg",
+            "maxlength": 3000
+        },
+        "field_blooikos_home_about_cta": {
+            "name": "cta",
+            "owner": "BlooikosHomeAbout",
+            "type": "AcfLink",
+            "nullable": true,
+            "acfType": "link"
+        },
+        "field_blooikos_home_about_companies": {
+            "name": "companies",
+            "owner": "BlooikosHomeAbout",
+            "type": "AcfContentNodeConnection",
+            "nullable": true,
+            "acfType": "relationship",
+            "min": 0,
+            "max": 6
+        },
+        "field_blooikos_home_about_variant": {
+            "name": "variant",
+            "owner": "BlooikosHomeAbout",
+            "type": "[String]",
+            "nullable": true,
+            "acfType": "select",
+            "choices": {
+                "light": "Claro",
+                "muted": "Suave"
+            },
+            "default_value": "muted"
+        },
+        "field_blooikos_home_institutional_image": {
+            "name": "image",
+            "owner": "BlooikosHomeInstitutional",
+            "type": "AcfMediaItemConnectionEdge",
+            "nullable": true,
+            "acfType": "image",
+            "mime_types": "jpg,jpeg,png,webp"
+        },
+        "field_blooikos_home_institutional_decorative": {
+            "name": "decorative",
+            "owner": "BlooikosHomeInstitutional",
+            "type": "Boolean",
+            "nullable": true,
+            "acfType": "true_false",
+            "default_value": 0
+        },
+        "field_blooikos_home_indicators_eyebrow": {
+            "name": "eyebrow",
+            "owner": "BlooikosHomeIndicators",
+            "type": "String",
+            "nullable": true,
+            "acfType": "text",
+            "maxlength": 80
+        },
+        "field_blooikos_home_indicators_title": {
+            "name": "title",
+            "owner": "BlooikosHomeIndicators",
+            "type": "String",
+            "nullable": true,
+            "acfType": "text",
+            "maxlength": 160
+        },
+        "field_blooikos_home_indicators_items": {
+            "name": "items",
+            "owner": "BlooikosHomeIndicators",
+            "type": "[BlooikosHomeIndicatorsItems]",
+            "nullable": true,
+            "acfType": "repeater",
+            "min": 0,
+            "max": 4
+        },
+        "field_blooikos_home_services_eyebrow": {
+            "name": "eyebrow",
+            "owner": "BlooikosHomeServices",
+            "type": "String",
+            "nullable": true,
+            "acfType": "text",
+            "maxlength": 80
+        },
+        "field_blooikos_home_services_title": {
+            "name": "title",
+            "owner": "BlooikosHomeServices",
+            "type": "String",
+            "nullable": true,
+            "acfType": "text",
+            "maxlength": 160
+        },
+        "field_blooikos_home_services_description": {
+            "name": "description",
+            "owner": "BlooikosHomeServices",
+            "type": "String",
+            "nullable": true,
+            "acfType": "textarea",
+            "maxlength": 600
+        },
+        "field_blooikos_home_services_variant": {
+            "name": "variant",
+            "owner": "BlooikosHomeServices",
+            "type": "[String]",
+            "nullable": true,
+            "acfType": "select",
+            "choices": {
+                "light": "Claro",
+                "muted": "Suave"
+            },
+            "default_value": "light"
+        },
+        "field_blooikos_home_services_items": {
+            "name": "items",
+            "owner": "BlooikosHomeServices",
+            "type": "[BlooikosHomeServicesItems]",
+            "nullable": true,
+            "acfType": "repeater",
+            "min": 0,
+            "max": 12
+        },
+        "field_blooikos_home_companies_featured": {
+            "name": "featured",
+            "owner": "BlooikosHomeCompanies",
+            "type": "AcfContentNodeConnection",
+            "nullable": true,
+            "acfType": "relationship",
+            "min": 0,
+            "max": 3
+        },
+        "field_blooikos_home_contact_eyebrow": {
+            "name": "eyebrow",
+            "owner": "BlooikosHomeContact",
+            "type": "String",
+            "nullable": true,
+            "acfType": "text",
+            "maxlength": 80
+        },
+        "field_blooikos_home_contact_title": {
+            "name": "title",
+            "owner": "BlooikosHomeContact",
+            "type": "String",
+            "nullable": true,
+            "acfType": "text",
+            "maxlength": 160
+        },
+        "field_blooikos_home_contact_variant": {
+            "name": "variant",
+            "owner": "BlooikosHomeContact",
+            "type": "[String]",
+            "nullable": true,
+            "acfType": "select",
+            "choices": {
+                "light": "Claro",
+                "muted": "Suave"
+            },
+            "default_value": "muted"
+        },
+        "field_blooikos_company_short_name": {
+            "name": "shortName",
+            "owner": "BlooikosCompanyFields",
+            "type": "String",
+            "nullable": true,
+            "acfType": "text",
+            "maxlength": 60
+        },
+        "field_blooikos_company_summary": {
+            "name": "summary",
+            "owner": "BlooikosCompanyFields",
+            "type": "String",
+            "nullable": true,
+            "acfType": "textarea",
+            "maxlength": 300
+        },
+        "field_blooikos_company_card_icon": {
+            "name": "cardIcon",
+            "owner": "BlooikosCompanyFields",
+            "type": "AcfMediaItemConnectionEdge",
+            "nullable": true,
+            "acfType": "image",
+            "mime_types": "jpg,jpeg,png,webp"
+        },
+        "field_blooikos_company_logo": {
+            "name": "logo",
+            "owner": "BlooikosCompanyFields",
+            "type": "AcfMediaItemConnectionEdge",
+            "nullable": true,
+            "acfType": "image",
+            "mime_types": "jpg,jpeg,png,webp"
+        },
+        "field_blooikos_company_eyebrow": {
+            "name": "eyebrow",
+            "owner": "BlooikosCompanyFields",
+            "type": "String",
+            "nullable": true,
+            "acfType": "text",
+            "maxlength": 100
+        },
+        "field_blooikos_company_heading": {
+            "name": "heading",
+            "owner": "BlooikosCompanyFields",
+            "type": "String",
+            "nullable": true,
+            "acfType": "text",
+            "maxlength": 180
+        },
+        "field_blooikos_company_body": {
+            "name": "body",
+            "owner": "BlooikosCompanyFields",
+            "type": "String",
+            "nullable": true,
+            "acfType": "wysiwyg",
+            "maxlength": 3000
+        },
+        "field_blooikos_company_image": {
+            "name": "image",
+            "owner": "BlooikosCompanyFields",
+            "type": "AcfMediaItemConnectionEdge",
+            "nullable": true,
+            "acfType": "image",
+            "mime_types": "jpg,jpeg,png,webp"
+        },
+        "field_blooikos_company_cta": {
+            "name": "cta",
+            "owner": "BlooikosCompanyFields",
+            "type": "AcfLink",
+            "nullable": true,
+            "acfType": "link"
+        },
+        "field_blooikos_site_brand_name": {
+            "name": "brandName",
+            "owner": "BlooikosSiteIdentity",
+            "type": "String",
+            "nullable": true,
+            "acfType": "text",
+            "maxlength": 100
+        },
+        "field_blooikos_site_logo": {
+            "name": "logo",
+            "owner": "BlooikosSiteIdentity",
+            "type": "AcfMediaItemConnectionEdge",
+            "nullable": true,
+            "acfType": "image",
+            "mime_types": "jpg,jpeg,png,webp"
+        },
+        "field_blooikos_site_logo_inverse": {
+            "name": "logoInverse",
+            "owner": "BlooikosSiteIdentity",
+            "type": "AcfMediaItemConnectionEdge",
+            "nullable": true,
+            "acfType": "image",
+            "mime_types": "jpg,jpeg,png,webp"
+        },
+        "field_blooikos_site_contact_company": {
+            "name": "contactCompany",
+            "owner": "BlooikosSiteContact",
+            "type": "AcfContentNodeConnectionEdge",
+            "nullable": true,
+            "acfType": "post_object"
+        },
+        "field_blooikos_site_phone": {
+            "name": "phone",
+            "owner": "BlooikosSiteContact",
+            "type": "String",
+            "nullable": true,
+            "acfType": "text",
+            "maxlength": 40
+        },
+        "field_blooikos_site_email": {
+            "name": "email",
+            "owner": "BlooikosSiteContact",
+            "type": "String",
+            "nullable": true,
+            "acfType": "email",
+            "maxlength": 254
+        },
+        "field_blooikos_site_instagram_url": {
+            "name": "instagramUrl",
+            "owner": "BlooikosSiteContact",
+            "type": "String",
+            "nullable": true,
+            "acfType": "url",
+            "maxlength": 2048
+        },
+        "field_blooikos_site_address": {
+            "name": "address",
+            "owner": "BlooikosSiteContact",
+            "type": "String",
+            "nullable": true,
+            "acfType": "textarea",
+            "maxlength": 500
+        },
+        "field_blooikos_site_footer_description": {
+            "name": "footerDescription",
+            "owner": "BlooikosSiteFooter",
+            "type": "String",
+            "nullable": true,
+            "acfType": "textarea",
+            "maxlength": 400
+        },
+        "field_blooikos_site_footer_companies": {
+            "name": "footerCompanies",
+            "owner": "BlooikosSiteFooter",
+            "type": "AcfContentNodeConnection",
+            "nullable": true,
+            "acfType": "relationship",
+            "min": 0,
+            "max": 6
+        },
+        "field_blooikos_site_copyright_holder": {
+            "name": "copyrightHolder",
+            "owner": "BlooikosSiteFooter",
+            "type": "String",
+            "nullable": true,
+            "acfType": "text",
+            "maxlength": 160
+        },
+        "field_blooikos_home_indicators_items_value": {
+            "name": "value",
+            "owner": "BlooikosHomeIndicatorsItems",
+            "type": "String",
+            "nullable": true,
+            "acfType": "text",
+            "maxlength": 20
+        },
+        "field_blooikos_home_indicators_items_label": {
+            "name": "label",
+            "owner": "BlooikosHomeIndicatorsItems",
+            "type": "String",
+            "nullable": true,
+            "acfType": "text",
+            "maxlength": 100
+        },
+        "field_blooikos_home_indicators_items_description": {
+            "name": "description",
+            "owner": "BlooikosHomeIndicatorsItems",
+            "type": "String",
+            "nullable": true,
+            "acfType": "text",
+            "maxlength": 180
+        },
+        "field_blooikos_home_services_items_title": {
+            "name": "title",
+            "owner": "BlooikosHomeServicesItems",
+            "type": "String",
+            "nullable": true,
+            "acfType": "text",
+            "maxlength": 100
+        },
+        "field_blooikos_home_services_items_description": {
+            "name": "description",
+            "owner": "BlooikosHomeServicesItems",
+            "type": "String",
+            "nullable": true,
+            "acfType": "textarea",
+            "maxlength": 500
+        },
+        "field_blooikos_home_services_items_icon": {
+            "name": "icon",
+            "owner": "BlooikosHomeServicesItems",
+            "type": "AcfMediaItemConnectionEdge",
+            "nullable": true,
+            "acfType": "image",
+            "mime_types": "jpg,jpeg,png,webp"
+        }
+    },
+    "responseRules": {
+        "Identity": {
+            "brandName": {
+                "kind": "text",
+                "max": 100,
+                "required": true
+            },
+            "logo": {
+                "kind": "image",
+                "required": true,
+                "informative": true
+            },
+            "logoInverse": {
+                "kind": "image",
+                "required": false,
+                "informative": true
+            }
+        },
+        "SiteContact": {
+            "contactCompany": {
+                "kind": "company_one",
+                "required": false
+            },
+            "phone": {
+                "kind": "phone",
+                "max": 40,
+                "required": false
+            },
+            "email": {
+                "kind": "email",
+                "max": 254,
+                "required": false
+            },
+            "instagramUrl": {
+                "kind": "https",
+                "max": 2048,
+                "required": false
+            },
+            "address": {
+                "kind": "text",
+                "max": 500,
+                "required": false
+            }
+        },
+        "Footer": {
+            "footerDescription": {
+                "kind": "text",
+                "max": 400,
+                "required": true
+            },
+            "copyrightHolder": {
+                "kind": "text",
+                "max": 160,
+                "required": false
+            },
+            "footerCompanies": {
+                "kind": "connection",
+                "type": "CompanyIdentity",
+                "min": 1,
+                "max": 6,
+                "required": true
+            }
+        },
+        "Settings": {
+            "blooikosSiteIdentity": {
+                "kind": "object",
+                "type": "Identity",
+                "required": true
+            },
+            "blooikosSiteContact": {
+                "kind": "object",
+                "type": "SiteContact",
+                "required": false
+            },
+            "blooikosSiteFooter": {
+                "kind": "object",
+                "type": "Footer",
+                "required": true
+            }
+        },
+        "CompanyIdentity": {
+            "id": {
+                "kind": "text",
+                "max": 0,
+                "required": true
+            },
+            "title": {
+                "kind": "text",
+                "max": 0,
+                "required": true
+            },
+            "slug": {
+                "kind": "text",
+                "max": 0,
+                "required": false
+            },
+            "blooikosCompanyFields": {
+                "kind": "object",
+                "type": "CompanyIdentityFields",
+                "required": true
+            }
+        },
+        "CompanyIdentityFields": {
+            "shortName": {
+                "kind": "text",
+                "max": 60,
+                "required": false
+            },
+            "cta": {
+                "kind": "link",
+                "required": false
+            }
+        },
+        "CompanyCardFields": {
+            "shortName": {
+                "kind": "text",
+                "max": 60,
+                "required": false
+            },
+            "cta": {
+                "kind": "link",
+                "required": false
+            },
+            "summary": {
+                "kind": "text",
+                "max": 300,
+                "required": true
+            },
+            "cardIcon": {
+                "kind": "image",
+                "required": false,
+                "informative": false
+            }
+        },
+        "CompanySectionFields": {
+            "shortName": {
+                "kind": "text",
+                "max": 60,
+                "required": false
+            },
+            "cta": {
+                "kind": "link",
+                "required": false
+            },
+            "eyebrow": {
+                "kind": "text",
+                "max": 100,
+                "required": false
+            },
+            "heading": {
+                "kind": "text",
+                "max": 180,
+                "required": true
+            },
+            "body": {
+                "kind": "html",
+                "max": 3000,
+                "required": true
+            },
+            "logo": {
+                "kind": "image",
+                "required": true,
+                "informative": true
+            },
+            "image": {
+                "kind": "image",
+                "required": true,
+                "informative": true
+            }
+        },
+        "Hero": {
+            "eyebrow": {
+                "kind": "text",
+                "max": 100,
+                "required": false
+            },
+            "titleBefore": {
+                "kind": "text",
+                "max": 100,
+                "required": true
+            },
+            "titleHighlight": {
+                "kind": "text",
+                "max": 100,
+                "required": false
+            },
+            "titleAfter": {
+                "kind": "text",
+                "max": 140,
+                "required": false
+            },
+            "description": {
+                "kind": "text",
+                "max": 400,
+                "required": true
+            },
+            "background": {
+                "kind": "image",
+                "required": true,
+                "informative": false
+            },
+            "primaryCta": {
+                "kind": "link",
+                "required": true
+            },
+            "secondaryCta": {
+                "kind": "link",
+                "required": false
+            }
+        },
+        "About": {
+            "eyebrow": {
+                "kind": "text",
+                "max": 80,
+                "required": false
+            },
+            "title": {
+                "kind": "text",
+                "max": 160,
+                "required": true
+            },
+            "body": {
+                "kind": "html",
+                "max": 3000,
+                "required": true
+            },
+            "cta": {
+                "kind": "link",
+                "required": false
+            },
+            "variant": {
+                "kind": "variant",
+                "required": true
+            },
+            "companies": {
+                "kind": "connection",
+                "type": "CompanyCard",
+                "min": 1,
+                "max": 6,
+                "required": true
+            }
+        },
+        "Institutional": {
+            "decorative": {
+                "kind": "boolean",
+                "required": true
+            },
+            "image": {
+                "kind": "image",
+                "required": true,
+                "informative": true
+            }
+        },
+        "Indicator": {
+            "value": {
+                "kind": "text",
+                "max": 20,
+                "required": true
+            },
+            "label": {
+                "kind": "text",
+                "max": 100,
+                "required": true
+            },
+            "description": {
+                "kind": "text",
+                "max": 180,
+                "required": false
+            }
+        },
+        "Indicators": {
+            "eyebrow": {
+                "kind": "text",
+                "max": 80,
+                "required": false
+            },
+            "title": {
+                "kind": "text",
+                "max": 160,
+                "required": true
+            },
+            "items": {
+                "kind": "list",
+                "type": "Indicator",
+                "min": 1,
+                "max": 4,
+                "required": true
+            }
+        },
+        "Service": {
+            "title": {
+                "kind": "text",
+                "max": 100,
+                "required": true
+            },
+            "description": {
+                "kind": "text",
+                "max": 500,
+                "required": true
+            },
+            "icon": {
+                "kind": "image",
+                "required": false,
+                "informative": false
+            }
+        },
+        "Services": {
+            "eyebrow": {
+                "kind": "text",
+                "max": 80,
+                "required": false
+            },
+            "title": {
+                "kind": "text",
+                "max": 160,
+                "required": true
+            },
+            "description": {
+                "kind": "text",
+                "max": 600,
+                "required": false
+            },
+            "variant": {
+                "kind": "variant",
+                "required": true
+            },
+            "items": {
+                "kind": "list",
+                "type": "Service",
+                "min": 1,
+                "max": 12,
+                "required": true
+            }
+        },
+        "Companies": {
+            "featured": {
+                "kind": "connection",
+                "type": "CompanySection",
+                "min": 1,
+                "max": 3,
+                "required": true
+            }
+        },
+        "Contact": {
+            "eyebrow": {
+                "kind": "text",
+                "max": 80,
+                "required": false
+            },
+            "title": {
+                "kind": "text",
+                "max": 160,
+                "required": true
+            },
+            "variant": {
+                "kind": "variant",
+                "required": true
+            }
+        },
+        "Home": {
+            "__typename": {
+                "kind": "literal",
+                "value": "Page",
+                "required": true
+            },
+            "isFrontPage": {
+                "kind": "literal",
+                "value": true,
+                "required": true
+            },
+            "blooikosHomeHero": {
+                "kind": "object",
+                "type": "Hero",
+                "required": true
+            },
+            "blooikosHomeAbout": {
+                "kind": "object",
+                "type": "About",
+                "required": true
+            },
+            "blooikosHomeInstitutional": {
+                "kind": "object",
+                "type": "Institutional",
+                "required": true
+            },
+            "blooikosHomeIndicators": {
+                "kind": "object",
+                "type": "Indicators",
+                "required": true
+            },
+            "blooikosHomeServices": {
+                "kind": "object",
+                "type": "Services",
+                "required": true
+            },
+            "blooikosHomeCompanies": {
+                "kind": "object",
+                "type": "Companies",
+                "required": true
+            },
+            "blooikosHomeContact": {
+                "kind": "object",
+                "type": "Contact",
+                "required": true
+            }
+        },
+        "MenuItem": {
+            "id": {
+                "kind": "text",
+                "max": 0,
+                "required": true
+            },
+            "label": {
+                "kind": "text",
+                "max": 0,
+                "required": true
+            },
+            "url": {
+                "kind": "destination",
+                "required": true
+            },
+            "target": {
+                "kind": "target"
+            },
+            "parentId": {
+                "kind": "no_parent"
+            },
+            "order": {
+                "kind": "order",
+                "required": true
+            }
+        },
+        "CompanyCard": {
+            "id": {
+                "kind": "text",
+                "max": 0,
+                "required": true
+            },
+            "title": {
+                "kind": "text",
+                "max": 0,
+                "required": true
+            },
+            "slug": {
+                "kind": "text",
+                "max": 0,
+                "required": false
+            },
+            "blooikosCompanyFields": {
+                "kind": "object",
+                "type": "CompanyCardFields",
+                "required": true
+            }
+        },
+        "CompanySection": {
+            "id": {
+                "kind": "text",
+                "max": 0,
+                "required": true
+            },
+            "title": {
+                "kind": "text",
+                "max": 0,
+                "required": true
+            },
+            "slug": {
+                "kind": "text",
+                "max": 0,
+                "required": false
+            },
+            "blooikosCompanyFields": {
+                "kind": "object",
+                "type": "CompanySectionFields",
+                "required": true
+            }
+        }
+    }
+}

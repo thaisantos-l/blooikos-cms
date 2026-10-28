@@ -1,0 +1,103 @@
+query BlooikosHeaderFooter {
+  blooikosSettings { ...BlooikosGlobalSettings }
+  primaryMenu: menuItems(first: 20, where: { location: BLOOIKOS_PRIMARY }) {
+    nodes { ...BlooikosNavigationItem }
+    pageInfo { hasNextPage endCursor }
+  }
+  footerMenu: menuItems(first: 20, where: { location: BLOOIKOS_FOOTER }) {
+    nodes { ...BlooikosNavigationItem }
+    pageInfo { hasNextPage endCursor }
+  }
+}
+
+query BlooikosHome {
+  blooikosSettings { ...BlooikosGlobalSettings }
+  primaryMenu: menuItems(first: 20, where: { location: BLOOIKOS_PRIMARY }) {
+    nodes { ...BlooikosNavigationItem }
+    pageInfo { hasNextPage endCursor }
+  }
+  footerMenu: menuItems(first: 20, where: { location: BLOOIKOS_FOOTER }) {
+    nodes { ...BlooikosNavigationItem }
+    pageInfo { hasNextPage endCursor }
+  }
+  home: nodeByUri(uri: "/") {
+    __typename
+    ... on Page {
+      id databaseId isFrontPage
+      blooikosHomeHero {
+        eyebrow titleBefore titleHighlight titleAfter description
+        background { node { ...BlooikosImage } }
+        primaryCta { ...BlooikosLink }
+        secondaryCta { ...BlooikosLink }
+      }
+      blooikosHomeAbout {
+        eyebrow title body variant
+        cta { ...BlooikosLink }
+        companies(first: 6) {
+          nodes { ... on BlooikosCompany { ...BlooikosCompanyCard } }
+          pageInfo { hasNextPage endCursor }
+        }
+      }
+      blooikosHomeInstitutional { decorative image { node { ...BlooikosImage } } }
+      blooikosHomeIndicators { eyebrow title items { value label description } }
+      blooikosHomeServices {
+        eyebrow title description variant
+        items { title description icon { node { ...BlooikosImage } } }
+      }
+      blooikosHomeCompanies {
+        featured(first: 3) {
+          nodes { ... on BlooikosCompany { ...BlooikosCompanySection } }
+          pageInfo { hasNextPage endCursor }
+        }
+      }
+      blooikosHomeContact { eyebrow title variant }
+    }
+  }
+}
+
+fragment BlooikosGlobalSettings on BlooikosSettings {
+  blooikosSiteIdentity {
+    brandName
+    logo { node { ...BlooikosImage } }
+    logoInverse { node { ...BlooikosImage } }
+  }
+  blooikosSiteContact {
+    contactCompany { node { ... on BlooikosCompany { id title } } }
+    phone email instagramUrl address
+  }
+  blooikosSiteFooter {
+    footerDescription copyrightHolder
+    footerCompanies(first: 6) {
+      nodes { ... on BlooikosCompany { ...BlooikosCompanyIdentity } }
+      pageInfo { hasNextPage endCursor }
+    }
+  }
+}
+
+fragment BlooikosCompanyIdentity on BlooikosCompany {
+  id slug title
+  blooikosCompanyFields { shortName cta { ...BlooikosLink } }
+}
+
+fragment BlooikosCompanyCard on BlooikosCompany {
+  ...BlooikosCompanyIdentity
+  blooikosCompanyFields { summary cardIcon { node { ...BlooikosImage } } }
+}
+
+fragment BlooikosCompanySection on BlooikosCompany {
+  ...BlooikosCompanyIdentity
+  blooikosCompanyFields {
+    eyebrow heading body
+    logo { node { ...BlooikosImage } }
+    image { node { ...BlooikosImage } }
+  }
+}
+
+fragment BlooikosImage on MediaItem {
+  id sourceUrl altText mimeType srcSet sizes
+  mediaDetails { width height }
+}
+
+fragment BlooikosLink on AcfLink { title url target }
+
+fragment BlooikosNavigationItem on MenuItem { id label url target parentId order }
