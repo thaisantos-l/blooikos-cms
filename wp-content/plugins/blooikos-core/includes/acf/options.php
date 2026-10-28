@@ -17,14 +17,15 @@ if ( ! defined( 'ABSPATH' ) ) {
 function blooikos_core_register_options() {
 	acf_add_options_page(
 		array(
-			'page_title'      => __( 'Configurações Blooikos', 'blooikos-core' ),
-			'menu_title'      => __( 'Blooikos', 'blooikos-core' ),
-			'menu_slug'       => 'blooikos-settings',
-			'capability'      => 'manage_options',
-			'redirect'        => false,
-			'post_id'         => 'options',
-			'autoload'        => false,
-			'show_in_graphql' => false,
+			'page_title'        => __( 'Configurações Blooikos', 'blooikos-core' ),
+			'menu_title'        => __( 'Blooikos', 'blooikos-core' ),
+			'menu_slug'         => 'blooikos-settings',
+			'capability'        => 'manage_options',
+			'redirect'          => false,
+			'post_id'           => 'options',
+			'autoload'          => false,
+			'show_in_graphql'   => true,
+			'graphql_type_name' => 'BlooikosSettings',
 		)
 	);
 }

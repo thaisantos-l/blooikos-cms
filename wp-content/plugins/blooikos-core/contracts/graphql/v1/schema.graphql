@@ -1,0 +1,9972 @@
+schema {
+  query: RootQuery
+  mutation: RootMutation
+}
+
+type AcfContentNodeConnection implements ContentNodeConnection & Connection {
+  ""
+  edges: [AcfContentNodeConnectionEdge!]!
+
+  ""
+  nodes: [ContentNode!]!
+
+  ""
+  pageInfo: AcfContentNodeConnectionPageInfo!
+}
+
+type AcfContentNodeConnectionEdge implements OneToOneConnection & Edge & ContentNodeConnectionEdge {
+  ""
+  cursor: String
+
+  ""
+  node: ContentNode!
+}
+
+type AcfContentNodeConnectionPageInfo implements ContentNodeConnectionPageInfo & WPPageInfo & PageInfo {
+  ""
+  endCursor: String
+
+  ""
+  hasNextPage: Boolean!
+
+  ""
+  hasPreviousPage: Boolean!
+
+  "Raw schema for page"
+  seo: SEOPostTypePageInfo
+
+  ""
+  startCursor: String
+}
+
+"A Field Group managed by ACF"
+interface AcfFieldGroup {
+  "The name of the field group"
+  fieldGroupName: String @deprecated(reason: "Use __typename instead")
+}
+
+"Fields associated with an ACF Field Group"
+interface AcfFieldGroupFields {
+  "The name of the field group"
+  fieldGroupName: String @deprecated(reason: "Use __typename instead")
+}
+
+"ACF Link field"
+type AcfLink {
+  "The target of the link (_blank, etc)"
+  target: String
+
+  "The title of the link"
+  title: String
+
+  "The url of the link"
+  url: String
+}
+
+type AcfMediaItemConnectionEdge implements OneToOneConnection & Edge & MediaItemConnectionEdge {
+  ""
+  cursor: String
+
+  ""
+  node: MediaItem!
+}
+
+"Options Page registered by ACF"
+interface AcfOptionsPage implements Node {
+  ""
+  id: ID!
+
+  ""
+  menuTitle: String
+
+  ""
+  pageTitle: String
+
+  ""
+  parentId: String
+}
+
+type Avatar {
+  ""
+  default: String
+
+  ""
+  extraAttr: String
+
+  ""
+  forceDefault: Boolean
+
+  ""
+  foundAvatar: Boolean
+
+  ""
+  height: Int
+
+  ""
+  isRestricted: Boolean
+
+  ""
+  rating: String
+
+  ""
+  scheme: String
+
+  ""
+  size: Int
+
+  ""
+  url: String
+
+  ""
+  width: Int
+}
+
+enum AvatarRatingEnum {
+  "Indicates a G level avatar rating level."
+  G
+
+  "Indicates a PG level avatar rating level."
+  PG
+
+  "Indicates an R level avatar rating level."
+  R
+
+  "Indicates an X level avatar rating level."
+  X
+}
+
+type BlooikosCompany implements Node & ContentNode & UniformResourceIdentifiable & DatabaseIdentifier & NodeWithTemplate & NodeWithTitle & NodeWithRevisions & WithAcfBlooikosCompanyFields {
+  "Fields of the BlooikosCompanyFields ACF Field Group"
+  blooikosCompanyFields: BlooikosCompanyFields
+
+  ""
+  blooikosCompanyId: Int!
+
+  "Connection between the ContentNode type and the ContentType type"
+  contentType: ContentNodeToContentTypeConnectionEdge
+
+  ""
+  contentTypeName: String!
+
+  ""
+  databaseId: Int!
+
+  ""
+  date: String
+
+  ""
+  dateGmt: String
+
+  ""
+  desiredSlug: String
+
+  ""
+  editingLockedBy: ContentNodeToEditLockConnectionEdge
+
+  ""
+  enclosure: String
+
+  "Connection between the ContentNode type and the EnqueuedScript type"
+  enqueuedScripts(after: String, before: String, first: Int, last: Int, where: ContentNodeToEnqueuedScriptConnectionWhereArgs): ContentNodeToEnqueuedScriptConnection
+
+  "Connection between the ContentNode type and the EnqueuedStylesheet type"
+  enqueuedStylesheets(after: String, before: String, first: Int, last: Int, where: ContentNodeToEnqueuedStylesheetConnectionWhereArgs): ContentNodeToEnqueuedStylesheetConnection
+
+  ""
+  guid: String
+
+  ""
+  hasPassword: Boolean
+
+  ""
+  id: ID!
+
+  ""
+  isComment: Boolean!
+
+  ""
+  isContentNode: Boolean!
+
+  ""
+  isFrontPage: Boolean!
+
+  ""
+  isPostsPage: Boolean!
+
+  ""
+  isPreview: Boolean
+
+  ""
+  isRestricted: Boolean
+
+  ""
+  isRevision: Boolean
+
+  ""
+  isTermNode: Boolean!
+
+  ""
+  lastEditedBy: ContentNodeToEditLastConnectionEdge
+
+  ""
+  link: String
+
+  ""
+  modified: String
+
+  ""
+  modifiedGmt: String
+
+  ""
+  password: String
+
+  ""
+  previewRevisionDatabaseId: Int
+
+  ""
+  previewRevisionId: ID
+
+  ""
+  revisionOf: NodeWithRevisionsToContentNodeConnectionEdge
+
+  "Connection between the BlooikosCompany type and the BlooikosCompany type"
+  revisions(after: String, before: String, first: Int, last: Int, where: BlooikosCompanyToRevisionConnectionWhereArgs): BlooikosCompanyToRevisionConnection
+
+  "The Yoast SEO data of the ContentNode"
+  seo: PostTypeSEO
+
+  ""
+  slug: String
+
+  ""
+  status: String
+
+  ""
+  template: ContentTemplate
+
+  ""
+  title(format: PostObjectFieldFormatEnum): String
+
+  ""
+  uri: String
+}
+
+interface BlooikosCompanyConnection implements Connection {
+  ""
+  edges: [BlooikosCompanyConnectionEdge!]!
+
+  ""
+  nodes: [BlooikosCompany!]!
+
+  ""
+  pageInfo: BlooikosCompanyConnectionPageInfo!
+}
+
+interface BlooikosCompanyConnectionEdge implements Edge {
+  ""
+  cursor: String
+
+  ""
+  node: BlooikosCompany!
+}
+
+interface BlooikosCompanyConnectionPageInfo implements WPPageInfo & PageInfo {
+  ""
+  endCursor: String
+
+  ""
+  hasNextPage: Boolean!
+
+  ""
+  hasPreviousPage: Boolean!
+
+  "Raw schema for page"
+  seo: SEOPostTypePageInfo
+
+  ""
+  startCursor: String
+}
+
+"The &quot;BlooikosCompanyFields&quot; Field Group. Added to the Schema by &quot;WPGraphQL for ACF&quot;."
+type BlooikosCompanyFields implements BlooikosCompanyFields_Fields & AcfFieldGroup & AcfFieldGroupFields {
+  "Até 3000 caracteres de texto. Use parágrafos, ênfase, listas e links; sem embeds ou shortcodes."
+  body: String
+
+  "Imagem decorativa junto ao texto: JPEG, PNG ou WebP. Não apaga o alt da mídia."
+  cardIcon: AcfMediaItemConnectionEdge
+
+  "Informe título descritivo e HTTPS, caminho / do site ou #âncora. Não use URLs de protótipo."
+  cta: AcfLink
+
+  "Até 100 caracteres. Pode ficar vazio durante a preparação do rascunho."
+  eyebrow: String
+
+  "The name of the field group"
+  fieldGroupName: String @deprecated(reason: "Use __typename instead")
+
+  "Até 180 caracteres. Pode ficar vazio durante a preparação do rascunho."
+  heading: String
+
+  "JPEG, PNG ou WebP. Imagem informativa exige texto alternativo na Biblioteca de mídia."
+  image: AcfMediaItemConnectionEdge
+
+  "JPEG, PNG ou WebP. Imagem informativa exige texto alternativo na Biblioteca de mídia."
+  logo: AcfMediaItemConnectionEdge
+
+  "Até 60 caracteres. Pode ficar vazio durante a preparação do rascunho."
+  shortName: String
+
+  "Até 300 caracteres. Pode ficar vazio durante a preparação do rascunho."
+  summary: String
+}
+
+"Interface representing fields of the ACF &quot;BlooikosCompanyFields&quot; Field Group"
+interface BlooikosCompanyFields_Fields implements AcfFieldGroup & AcfFieldGroupFields {
+  "Até 3000 caracteres de texto. Use parágrafos, ênfase, listas e links; sem embeds ou shortcodes."
+  body: String
+
+  "Imagem decorativa junto ao texto: JPEG, PNG ou WebP. Não apaga o alt da mídia."
+  cardIcon: AcfMediaItemConnectionEdge
+
+  "Informe título descritivo e HTTPS, caminho / do site ou #âncora. Não use URLs de protótipo."
+  cta: AcfLink
+
+  "Até 100 caracteres. Pode ficar vazio durante a preparação do rascunho."
+  eyebrow: String
+
+  "The name of the field group"
+  fieldGroupName: String @deprecated(reason: "Use __typename instead")
+
+  "Até 180 caracteres. Pode ficar vazio durante a preparação do rascunho."
+  heading: String
+
+  "JPEG, PNG ou WebP. Imagem informativa exige texto alternativo na Biblioteca de mídia."
+  image: AcfMediaItemConnectionEdge
+
+  "JPEG, PNG ou WebP. Imagem informativa exige texto alternativo na Biblioteca de mídia."
+  logo: AcfMediaItemConnectionEdge
+
+  "Até 60 caracteres. Pode ficar vazio durante a preparação do rascunho."
+  shortName: String
+
+  "Até 300 caracteres. Pode ficar vazio durante a preparação do rascunho."
+  summary: String
+}
+
+type BlooikosCompanyToRevisionConnection implements BlooikosCompanyConnection & Connection {
+  ""
+  edges: [BlooikosCompanyToRevisionConnectionEdge!]!
+
+  ""
+  nodes: [BlooikosCompany!]!
+
+  ""
+  pageInfo: BlooikosCompanyToRevisionConnectionPageInfo!
+}
+
+type BlooikosCompanyToRevisionConnectionEdge implements BlooikosCompanyConnectionEdge & Edge {
+  ""
+  cursor: String
+
+  ""
+  node: BlooikosCompany!
+}
+
+type BlooikosCompanyToRevisionConnectionPageInfo implements BlooikosCompanyConnectionPageInfo & WPPageInfo & PageInfo {
+  ""
+  endCursor: String
+
+  ""
+  hasNextPage: Boolean!
+
+  ""
+  hasPreviousPage: Boolean!
+
+  "Raw schema for page"
+  seo: SEOPostTypePageInfo
+
+  ""
+  startCursor: String
+}
+
+input BlooikosCompanyToRevisionConnectionWhereArgs {
+  dateQuery: DateQueryInput
+  hasPassword: Boolean
+  id: Int
+  in: [ID]
+  isSticky: Boolean
+  mimeType: MimeTypeEnum
+  name: String
+  nameIn: [String]
+  notIn: [ID]
+  orderby: [PostObjectsConnectionOrderbyInput]
+  parent: ID
+  parentIn: [ID]
+  parentNotIn: [ID]
+  password: String
+  search: String
+  stati: [PostStatusEnum]
+  status: PostStatusEnum
+  template: ContentTemplateEnum
+  title: String
+}
+
+"The &quot;BlooikosHomeAbout&quot; Field Group. Added to the Schema by &quot;WPGraphQL for ACF&quot;."
+type BlooikosHomeAbout implements BlooikosHomeAbout_Fields & AcfFieldGroup & AcfFieldGroupFields {
+  "Até 3000 caracteres de texto. Use parágrafos, ênfase, listas e links; sem embeds ou shortcodes."
+  body: String
+
+  "Selecione empresas publicadas ou em rascunho que você pode editar. A ordem da seleção será preservada."
+  companies(after: String, before: String, first: Int, last: Int): AcfContentNodeConnection
+
+  "Informe título descritivo e HTTPS, caminho / do site ou #âncora. Não use URLs de protótipo."
+  cta: AcfLink
+
+  "Até 80 caracteres. Pode ficar vazio durante a preparação do rascunho."
+  eyebrow: String
+
+  "The name of the field group"
+  fieldGroupName: String @deprecated(reason: "Use __typename instead")
+
+  "Até 160 caracteres. Pode ficar vazio durante a preparação do rascunho."
+  title: String
+
+  "Combinação de aparência controlada; não aceita CSS ou cores livres."
+  variant: [String]
+}
+
+"Interface representing fields of the ACF &quot;BlooikosHomeAbout&quot; Field Group"
+interface BlooikosHomeAbout_Fields implements AcfFieldGroup & AcfFieldGroupFields {
+  "Até 3000 caracteres de texto. Use parágrafos, ênfase, listas e links; sem embeds ou shortcodes."
+  body: String
+
+  "Selecione empresas publicadas ou em rascunho que você pode editar. A ordem da seleção será preservada."
+  companies(after: String, before: String, first: Int, last: Int): AcfContentNodeConnection
+
+  "Informe título descritivo e HTTPS, caminho / do site ou #âncora. Não use URLs de protótipo."
+  cta: AcfLink
+
+  "Até 80 caracteres. Pode ficar vazio durante a preparação do rascunho."
+  eyebrow: String
+
+  "The name of the field group"
+  fieldGroupName: String @deprecated(reason: "Use __typename instead")
+
+  "Até 160 caracteres. Pode ficar vazio durante a preparação do rascunho."
+  title: String
+
+  "Combinação de aparência controlada; não aceita CSS ou cores livres."
+  variant: [String]
+}
+
+"The &quot;BlooikosHomeCompanies&quot; Field Group. Added to the Schema by &quot;WPGraphQL for ACF&quot;."
+type BlooikosHomeCompanies implements BlooikosHomeCompanies_Fields & AcfFieldGroup & AcfFieldGroupFields {
+  "Selecione empresas publicadas ou em rascunho que você pode editar. A ordem da seleção será preservada."
+  featured(after: String, before: String, first: Int, last: Int): AcfContentNodeConnection
+
+  "The name of the field group"
+  fieldGroupName: String @deprecated(reason: "Use __typename instead")
+}
+
+"Interface representing fields of the ACF &quot;BlooikosHomeCompanies&quot; Field Group"
+interface BlooikosHomeCompanies_Fields implements AcfFieldGroup & AcfFieldGroupFields {
+  "Selecione empresas publicadas ou em rascunho que você pode editar. A ordem da seleção será preservada."
+  featured(after: String, before: String, first: Int, last: Int): AcfContentNodeConnection
+
+  "The name of the field group"
+  fieldGroupName: String @deprecated(reason: "Use __typename instead")
+}
+
+"The &quot;BlooikosHomeContact&quot; Field Group. Added to the Schema by &quot;WPGraphQL for ACF&quot;."
+type BlooikosHomeContact implements BlooikosHomeContact_Fields & AcfFieldGroup & AcfFieldGroupFields {
+  "Até 80 caracteres. Pode ficar vazio durante a preparação do rascunho."
+  eyebrow: String
+
+  "The name of the field group"
+  fieldGroupName: String @deprecated(reason: "Use __typename instead")
+
+  "Até 160 caracteres. Pode ficar vazio durante a preparação do rascunho."
+  title: String
+
+  "Combinação de aparência controlada; não aceita CSS ou cores livres."
+  variant: [String]
+}
+
+"Interface representing fields of the ACF &quot;BlooikosHomeContact&quot; Field Group"
+interface BlooikosHomeContact_Fields implements AcfFieldGroup & AcfFieldGroupFields {
+  "Até 80 caracteres. Pode ficar vazio durante a preparação do rascunho."
+  eyebrow: String
+
+  "The name of the field group"
+  fieldGroupName: String @deprecated(reason: "Use __typename instead")
+
+  "Até 160 caracteres. Pode ficar vazio durante a preparação do rascunho."
+  title: String
+
+  "Combinação de aparência controlada; não aceita CSS ou cores livres."
+  variant: [String]
+}
+
+"The &quot;BlooikosHomeHero&quot; Field Group. Added to the Schema by &quot;WPGraphQL for ACF&quot;."
+type BlooikosHomeHero implements BlooikosHomeHero_Fields & AcfFieldGroup & AcfFieldGroupFields {
+  "Fundo decorativo: JPEG, PNG ou WebP. O alt da mídia compartilhada será preservado."
+  background: AcfMediaItemConnectionEdge
+
+  "Até 400 caracteres. Pode ficar vazio durante a preparação do rascunho."
+  description: String
+
+  "Até 100 caracteres. Pode ficar vazio durante a preparação do rascunho."
+  eyebrow: String
+
+  "The name of the field group"
+  fieldGroupName: String @deprecated(reason: "Use __typename instead")
+
+  "Informe título descritivo e HTTPS, caminho / do site ou #âncora. Não use URLs de protótipo."
+  primaryCta: AcfLink
+
+  "Informe título descritivo e HTTPS, caminho / do site ou #âncora. Não use URLs de protótipo."
+  secondaryCta: AcfLink
+
+  "Até 140 caracteres. Pode ficar vazio durante a preparação do rascunho."
+  titleAfter: String
+
+  "Até 100 caracteres. Pode ficar vazio durante a preparação do rascunho."
+  titleBefore: String
+
+  "Até 100 caracteres. Pode ficar vazio durante a preparação do rascunho."
+  titleHighlight: String
+}
+
+"Interface representing fields of the ACF &quot;BlooikosHomeHero&quot; Field Group"
+interface BlooikosHomeHero_Fields implements AcfFieldGroup & AcfFieldGroupFields {
+  "Fundo decorativo: JPEG, PNG ou WebP. O alt da mídia compartilhada será preservado."
+  background: AcfMediaItemConnectionEdge
+
+  "Até 400 caracteres. Pode ficar vazio durante a preparação do rascunho."
+  description: String
+
+  "Até 100 caracteres. Pode ficar vazio durante a preparação do rascunho."
+  eyebrow: String
+
+  "The name of the field group"
+  fieldGroupName: String @deprecated(reason: "Use __typename instead")
+
+  "Informe título descritivo e HTTPS, caminho / do site ou #âncora. Não use URLs de protótipo."
+  primaryCta: AcfLink
+
+  "Informe título descritivo e HTTPS, caminho / do site ou #âncora. Não use URLs de protótipo."
+  secondaryCta: AcfLink
+
+  "Até 140 caracteres. Pode ficar vazio durante a preparação do rascunho."
+  titleAfter: String
+
+  "Até 100 caracteres. Pode ficar vazio durante a preparação do rascunho."
+  titleBefore: String
+
+  "Até 100 caracteres. Pode ficar vazio durante a preparação do rascunho."
+  titleHighlight: String
+}
+
+"The &quot;BlooikosHomeIndicators&quot; Field Group. Added to the Schema by &quot;WPGraphQL for ACF&quot;."
+type BlooikosHomeIndicators implements BlooikosHomeIndicators_Fields & AcfFieldGroup & AcfFieldGroupFields {
+  "Até 80 caracteres. Pode ficar vazio durante a preparação do rascunho."
+  eyebrow: String
+
+  "The name of the field group"
+  fieldGroupName: String @deprecated(reason: "Use __typename instead")
+
+  "Até 4 itens. Preserve zeros e prefixos: +300, +100, 03, 02."
+  items: [BlooikosHomeIndicatorsItems]
+
+  "Até 160 caracteres. Pode ficar vazio durante a preparação do rascunho."
+  title: String
+}
+
+"The &quot;BlooikosHomeIndicatorsItems&quot; Field Group. Added to the Schema by &quot;WPGraphQL for ACF&quot;."
+type BlooikosHomeIndicatorsItems implements BlooikosHomeIndicatorsItems_Fields & AcfFieldGroup & AcfFieldGroupFields {
+  "Até 180 caracteres."
+  description: String
+
+  "The name of the field group"
+  fieldGroupName: String @deprecated(reason: "Use __typename instead")
+
+  "Até 100 caracteres."
+  label: String
+
+  "Até 20 caracteres."
+  value: String
+}
+
+"Interface representing fields of the ACF &quot;BlooikosHomeIndicatorsItems&quot; Field Group"
+interface BlooikosHomeIndicatorsItems_Fields implements AcfFieldGroup & AcfFieldGroupFields {
+  "Até 180 caracteres."
+  description: String
+
+  "The name of the field group"
+  fieldGroupName: String @deprecated(reason: "Use __typename instead")
+
+  "Até 100 caracteres."
+  label: String
+
+  "Até 20 caracteres."
+  value: String
+}
+
+"Interface representing fields of the ACF &quot;BlooikosHomeIndicators&quot; Field Group"
+interface BlooikosHomeIndicators_Fields implements AcfFieldGroup & AcfFieldGroupFields {
+  "Até 80 caracteres. Pode ficar vazio durante a preparação do rascunho."
+  eyebrow: String
+
+  "The name of the field group"
+  fieldGroupName: String @deprecated(reason: "Use __typename instead")
+
+  "Até 4 itens. Preserve zeros e prefixos: +300, +100, 03, 02."
+  items: [BlooikosHomeIndicatorsItems]
+
+  "Até 160 caracteres. Pode ficar vazio durante a preparação do rascunho."
+  title: String
+}
+
+"The &quot;BlooikosHomeInstitutional&quot; Field Group. Added to the Schema by &quot;WPGraphQL for ACF&quot;."
+type BlooikosHomeInstitutional implements BlooikosHomeInstitutional_Fields & AcfFieldGroup & AcfFieldGroupFields {
+  "Ative somente se a imagem não transmitir informação. O alt compartilhado não será apagado."
+  decorative: Boolean
+
+  "The name of the field group"
+  fieldGroupName: String @deprecated(reason: "Use __typename instead")
+
+  "JPEG, PNG ou WebP. Imagem informativa exige texto alternativo na Biblioteca de mídia."
+  image: AcfMediaItemConnectionEdge
+}
+
+"Interface representing fields of the ACF &quot;BlooikosHomeInstitutional&quot; Field Group"
+interface BlooikosHomeInstitutional_Fields implements AcfFieldGroup & AcfFieldGroupFields {
+  "Ative somente se a imagem não transmitir informação. O alt compartilhado não será apagado."
+  decorative: Boolean
+
+  "The name of the field group"
+  fieldGroupName: String @deprecated(reason: "Use __typename instead")
+
+  "JPEG, PNG ou WebP. Imagem informativa exige texto alternativo na Biblioteca de mídia."
+  image: AcfMediaItemConnectionEdge
+}
+
+"The &quot;BlooikosHomeServices&quot; Field Group. Added to the Schema by &quot;WPGraphQL for ACF&quot;."
+type BlooikosHomeServices implements BlooikosHomeServices_Fields & AcfFieldGroup & AcfFieldGroupFields {
+  "Até 600 caracteres. Pode ficar vazio durante a preparação do rascunho."
+  description: String
+
+  "Até 80 caracteres. Pode ficar vazio durante a preparação do rascunho."
+  eyebrow: String
+
+  "The name of the field group"
+  fieldGroupName: String @deprecated(reason: "Use __typename instead")
+
+  "Até 12 serviços. Cada linha precisa de título e descrição."
+  items: [BlooikosHomeServicesItems]
+
+  "Até 160 caracteres. Pode ficar vazio durante a preparação do rascunho."
+  title: String
+
+  "Combinação de aparência controlada; não aceita CSS ou cores livres."
+  variant: [String]
+}
+
+"The &quot;BlooikosHomeServicesItems&quot; Field Group. Added to the Schema by &quot;WPGraphQL for ACF&quot;."
+type BlooikosHomeServicesItems implements BlooikosHomeServicesItems_Fields & AcfFieldGroup & AcfFieldGroupFields {
+  "Até 500 caracteres."
+  description: String
+
+  "The name of the field group"
+  fieldGroupName: String @deprecated(reason: "Use __typename instead")
+
+  "JPEG, PNG ou WebP; ícone decorativo junto ao texto."
+  icon: AcfMediaItemConnectionEdge
+
+  "Até 100 caracteres."
+  title: String
+}
+
+"Interface representing fields of the ACF &quot;BlooikosHomeServicesItems&quot; Field Group"
+interface BlooikosHomeServicesItems_Fields implements AcfFieldGroup & AcfFieldGroupFields {
+  "Até 500 caracteres."
+  description: String
+
+  "The name of the field group"
+  fieldGroupName: String @deprecated(reason: "Use __typename instead")
+
+  "JPEG, PNG ou WebP; ícone decorativo junto ao texto."
+  icon: AcfMediaItemConnectionEdge
+
+  "Até 100 caracteres."
+  title: String
+}
+
+"Interface representing fields of the ACF &quot;BlooikosHomeServices&quot; Field Group"
+interface BlooikosHomeServices_Fields implements AcfFieldGroup & AcfFieldGroupFields {
+  "Até 600 caracteres. Pode ficar vazio durante a preparação do rascunho."
+  description: String
+
+  "Até 80 caracteres. Pode ficar vazio durante a preparação do rascunho."
+  eyebrow: String
+
+  "The name of the field group"
+  fieldGroupName: String @deprecated(reason: "Use __typename instead")
+
+  "Até 12 serviços. Cada linha precisa de título e descrição."
+  items: [BlooikosHomeServicesItems]
+
+  "Até 160 caracteres. Pode ficar vazio durante a preparação do rascunho."
+  title: String
+
+  "Combinação de aparência controlada; não aceita CSS ou cores livres."
+  variant: [String]
+}
+
+type BlooikosSettings implements AcfOptionsPage & Node & WithAcfBlooikosSiteIdentity & WithAcfBlooikosSiteContact & WithAcfBlooikosSiteFooter {
+  "Fields of the BlooikosSiteContact ACF Field Group"
+  blooikosSiteContact: BlooikosSiteContact
+
+  "Fields of the BlooikosSiteFooter ACF Field Group"
+  blooikosSiteFooter: BlooikosSiteFooter
+
+  "Fields of the BlooikosSiteIdentity ACF Field Group"
+  blooikosSiteIdentity: BlooikosSiteIdentity
+
+  ""
+  id: ID!
+
+  ""
+  menuTitle: String
+
+  ""
+  pageTitle: String
+
+  ""
+  parentId: String
+}
+
+"The &quot;BlooikosSiteContact&quot; Field Group. Added to the Schema by &quot;WPGraphQL for ACF&quot;."
+type BlooikosSiteContact implements BlooikosSiteContact_Fields & AcfFieldGroup & AcfFieldGroupFields {
+  "Até 500 caracteres. Pode ficar vazio durante a preparação do rascunho."
+  address: String
+
+  "Selecione empresas publicadas ou em rascunho que você pode editar. A ordem da seleção será preservada."
+  contactCompany: AcfContentNodeConnectionEdge
+
+  "Até 254 caracteres. Pode ficar vazio durante a preparação do rascunho."
+  email: String
+
+  "The name of the field group"
+  fieldGroupName: String @deprecated(reason: "Use __typename instead")
+
+  "URL HTTPS definitiva, até 2048 caracteres."
+  instagramUrl: String
+
+  "De 8 a 15 dígitos; use apenas números, espaços, parênteses, hífens e +."
+  phone: String
+}
+
+"Interface representing fields of the ACF &quot;BlooikosSiteContact&quot; Field Group"
+interface BlooikosSiteContact_Fields implements AcfFieldGroup & AcfFieldGroupFields {
+  "Até 500 caracteres. Pode ficar vazio durante a preparação do rascunho."
+  address: String
+
+  "Selecione empresas publicadas ou em rascunho que você pode editar. A ordem da seleção será preservada."
+  contactCompany: AcfContentNodeConnectionEdge
+
+  "Até 254 caracteres. Pode ficar vazio durante a preparação do rascunho."
+  email: String
+
+  "The name of the field group"
+  fieldGroupName: String @deprecated(reason: "Use __typename instead")
+
+  "URL HTTPS definitiva, até 2048 caracteres."
+  instagramUrl: String
+
+  "De 8 a 15 dígitos; use apenas números, espaços, parênteses, hífens e +."
+  phone: String
+}
+
+"The &quot;BlooikosSiteFooter&quot; Field Group. Added to the Schema by &quot;WPGraphQL for ACF&quot;."
+type BlooikosSiteFooter implements BlooikosSiteFooter_Fields & AcfFieldGroup & AcfFieldGroupFields {
+  "Até 160 caracteres. Pode ficar vazio durante a preparação do rascunho."
+  copyrightHolder: String
+
+  "The name of the field group"
+  fieldGroupName: String @deprecated(reason: "Use __typename instead")
+
+  "Selecione empresas publicadas ou em rascunho que você pode editar. A ordem da seleção será preservada."
+  footerCompanies(after: String, before: String, first: Int, last: Int): AcfContentNodeConnection
+
+  "Até 400 caracteres. Pode ficar vazio durante a preparação do rascunho."
+  footerDescription: String
+}
+
+"Interface representing fields of the ACF &quot;BlooikosSiteFooter&quot; Field Group"
+interface BlooikosSiteFooter_Fields implements AcfFieldGroup & AcfFieldGroupFields {
+  "Até 160 caracteres. Pode ficar vazio durante a preparação do rascunho."
+  copyrightHolder: String
+
+  "The name of the field group"
+  fieldGroupName: String @deprecated(reason: "Use __typename instead")
+
+  "Selecione empresas publicadas ou em rascunho que você pode editar. A ordem da seleção será preservada."
+  footerCompanies(after: String, before: String, first: Int, last: Int): AcfContentNodeConnection
+
+  "Até 400 caracteres. Pode ficar vazio durante a preparação do rascunho."
+  footerDescription: String
+}
+
+"The &quot;BlooikosSiteIdentity&quot; Field Group. Added to the Schema by &quot;WPGraphQL for ACF&quot;."
+type BlooikosSiteIdentity implements BlooikosSiteIdentity_Fields & AcfFieldGroup & AcfFieldGroupFields {
+  "Até 100 caracteres. Pode ficar vazio durante a preparação do rascunho."
+  brandName: String
+
+  "The name of the field group"
+  fieldGroupName: String @deprecated(reason: "Use __typename instead")
+
+  "JPEG, PNG ou WebP. Imagem informativa exige texto alternativo na Biblioteca de mídia."
+  logo: AcfMediaItemConnectionEdge
+
+  "JPEG, PNG ou WebP. Imagem informativa exige texto alternativo na Biblioteca de mídia."
+  logoInverse: AcfMediaItemConnectionEdge
+}
+
+"Interface representing fields of the ACF &quot;BlooikosSiteIdentity&quot; Field Group"
+interface BlooikosSiteIdentity_Fields implements AcfFieldGroup & AcfFieldGroupFields {
+  "Até 100 caracteres. Pode ficar vazio durante a preparação do rascunho."
+  brandName: String
+
+  "The name of the field group"
+  fieldGroupName: String @deprecated(reason: "Use __typename instead")
+
+  "JPEG, PNG ou WebP. Imagem informativa exige texto alternativo na Biblioteca de mídia."
+  logo: AcfMediaItemConnectionEdge
+
+  "JPEG, PNG ou WebP. Imagem informativa exige texto alternativo na Biblioteca de mídia."
+  logoInverse: AcfMediaItemConnectionEdge
+}
+
+type Category implements Node & TermNode & UniformResourceIdentifiable & DatabaseIdentifier & HierarchicalTermNode & HierarchicalNode & MenuItemLinkable {
+  ""
+  ancestors(after: String, before: String, first: Int, last: Int): CategoryToAncestorsCategoryConnection
+
+  ""
+  categoryId: Int
+
+  ""
+  children(after: String, before: String, first: Int, last: Int, where: CategoryToCategoryConnectionWhereArgs): CategoryToCategoryConnection
+
+  "Connection between the Category type and the ContentNode type"
+  contentNodes(after: String, before: String, first: Int, last: Int, where: CategoryToContentNodeConnectionWhereArgs): CategoryToContentNodeConnection
+
+  ""
+  count: Int
+
+  ""
+  databaseId: Int!
+
+  ""
+  description: String
+
+  "Connection between the TermNode type and the EnqueuedScript type"
+  enqueuedScripts(after: String, before: String, first: Int, last: Int, where: TermNodeToEnqueuedScriptConnectionWhereArgs): TermNodeToEnqueuedScriptConnection
+
+  "Connection between the TermNode type and the EnqueuedStylesheet type"
+  enqueuedStylesheets(after: String, before: String, first: Int, last: Int, where: TermNodeToEnqueuedStylesheetConnectionWhereArgs): TermNodeToEnqueuedStylesheetConnection
+
+  ""
+  id: ID!
+
+  ""
+  isComment: Boolean!
+
+  ""
+  isContentNode: Boolean!
+
+  ""
+  isFrontPage: Boolean!
+
+  ""
+  isPostsPage: Boolean!
+
+  ""
+  isRestricted: Boolean
+
+  ""
+  isTermNode: Boolean!
+
+  ""
+  link: String
+
+  ""
+  name: String
+
+  ""
+  parent: CategoryToParentCategoryConnectionEdge
+
+  ""
+  parentDatabaseId: Int
+
+  ""
+  parentId: ID
+
+  "Connection between the Category type and the post type"
+  posts(after: String, before: String, first: Int, last: Int, where: CategoryToPostConnectionWhereArgs): CategoryToPostConnection
+
+  "The Yoast SEO data of the Categorias taxonomy."
+  seo: TaxonomySEO
+
+  ""
+  slug: String
+
+  "Connection between the Category type and the Taxonomy type"
+  taxonomy: CategoryToTaxonomyConnectionEdge
+
+  ""
+  taxonomyName: String
+
+  ""
+  termGroupId: Int
+
+  ""
+  termTaxonomyId: Int
+
+  ""
+  uri: String
+}
+
+interface CategoryConnection implements Connection {
+  ""
+  edges: [CategoryConnectionEdge!]!
+
+  ""
+  nodes: [Category!]!
+
+  ""
+  pageInfo: CategoryConnectionPageInfo!
+}
+
+interface CategoryConnectionEdge implements Edge {
+  ""
+  cursor: String
+
+  ""
+  node: Category!
+}
+
+interface CategoryConnectionPageInfo implements WPPageInfo & PageInfo {
+  ""
+  endCursor: String
+
+  ""
+  hasNextPage: Boolean!
+
+  ""
+  hasPreviousPage: Boolean!
+
+  "Raw schema for page"
+  seo: SEOPostTypePageInfo
+
+  ""
+  startCursor: String
+}
+
+enum CategoryIdType {
+  "The Database ID for the node"
+  DATABASE_ID
+
+  "The hashed Global ID"
+  ID
+
+  "The name of the node"
+  NAME
+
+  "Url friendly name of the node"
+  SLUG
+
+  "The URI for the node"
+  URI
+}
+
+type CategoryToAncestorsCategoryConnection implements CategoryConnection & Connection {
+  ""
+  edges: [CategoryToAncestorsCategoryConnectionEdge!]!
+
+  ""
+  nodes: [Category!]!
+
+  ""
+  pageInfo: CategoryToAncestorsCategoryConnectionPageInfo!
+}
+
+type CategoryToAncestorsCategoryConnectionEdge implements CategoryConnectionEdge & Edge {
+  ""
+  cursor: String
+
+  ""
+  node: Category!
+}
+
+type CategoryToAncestorsCategoryConnectionPageInfo implements CategoryConnectionPageInfo & WPPageInfo & PageInfo {
+  ""
+  endCursor: String
+
+  ""
+  hasNextPage: Boolean!
+
+  ""
+  hasPreviousPage: Boolean!
+
+  "Raw schema for page"
+  seo: SEOPostTypePageInfo
+
+  ""
+  startCursor: String
+}
+
+type CategoryToCategoryConnection implements CategoryConnection & Connection {
+  ""
+  edges: [CategoryToCategoryConnectionEdge!]!
+
+  ""
+  nodes: [Category!]!
+
+  ""
+  pageInfo: CategoryToCategoryConnectionPageInfo!
+}
+
+type CategoryToCategoryConnectionEdge implements CategoryConnectionEdge & Edge {
+  ""
+  cursor: String
+
+  ""
+  node: Category!
+}
+
+type CategoryToCategoryConnectionPageInfo implements CategoryConnectionPageInfo & WPPageInfo & PageInfo {
+  ""
+  endCursor: String
+
+  ""
+  hasNextPage: Boolean!
+
+  ""
+  hasPreviousPage: Boolean!
+
+  "Raw schema for page"
+  seo: SEOPostTypePageInfo
+
+  ""
+  startCursor: String
+}
+
+input CategoryToCategoryConnectionWhereArgs {
+  cacheDomain: String
+  childOf: Int
+  childless: Boolean
+  descriptionLike: String
+  exclude: [ID]
+  excludeTree: [ID]
+  hideEmpty: Boolean
+  hierarchical: Boolean
+  include: [ID]
+  name: [String]
+  nameLike: String
+  objectIds: [ID]
+  order: OrderEnum
+  orderby: TermObjectsConnectionOrderbyEnum
+  padCounts: Boolean
+  parent: Int
+  search: String
+  slug: [String]
+  termTaxonomId: [ID]
+  termTaxonomyId: [ID]
+  updateTermMetaCache: Boolean
+}
+
+type CategoryToContentNodeConnection implements ContentNodeConnection & Connection {
+  ""
+  edges: [CategoryToContentNodeConnectionEdge!]!
+
+  ""
+  nodes: [ContentNode!]!
+
+  ""
+  pageInfo: CategoryToContentNodeConnectionPageInfo!
+}
+
+type CategoryToContentNodeConnectionEdge implements ContentNodeConnectionEdge & Edge {
+  ""
+  cursor: String
+
+  ""
+  node: ContentNode!
+}
+
+type CategoryToContentNodeConnectionPageInfo implements ContentNodeConnectionPageInfo & WPPageInfo & PageInfo {
+  ""
+  endCursor: String
+
+  ""
+  hasNextPage: Boolean!
+
+  ""
+  hasPreviousPage: Boolean!
+
+  "Raw schema for page"
+  seo: SEOPostTypePageInfo
+
+  ""
+  startCursor: String
+}
+
+input CategoryToContentNodeConnectionWhereArgs {
+  contentTypes: [ContentTypesOfCategoryEnum]
+  dateQuery: DateQueryInput
+  hasPassword: Boolean
+  id: Int
+  in: [ID]
+  isSticky: Boolean
+  mimeType: MimeTypeEnum
+  name: String
+  nameIn: [String]
+  notIn: [ID]
+  orderby: [PostObjectsConnectionOrderbyInput]
+  parent: ID
+  parentIn: [ID]
+  parentNotIn: [ID]
+  password: String
+  search: String
+  stati: [PostStatusEnum]
+  status: PostStatusEnum
+  template: ContentTemplateEnum
+  title: String
+}
+
+type CategoryToParentCategoryConnectionEdge implements OneToOneConnection & Edge & CategoryConnectionEdge {
+  ""
+  cursor: String
+
+  ""
+  node: Category!
+}
+
+type CategoryToPostConnection implements PostConnection & Connection {
+  ""
+  edges: [CategoryToPostConnectionEdge!]!
+
+  ""
+  nodes: [Post!]!
+
+  ""
+  pageInfo: CategoryToPostConnectionPageInfo!
+}
+
+type CategoryToPostConnectionEdge implements PostConnectionEdge & Edge {
+  ""
+  cursor: String
+
+  ""
+  node: Post!
+}
+
+type CategoryToPostConnectionPageInfo implements PostConnectionPageInfo & WPPageInfo & PageInfo {
+  ""
+  endCursor: String
+
+  ""
+  hasNextPage: Boolean!
+
+  ""
+  hasPreviousPage: Boolean!
+
+  "Raw schema for page"
+  seo: SEOPostTypePageInfo
+
+  ""
+  startCursor: String
+}
+
+input CategoryToPostConnectionWhereArgs {
+  author: Int
+  authorIn: [ID]
+  authorName: String
+  authorNotIn: [ID]
+  categoryId: Int
+  categoryIn: [ID]
+  categoryName: String
+  categoryNotIn: [ID]
+  dateQuery: DateQueryInput
+  hasPassword: Boolean
+  id: Int
+  in: [ID]
+  isSticky: Boolean
+  mimeType: MimeTypeEnum
+  name: String
+  nameIn: [String]
+  notIn: [ID]
+  orderby: [PostObjectsConnectionOrderbyInput]
+  parent: ID
+  parentIn: [ID]
+  parentNotIn: [ID]
+  password: String
+  search: String
+  stati: [PostStatusEnum]
+  status: PostStatusEnum
+  tag: String
+  tagId: String
+  tagIn: [ID]
+  tagNotIn: [ID]
+  tagSlugAnd: [String]
+  tagSlugIn: [String]
+  template: ContentTemplateEnum
+  title: String
+}
+
+type CategoryToTaxonomyConnectionEdge implements OneToOneConnection & Edge & TaxonomyConnectionEdge {
+  ""
+  cursor: String
+
+  ""
+  node: Taxonomy!
+}
+
+type Comment implements Node & DatabaseIdentifier & UniformResourceIdentifiable {
+  ""
+  agent: String
+
+  ""
+  approved: Boolean @deprecated(reason: "Deprecated in favor of the `status` field")
+
+  ""
+  author: CommentToCommenterConnectionEdge
+
+  ""
+  authorIp: String @deprecated(reason: "Use the ipAddress field on the edge between the comment and author")
+
+  ""
+  commentId: Int
+
+  "Connection between the Comment type and the ContentNode type"
+  commentedOn: CommentToContentNodeConnectionEdge
+
+  ""
+  content(format: PostObjectFieldFormatEnum): String
+
+  ""
+  databaseId: Int!
+
+  ""
+  date: String
+
+  ""
+  dateGmt: String
+
+  ""
+  id: ID!
+
+  ""
+  isComment: Boolean!
+
+  ""
+  isContentNode: Boolean!
+
+  ""
+  isFrontPage: Boolean!
+
+  ""
+  isPostsPage: Boolean!
+
+  ""
+  isRestricted: Boolean
+
+  ""
+  isTermNode: Boolean!
+
+  ""
+  karma: Int
+
+  ""
+  link: String
+
+  "Connection between the Comment type and the Comment type"
+  parent(where: CommentToParentCommentConnectionWhereArgs): CommentToParentCommentConnectionEdge
+
+  ""
+  parentDatabaseId: Int
+
+  ""
+  parentId: ID
+
+  "Connection between the Comment type and the Comment type"
+  replies(after: String, before: String, first: Int, last: Int, where: CommentToCommentConnectionWhereArgs): CommentToCommentConnection
+
+  ""
+  status: CommentStatusEnum
+
+  ""
+  type: String
+
+  ""
+  uri: String
+}
+
+interface CommentConnection implements Connection {
+  ""
+  edges: [CommentConnectionEdge!]!
+
+  ""
+  nodes: [Comment!]!
+
+  ""
+  pageInfo: CommentConnectionPageInfo!
+}
+
+interface CommentConnectionEdge implements Edge {
+  ""
+  cursor: String
+
+  ""
+  node: Comment!
+}
+
+interface CommentConnectionPageInfo implements WPPageInfo & PageInfo {
+  ""
+  endCursor: String
+
+  ""
+  hasNextPage: Boolean!
+
+  ""
+  hasPreviousPage: Boolean!
+
+  "Raw schema for page"
+  seo: SEOPostTypePageInfo
+
+  ""
+  startCursor: String
+}
+
+enum CommentNodeIdTypeEnum {
+  "Identify a resource by the Database ID."
+  DATABASE_ID
+
+  "Identify a resource by the (hashed) Global ID."
+  ID
+}
+
+enum CommentStatusEnum {
+  "Comments with the Aprovado status"
+  APPROVE
+
+  "Comments with the Rejeitado status"
+  HOLD
+
+  "Comments with the Spam status"
+  SPAM
+
+  "Comments with the Lixo status"
+  TRASH
+}
+
+type CommentToCommentConnection implements CommentConnection & Connection {
+  ""
+  edges: [CommentToCommentConnectionEdge!]!
+
+  ""
+  nodes: [Comment!]!
+
+  ""
+  pageInfo: CommentToCommentConnectionPageInfo!
+}
+
+type CommentToCommentConnectionEdge implements CommentConnectionEdge & Edge {
+  ""
+  cursor: String
+
+  ""
+  node: Comment!
+}
+
+type CommentToCommentConnectionPageInfo implements CommentConnectionPageInfo & WPPageInfo & PageInfo {
+  ""
+  endCursor: String
+
+  ""
+  hasNextPage: Boolean!
+
+  ""
+  hasPreviousPage: Boolean!
+
+  "Raw schema for page"
+  seo: SEOPostTypePageInfo
+
+  ""
+  startCursor: String
+}
+
+input CommentToCommentConnectionWhereArgs {
+  authorEmail: String
+  authorIn: [ID]
+  authorNotIn: [ID]
+  authorUrl: String
+  commentIn: [ID]
+  commentNotIn: [ID]
+  commentType: String
+  commentTypeIn: [String]
+  commentTypeNotIn: String
+  contentAuthor: [ID]
+  contentAuthorIn: [ID]
+  contentAuthorNotIn: [ID]
+  contentId: ID
+  contentIdIn: [ID]
+  contentIdNotIn: [ID]
+  contentName: String
+  contentParent: Int
+  contentStatus: [PostStatusEnum]
+  contentType: [ContentTypeEnum]
+  includeUnapproved: [ID]
+  karma: Int
+  order: OrderEnum
+  orderby: CommentsConnectionOrderbyEnum
+  parent: Int
+  parentIn: [ID]
+  parentNotIn: [ID]
+  search: String
+  status: String
+  statusIn: [CommentStatusEnum]
+  userId: ID
+}
+
+type CommentToCommenterConnectionEdge implements OneToOneConnection & Edge & CommenterConnectionEdge {
+  ""
+  cursor: String
+
+  ""
+  email: String
+
+  ""
+  ipAddress: String
+
+  ""
+  name: String
+
+  ""
+  node: Commenter!
+
+  ""
+  url: String
+}
+
+type CommentToContentNodeConnectionEdge implements OneToOneConnection & Edge & ContentNodeConnectionEdge {
+  ""
+  cursor: String
+
+  ""
+  node: ContentNode!
+}
+
+type CommentToParentCommentConnectionEdge implements OneToOneConnection & Edge & CommentConnectionEdge {
+  ""
+  cursor: String
+
+  ""
+  node: Comment!
+}
+
+input CommentToParentCommentConnectionWhereArgs {
+  authorEmail: String
+  authorIn: [ID]
+  authorNotIn: [ID]
+  authorUrl: String
+  commentIn: [ID]
+  commentNotIn: [ID]
+  commentType: String
+  commentTypeIn: [String]
+  commentTypeNotIn: String
+  contentAuthor: [ID]
+  contentAuthorIn: [ID]
+  contentAuthorNotIn: [ID]
+  contentId: ID
+  contentIdIn: [ID]
+  contentIdNotIn: [ID]
+  contentName: String
+  contentParent: Int
+  contentStatus: [PostStatusEnum]
+  contentType: [ContentTypeEnum]
+  includeUnapproved: [ID]
+  karma: Int
+  order: OrderEnum
+  orderby: CommentsConnectionOrderbyEnum
+  parent: Int
+  parentIn: [ID]
+  parentNotIn: [ID]
+  search: String
+  status: String
+  statusIn: [CommentStatusEnum]
+  userId: ID
+}
+
+interface Commenter implements Node & DatabaseIdentifier {
+  ""
+  avatar: Avatar
+
+  ""
+  databaseId: Int!
+
+  ""
+  email: String
+
+  ""
+  id: ID!
+
+  ""
+  isRestricted: Boolean
+
+  ""
+  name: String
+
+  ""
+  url: String
+}
+
+interface CommenterConnectionEdge implements Edge {
+  ""
+  cursor: String
+
+  ""
+  node: Commenter!
+}
+
+enum CommentsConnectionOrderbyEnum {
+  "Order by browser user agent of the commenter."
+  COMMENT_AGENT
+
+  "Order by approval status of the comment."
+  COMMENT_APPROVED
+
+  "Order by name of the comment author."
+  COMMENT_AUTHOR
+
+  "Order by e-mail of the comment author."
+  COMMENT_AUTHOR_EMAIL
+
+  "Order by IP address of the comment author."
+  COMMENT_AUTHOR_IP
+
+  "Order by URL address of the comment author."
+  COMMENT_AUTHOR_URL
+
+  "Order by the comment contents."
+  COMMENT_CONTENT
+
+  "Chronological ordering by comment submission date."
+  COMMENT_DATE
+
+  "Chronological ordering by comment date in UTC/GMT time."
+  COMMENT_DATE_GMT
+
+  "Ordering by internal ID (typically reflects creation order)."
+  COMMENT_ID
+
+  "Preserve custom order of IDs as specified in the query."
+  COMMENT_IN
+
+  "Order by the comment karma score."
+  COMMENT_KARMA
+
+  "Ordering by parent comment relationship (threaded discussions)."
+  COMMENT_PARENT
+
+  "Ordering by associated content item ID."
+  COMMENT_POST_ID
+
+  "Ordering by comment classification (standard comments, pingbacks, etc.)."
+  COMMENT_TYPE
+
+  "Ordering by the user account ID associated with the comment as the comment author."
+  USER_ID
+}
+
+interface Connection {
+  ""
+  edges: [Edge!]!
+
+  ""
+  nodes: [Node!]!
+
+  ""
+  pageInfo: PageInfo!
+}
+
+interface ContentNode implements Node & UniformResourceIdentifiable {
+  "Connection between the ContentNode type and the ContentType type"
+  contentType: ContentNodeToContentTypeConnectionEdge
+
+  ""
+  contentTypeName: String!
+
+  ""
+  databaseId: Int!
+
+  ""
+  date: String
+
+  ""
+  dateGmt: String
+
+  ""
+  desiredSlug: String
+
+  ""
+  editingLockedBy: ContentNodeToEditLockConnectionEdge
+
+  ""
+  enclosure: String
+
+  "Connection between the ContentNode type and the EnqueuedScript type"
+  enqueuedScripts(after: String, before: String, first: Int, last: Int, where: ContentNodeToEnqueuedScriptConnectionWhereArgs): ContentNodeToEnqueuedScriptConnection
+
+  "Connection between the ContentNode type and the EnqueuedStylesheet type"
+  enqueuedStylesheets(after: String, before: String, first: Int, last: Int, where: ContentNodeToEnqueuedStylesheetConnectionWhereArgs): ContentNodeToEnqueuedStylesheetConnection
+
+  ""
+  guid: String
+
+  ""
+  id: ID!
+
+  ""
+  isComment: Boolean!
+
+  ""
+  isContentNode: Boolean!
+
+  ""
+  isFrontPage: Boolean!
+
+  ""
+  isPostsPage: Boolean!
+
+  ""
+  isPreview: Boolean
+
+  ""
+  isRestricted: Boolean
+
+  ""
+  isTermNode: Boolean!
+
+  ""
+  lastEditedBy: ContentNodeToEditLastConnectionEdge
+
+  ""
+  link: String
+
+  ""
+  modified: String
+
+  ""
+  modifiedGmt: String
+
+  ""
+  previewRevisionDatabaseId: Int
+
+  ""
+  previewRevisionId: ID
+
+  "The Yoast SEO data of the ContentNode"
+  seo: PostTypeSEO
+
+  ""
+  slug: String
+
+  ""
+  status: String
+
+  ""
+  template: ContentTemplate
+
+  ""
+  uri: String
+}
+
+interface ContentNodeConnection implements Connection {
+  ""
+  edges: [ContentNodeConnectionEdge!]!
+
+  ""
+  nodes: [ContentNode!]!
+
+  ""
+  pageInfo: ContentNodeConnectionPageInfo!
+}
+
+interface ContentNodeConnectionEdge implements Edge {
+  ""
+  cursor: String
+
+  ""
+  node: ContentNode!
+}
+
+interface ContentNodeConnectionPageInfo implements WPPageInfo & PageInfo {
+  ""
+  endCursor: String
+
+  ""
+  hasNextPage: Boolean!
+
+  ""
+  hasPreviousPage: Boolean!
+
+  "Raw schema for page"
+  seo: SEOPostTypePageInfo
+
+  ""
+  startCursor: String
+}
+
+enum ContentNodeIdTypeEnum {
+  "Identify a resource by the Database ID."
+  DATABASE_ID
+
+  "Identify a resource by the (hashed) Global ID."
+  ID
+
+  "Identify a resource by the URI."
+  URI
+}
+
+type ContentNodeToContentTypeConnectionEdge implements OneToOneConnection & Edge & ContentTypeConnectionEdge {
+  ""
+  cursor: String
+
+  ""
+  node: ContentType!
+}
+
+type ContentNodeToEditLastConnectionEdge implements OneToOneConnection & Edge & UserConnectionEdge {
+  ""
+  cursor: String
+
+  ""
+  node: User!
+}
+
+type ContentNodeToEditLockConnectionEdge implements OneToOneConnection & Edge & UserConnectionEdge {
+  ""
+  cursor: String
+
+  ""
+  lockTimestamp: String
+
+  ""
+  node: User!
+}
+
+type ContentNodeToEnqueuedScriptConnection implements EnqueuedScriptConnection & Connection {
+  ""
+  edges: [ContentNodeToEnqueuedScriptConnectionEdge!]!
+
+  ""
+  nodes: [EnqueuedScript!]!
+
+  ""
+  pageInfo: ContentNodeToEnqueuedScriptConnectionPageInfo!
+}
+
+type ContentNodeToEnqueuedScriptConnectionEdge implements EnqueuedScriptConnectionEdge & Edge {
+  ""
+  cursor: String
+
+  ""
+  node: EnqueuedScript!
+}
+
+type ContentNodeToEnqueuedScriptConnectionPageInfo implements EnqueuedScriptConnectionPageInfo & WPPageInfo & PageInfo {
+  ""
+  endCursor: String
+
+  ""
+  hasNextPage: Boolean!
+
+  ""
+  hasPreviousPage: Boolean!
+
+  "Raw schema for page"
+  seo: SEOPostTypePageInfo
+
+  ""
+  startCursor: String
+}
+
+input ContentNodeToEnqueuedScriptConnectionWhereArgs {
+  handlesIn: [String]
+}
+
+type ContentNodeToEnqueuedStylesheetConnection implements EnqueuedStylesheetConnection & Connection {
+  ""
+  edges: [ContentNodeToEnqueuedStylesheetConnectionEdge!]!
+
+  ""
+  nodes: [EnqueuedStylesheet!]!
+
+  ""
+  pageInfo: ContentNodeToEnqueuedStylesheetConnectionPageInfo!
+}
+
+type ContentNodeToEnqueuedStylesheetConnectionEdge implements EnqueuedStylesheetConnectionEdge & Edge {
+  ""
+  cursor: String
+
+  ""
+  node: EnqueuedStylesheet!
+}
+
+type ContentNodeToEnqueuedStylesheetConnectionPageInfo implements EnqueuedStylesheetConnectionPageInfo & WPPageInfo & PageInfo {
+  ""
+  endCursor: String
+
+  ""
+  hasNextPage: Boolean!
+
+  ""
+  hasPreviousPage: Boolean!
+
+  "Raw schema for page"
+  seo: SEOPostTypePageInfo
+
+  ""
+  startCursor: String
+}
+
+input ContentNodeToEnqueuedStylesheetConnectionWhereArgs {
+  handlesIn: [String]
+}
+
+interface ContentTemplate {
+  ""
+  templateName: String
+}
+
+enum ContentTemplateEnum {
+  "The default template, applied when no specific template is assigned."
+  DEFAULT_TEMPLATE
+
+  "The \"Página sem título\" template."
+  PAGE_NO_TITLE_BLOCK_TEMPLATE
+}
+
+type ContentType implements Node & UniformResourceIdentifiable {
+  ""
+  canExport: Boolean
+
+  "Connection between the ContentType type and the Taxonomy type"
+  connectedTaxonomies(after: String, before: String, first: Int, last: Int): ContentTypeToTaxonomyConnection
+
+  "Connection between the ContentType type and the ContentNode type"
+  contentNodes(after: String, before: String, first: Int, last: Int, where: ContentTypeToContentNodeConnectionWhereArgs): ContentTypeToContentNodeConnection
+
+  ""
+  deleteWithUser: Boolean
+
+  ""
+  description: String
+
+  ""
+  excludeFromSearch: Boolean
+
+  ""
+  graphqlPluralName: String
+
+  ""
+  graphqlSingleName: String
+
+  ""
+  hasArchive: Boolean
+
+  ""
+  hierarchical: Boolean
+
+  ""
+  id: ID!
+
+  ""
+  isComment: Boolean!
+
+  ""
+  isContentNode: Boolean!
+
+  ""
+  isFrontPage: Boolean!
+
+  ""
+  isPostsPage: Boolean!
+
+  ""
+  isRestricted: Boolean
+
+  ""
+  isTermNode: Boolean!
+
+  ""
+  label: String
+
+  ""
+  labels: PostTypeLabelDetails
+
+  ""
+  menuIcon: String
+
+  ""
+  menuPosition: Int
+
+  ""
+  name: String
+
+  ""
+  public: Boolean
+
+  ""
+  publiclyQueryable: Boolean
+
+  ""
+  restBase: String
+
+  ""
+  restControllerClass: String
+
+  ""
+  showInAdminBar: Boolean
+
+  ""
+  showInGraphql: Boolean
+
+  ""
+  showInMenu: Boolean
+
+  ""
+  showInNavMenus: Boolean
+
+  ""
+  showInRest: Boolean
+
+  ""
+  showUi: Boolean
+
+  ""
+  uri: String
+}
+
+interface ContentTypeConnection implements Connection {
+  ""
+  edges: [ContentTypeConnectionEdge!]!
+
+  ""
+  nodes: [ContentType!]!
+
+  ""
+  pageInfo: ContentTypeConnectionPageInfo!
+}
+
+interface ContentTypeConnectionEdge implements Edge {
+  ""
+  cursor: String
+
+  ""
+  node: ContentType!
+}
+
+interface ContentTypeConnectionPageInfo implements WPPageInfo & PageInfo {
+  ""
+  endCursor: String
+
+  ""
+  hasNextPage: Boolean!
+
+  ""
+  hasPreviousPage: Boolean!
+
+  "Raw schema for page"
+  seo: SEOPostTypePageInfo
+
+  ""
+  startCursor: String
+}
+
+enum ContentTypeEnum {
+  "The Type of Content object"
+  ATTACHMENT
+
+  "The Type of Content object"
+  BLOOIKOS_COMPANY
+
+  "The Type of Content object"
+  PAGE
+
+  "The Type of Content object"
+  POST
+}
+
+enum ContentTypeIdTypeEnum {
+  "The globally unique ID"
+  ID
+
+  "The name of the content type."
+  NAME
+}
+
+type ContentTypeToContentNodeConnection implements ContentNodeConnection & Connection {
+  ""
+  edges: [ContentTypeToContentNodeConnectionEdge!]!
+
+  ""
+  nodes: [ContentNode!]!
+
+  ""
+  pageInfo: ContentTypeToContentNodeConnectionPageInfo!
+}
+
+type ContentTypeToContentNodeConnectionEdge implements ContentNodeConnectionEdge & Edge {
+  ""
+  cursor: String
+
+  ""
+  node: ContentNode!
+}
+
+type ContentTypeToContentNodeConnectionPageInfo implements ContentNodeConnectionPageInfo & WPPageInfo & PageInfo {
+  ""
+  endCursor: String
+
+  ""
+  hasNextPage: Boolean!
+
+  ""
+  hasPreviousPage: Boolean!
+
+  "Raw schema for page"
+  seo: SEOPostTypePageInfo
+
+  ""
+  startCursor: String
+}
+
+input ContentTypeToContentNodeConnectionWhereArgs {
+  contentTypes: [ContentTypeEnum]
+  dateQuery: DateQueryInput
+  hasPassword: Boolean
+  id: Int
+  in: [ID]
+  isSticky: Boolean
+  mimeType: MimeTypeEnum
+  name: String
+  nameIn: [String]
+  notIn: [ID]
+  orderby: [PostObjectsConnectionOrderbyInput]
+  parent: ID
+  parentIn: [ID]
+  parentNotIn: [ID]
+  password: String
+  search: String
+  stati: [PostStatusEnum]
+  status: PostStatusEnum
+  template: ContentTemplateEnum
+  title: String
+}
+
+type ContentTypeToTaxonomyConnection implements TaxonomyConnection & Connection {
+  ""
+  edges: [ContentTypeToTaxonomyConnectionEdge!]!
+
+  ""
+  nodes: [Taxonomy!]!
+
+  ""
+  pageInfo: ContentTypeToTaxonomyConnectionPageInfo!
+}
+
+type ContentTypeToTaxonomyConnectionEdge implements TaxonomyConnectionEdge & Edge {
+  ""
+  cursor: String
+
+  ""
+  node: Taxonomy!
+}
+
+type ContentTypeToTaxonomyConnectionPageInfo implements TaxonomyConnectionPageInfo & WPPageInfo & PageInfo {
+  ""
+  endCursor: String
+
+  ""
+  hasNextPage: Boolean!
+
+  ""
+  hasPreviousPage: Boolean!
+
+  "Raw schema for page"
+  seo: SEOPostTypePageInfo
+
+  ""
+  startCursor: String
+}
+
+enum ContentTypesOfCategoryEnum {
+  "The Type of Content object"
+  POST
+}
+
+enum ContentTypesOfPostFormatEnum {
+  "The Type of Content object"
+  POST
+}
+
+enum ContentTypesOfTagEnum {
+  "The Type of Content object"
+  POST
+}
+
+input CreateCategoryInput {
+  aliasOf: String
+  clientMutationId: String
+  description: String
+  name: String!
+  parentDatabaseId: Int
+  parentId: ID
+  slug: String
+}
+
+type CreateCategoryPayload {
+  ""
+  category: Category
+
+  ""
+  clientMutationId: String
+}
+
+input CreateCommentInput {
+  approved: String
+  author: String
+  authorEmail: String
+  authorUrl: String
+  clientMutationId: String
+  commentOn: Int
+  content: String
+  date: String
+  parent: ID
+  status: CommentStatusEnum
+  type: String
+}
+
+type CreateCommentPayload {
+  ""
+  clientMutationId: String
+
+  ""
+  comment: Comment
+
+  ""
+  success: Boolean
+}
+
+input CreateMediaItemInput {
+  altText: String
+  authorId: ID
+  caption: String
+  clientMutationId: String
+  commentStatus: String
+  date: String
+  dateGmt: String
+  description: String
+  filePath: String
+  fileType: MimeTypeEnum
+  parentId: ID
+  pingStatus: String
+  slug: String
+  status: MediaItemStatusEnum
+  title: String
+}
+
+type CreateMediaItemPayload {
+  ""
+  clientMutationId: String
+
+  ""
+  mediaItem: MediaItem
+}
+
+input CreatePageInput {
+  authorId: ID
+  clientMutationId: String
+  commentStatus: String
+  content: String
+  date: String
+  menuOrder: Int
+  parentId: ID
+  password: String
+  slug: String
+  status: PostStatusEnum
+  title: String
+}
+
+type CreatePagePayload {
+  ""
+  clientMutationId: String
+
+  ""
+  page: Page
+}
+
+input CreatePostFormatInput {
+  aliasOf: String
+  clientMutationId: String
+  description: String
+  name: String!
+  slug: String
+}
+
+type CreatePostFormatPayload {
+  ""
+  clientMutationId: String
+
+  ""
+  postFormat: PostFormat
+}
+
+input CreatePostInput {
+  authorId: ID
+  categories: PostCategoriesInput
+  clientMutationId: String
+  commentStatus: String
+  content: String
+  date: String
+  excerpt: String
+  menuOrder: Int
+  password: String
+  pingStatus: String
+  pinged: [String]
+  postFormats: PostPostFormatsInput
+  slug: String
+  status: PostStatusEnum
+  tags: PostTagsInput
+  title: String
+  toPing: [String]
+}
+
+type CreatePostPayload {
+  ""
+  clientMutationId: String
+
+  ""
+  post: Post
+}
+
+input CreateTagInput {
+  aliasOf: String
+  clientMutationId: String
+  description: String
+  name: String!
+  slug: String
+}
+
+type CreateTagPayload {
+  ""
+  clientMutationId: String
+
+  ""
+  tag: Tag
+}
+
+input CreateUserInput {
+  aim: String
+  clientMutationId: String
+  description: String
+  displayName: String
+  email: String
+  firstName: String
+  jabber: String
+  lastName: String
+  locale: String
+  nicename: String
+  nickname: String
+  password: String
+  registered: String
+  richEditing: String
+  roles: [String]
+  username: String!
+  websiteUrl: String
+  yim: String
+}
+
+type CreateUserPayload {
+  ""
+  clientMutationId: String
+
+  ""
+  user: User
+}
+
+interface DatabaseIdentifier {
+  ""
+  databaseId: Int!
+}
+
+input DateInput {
+  day: Int
+  hour: Int
+  minute: Int
+  month: Int
+  second: Int
+  year: Int
+}
+
+input DateQueryInput {
+  after: DateInput
+  before: DateInput
+  column: PostObjectsConnectionDateColumnEnum
+  compare: String
+  day: Int
+  hour: Int
+  inclusive: Boolean
+  minute: Int
+  month: Int
+  relation: RelationEnum
+  second: Int
+  week: Int
+  year: Int
+}
+
+input DeleteCategoryInput {
+  clientMutationId: String
+  id: ID!
+}
+
+type DeleteCategoryPayload {
+  ""
+  category: Category
+
+  ""
+  clientMutationId: String
+
+  ""
+  deletedId: ID
+}
+
+input DeleteCommentInput {
+  clientMutationId: String
+  forceDelete: Boolean
+  id: ID!
+}
+
+type DeleteCommentPayload {
+  ""
+  clientMutationId: String
+
+  ""
+  comment: Comment
+
+  ""
+  deletedId: ID
+}
+
+input DeleteMediaItemInput {
+  clientMutationId: String
+  forceDelete: Boolean
+  id: ID!
+}
+
+type DeleteMediaItemPayload {
+  ""
+  clientMutationId: String
+
+  ""
+  deletedId: ID
+
+  ""
+  mediaItem: MediaItem
+}
+
+input DeletePageInput {
+  clientMutationId: String
+  forceDelete: Boolean
+  id: ID!
+  ignoreEditLock: Boolean
+}
+
+type DeletePagePayload {
+  ""
+  clientMutationId: String
+
+  ""
+  deletedId: ID
+
+  ""
+  page: Page
+}
+
+input DeletePostFormatInput {
+  clientMutationId: String
+  id: ID!
+}
+
+type DeletePostFormatPayload {
+  ""
+  clientMutationId: String
+
+  ""
+  deletedId: ID
+
+  ""
+  postFormat: PostFormat
+}
+
+input DeletePostInput {
+  clientMutationId: String
+  forceDelete: Boolean
+  id: ID!
+  ignoreEditLock: Boolean
+}
+
+type DeletePostPayload {
+  ""
+  clientMutationId: String
+
+  ""
+  deletedId: ID
+
+  ""
+  post: Post
+}
+
+input DeleteTagInput {
+  clientMutationId: String
+  id: ID!
+}
+
+type DeleteTagPayload {
+  ""
+  clientMutationId: String
+
+  ""
+  deletedId: ID
+
+  ""
+  tag: Tag
+}
+
+input DeleteUserInput {
+  clientMutationId: String
+  id: ID!
+  reassignId: ID
+}
+
+type DeleteUserPayload {
+  ""
+  clientMutationId: String
+
+  ""
+  deletedId: ID
+
+  ""
+  user: User
+}
+
+interface Edge {
+  ""
+  cursor: String
+
+  ""
+  node: Node!
+}
+
+interface EnqueuedAsset {
+  ""
+  after: [String]
+
+  ""
+  args: Boolean
+
+  ""
+  before: [String]
+
+  ""
+  conditional: String
+
+  ""
+  dependencies: [EnqueuedAsset]
+
+  ""
+  extra: String
+
+  ""
+  group: Int
+
+  ""
+  handle: String
+
+  ""
+  id: ID!
+
+  ""
+  src: String
+
+  ""
+  version: String
+}
+
+type EnqueuedScript implements Node & EnqueuedAsset {
+  ""
+  after: [String]
+
+  ""
+  args: Boolean
+
+  ""
+  before: [String]
+
+  ""
+  conditional: String
+
+  ""
+  dependencies: [EnqueuedScript]
+
+  ""
+  extra: String
+
+  ""
+  extraData: String
+
+  ""
+  group: Int
+
+  ""
+  groupLocation: ScriptLoadingGroupLocationEnum
+
+  ""
+  handle: String
+
+  ""
+  id: ID!
+
+  ""
+  src: String
+
+  ""
+  strategy: ScriptLoadingStrategyEnum
+
+  ""
+  version: String
+}
+
+interface EnqueuedScriptConnection implements Connection {
+  ""
+  edges: [EnqueuedScriptConnectionEdge!]!
+
+  ""
+  nodes: [EnqueuedScript!]!
+
+  ""
+  pageInfo: EnqueuedScriptConnectionPageInfo!
+}
+
+interface EnqueuedScriptConnectionEdge implements Edge {
+  ""
+  cursor: String
+
+  ""
+  node: EnqueuedScript!
+}
+
+interface EnqueuedScriptConnectionPageInfo implements WPPageInfo & PageInfo {
+  ""
+  endCursor: String
+
+  ""
+  hasNextPage: Boolean!
+
+  ""
+  hasPreviousPage: Boolean!
+
+  "Raw schema for page"
+  seo: SEOPostTypePageInfo
+
+  ""
+  startCursor: String
+}
+
+type EnqueuedStylesheet implements Node & EnqueuedAsset {
+  ""
+  after: [String]
+
+  ""
+  args: Boolean
+
+  ""
+  before: [String]
+
+  ""
+  conditional: String
+
+  ""
+  dependencies: [EnqueuedStylesheet]
+
+  ""
+  extra: String
+
+  ""
+  group: Int
+
+  ""
+  handle: String
+
+  ""
+  id: ID!
+
+  ""
+  isRtl: Boolean
+
+  ""
+  media: String
+
+  ""
+  path: String
+
+  ""
+  rel: String
+
+  ""
+  src: String
+
+  ""
+  suffix: String
+
+  ""
+  title: String
+
+  ""
+  version: String
+}
+
+interface EnqueuedStylesheetConnection implements Connection {
+  ""
+  edges: [EnqueuedStylesheetConnectionEdge!]!
+
+  ""
+  nodes: [EnqueuedStylesheet!]!
+
+  ""
+  pageInfo: EnqueuedStylesheetConnectionPageInfo!
+}
+
+interface EnqueuedStylesheetConnectionEdge implements Edge {
+  ""
+  cursor: String
+
+  ""
+  node: EnqueuedStylesheet!
+}
+
+interface EnqueuedStylesheetConnectionPageInfo implements WPPageInfo & PageInfo {
+  ""
+  endCursor: String
+
+  ""
+  hasNextPage: Boolean!
+
+  ""
+  hasPreviousPage: Boolean!
+
+  "Raw schema for page"
+  seo: SEOPostTypePageInfo
+
+  ""
+  startCursor: String
+}
+
+type GeneralSettings implements Node {
+  ""
+  homeUrl: String
+
+  ""
+  id: ID!
+
+  ""
+  siteIcon: GeneralSettingsToMediaItemConnectionEdge
+
+  ""
+  siteIconUrl(size: Int): String
+
+  ""
+  url: String
+}
+
+type GeneralSettingsToMediaItemConnectionEdge implements OneToOneConnection & Edge & MediaItemConnectionEdge {
+  ""
+  cursor: String
+
+  ""
+  node: MediaItem!
+}
+
+interface HierarchicalContentNode implements Node & ContentNode & UniformResourceIdentifiable & DatabaseIdentifier & HierarchicalNode {
+  ""
+  ancestors(after: String, before: String, first: Int, last: Int, where: HierarchicalContentNodeToContentNodeAncestorsConnectionWhereArgs): HierarchicalContentNodeToContentNodeAncestorsConnection
+
+  "Connection between the HierarchicalContentNode type and the ContentNode type"
+  children(after: String, before: String, first: Int, last: Int, where: HierarchicalContentNodeToContentNodeChildrenConnectionWhereArgs): HierarchicalContentNodeToContentNodeChildrenConnection
+
+  "Connection between the ContentNode type and the ContentType type"
+  contentType: ContentNodeToContentTypeConnectionEdge
+
+  ""
+  contentTypeName: String!
+
+  ""
+  databaseId: Int!
+
+  ""
+  date: String
+
+  ""
+  dateGmt: String
+
+  ""
+  desiredSlug: String
+
+  ""
+  editingLockedBy: ContentNodeToEditLockConnectionEdge
+
+  ""
+  enclosure: String
+
+  "Connection between the ContentNode type and the EnqueuedScript type"
+  enqueuedScripts(after: String, before: String, first: Int, last: Int, where: ContentNodeToEnqueuedScriptConnectionWhereArgs): ContentNodeToEnqueuedScriptConnection
+
+  "Connection between the ContentNode type and the EnqueuedStylesheet type"
+  enqueuedStylesheets(after: String, before: String, first: Int, last: Int, where: ContentNodeToEnqueuedStylesheetConnectionWhereArgs): ContentNodeToEnqueuedStylesheetConnection
+
+  ""
+  guid: String
+
+  ""
+  id: ID!
+
+  ""
+  isComment: Boolean!
+
+  ""
+  isContentNode: Boolean!
+
+  ""
+  isFrontPage: Boolean!
+
+  ""
+  isPostsPage: Boolean!
+
+  ""
+  isPreview: Boolean
+
+  ""
+  isRestricted: Boolean
+
+  ""
+  isTermNode: Boolean!
+
+  ""
+  lastEditedBy: ContentNodeToEditLastConnectionEdge
+
+  ""
+  link: String
+
+  ""
+  modified: String
+
+  ""
+  modifiedGmt: String
+
+  ""
+  parent: HierarchicalContentNodeToParentContentNodeConnectionEdge
+
+  ""
+  parentDatabaseId: Int
+
+  ""
+  parentId: ID
+
+  ""
+  previewRevisionDatabaseId: Int
+
+  ""
+  previewRevisionId: ID
+
+  "The Yoast SEO data of the ContentNode"
+  seo: PostTypeSEO
+
+  ""
+  slug: String
+
+  ""
+  status: String
+
+  ""
+  template: ContentTemplate
+
+  ""
+  uri: String
+}
+
+type HierarchicalContentNodeToContentNodeAncestorsConnection implements ContentNodeConnection & Connection {
+  ""
+  edges: [HierarchicalContentNodeToContentNodeAncestorsConnectionEdge!]!
+
+  ""
+  nodes: [ContentNode!]!
+
+  ""
+  pageInfo: HierarchicalContentNodeToContentNodeAncestorsConnectionPageInfo!
+}
+
+type HierarchicalContentNodeToContentNodeAncestorsConnectionEdge implements ContentNodeConnectionEdge & Edge {
+  ""
+  cursor: String
+
+  ""
+  node: ContentNode!
+}
+
+type HierarchicalContentNodeToContentNodeAncestorsConnectionPageInfo implements ContentNodeConnectionPageInfo & WPPageInfo & PageInfo {
+  ""
+  endCursor: String
+
+  ""
+  hasNextPage: Boolean!
+
+  ""
+  hasPreviousPage: Boolean!
+
+  "Raw schema for page"
+  seo: SEOPostTypePageInfo
+
+  ""
+  startCursor: String
+}
+
+input HierarchicalContentNodeToContentNodeAncestorsConnectionWhereArgs {
+  contentTypes: [ContentTypeEnum]
+  dateQuery: DateQueryInput
+  hasPassword: Boolean
+  id: Int
+  in: [ID]
+  isSticky: Boolean
+  mimeType: MimeTypeEnum
+  name: String
+  nameIn: [String]
+  notIn: [ID]
+  orderby: [PostObjectsConnectionOrderbyInput]
+  parent: ID
+  parentIn: [ID]
+  parentNotIn: [ID]
+  password: String
+  search: String
+  stati: [PostStatusEnum]
+  status: PostStatusEnum
+  template: ContentTemplateEnum
+  title: String
+}
+
+type HierarchicalContentNodeToContentNodeChildrenConnection implements ContentNodeConnection & Connection {
+  ""
+  edges: [HierarchicalContentNodeToContentNodeChildrenConnectionEdge!]!
+
+  ""
+  nodes: [ContentNode!]!
+
+  ""
+  pageInfo: HierarchicalContentNodeToContentNodeChildrenConnectionPageInfo!
+}
+
+type HierarchicalContentNodeToContentNodeChildrenConnectionEdge implements ContentNodeConnectionEdge & Edge {
+  ""
+  cursor: String
+
+  ""
+  node: ContentNode!
+}
+
+type HierarchicalContentNodeToContentNodeChildrenConnectionPageInfo implements ContentNodeConnectionPageInfo & WPPageInfo & PageInfo {
+  ""
+  endCursor: String
+
+  ""
+  hasNextPage: Boolean!
+
+  ""
+  hasPreviousPage: Boolean!
+
+  "Raw schema for page"
+  seo: SEOPostTypePageInfo
+
+  ""
+  startCursor: String
+}
+
+input HierarchicalContentNodeToContentNodeChildrenConnectionWhereArgs {
+  contentTypes: [ContentTypeEnum]
+  dateQuery: DateQueryInput
+  hasPassword: Boolean
+  id: Int
+  in: [ID]
+  isSticky: Boolean
+  mimeType: MimeTypeEnum
+  name: String
+  nameIn: [String]
+  notIn: [ID]
+  orderby: [PostObjectsConnectionOrderbyInput]
+  parent: ID
+  parentIn: [ID]
+  parentNotIn: [ID]
+  password: String
+  search: String
+  stati: [PostStatusEnum]
+  status: PostStatusEnum
+  template: ContentTemplateEnum
+  title: String
+}
+
+type HierarchicalContentNodeToParentContentNodeConnectionEdge implements OneToOneConnection & Edge & ContentNodeConnectionEdge {
+  ""
+  cursor: String
+
+  ""
+  node: ContentNode!
+}
+
+interface HierarchicalNode implements Node & DatabaseIdentifier {
+  ""
+  databaseId: Int!
+
+  ""
+  id: ID!
+
+  ""
+  parentDatabaseId: Int
+
+  ""
+  parentId: ID
+}
+
+interface HierarchicalTermNode implements Node & TermNode & UniformResourceIdentifiable & DatabaseIdentifier & HierarchicalNode {
+  ""
+  count: Int
+
+  ""
+  databaseId: Int!
+
+  ""
+  description: String
+
+  "Connection between the TermNode type and the EnqueuedScript type"
+  enqueuedScripts(after: String, before: String, first: Int, last: Int, where: TermNodeToEnqueuedScriptConnectionWhereArgs): TermNodeToEnqueuedScriptConnection
+
+  "Connection between the TermNode type and the EnqueuedStylesheet type"
+  enqueuedStylesheets(after: String, before: String, first: Int, last: Int, where: TermNodeToEnqueuedStylesheetConnectionWhereArgs): TermNodeToEnqueuedStylesheetConnection
+
+  ""
+  id: ID!
+
+  ""
+  isComment: Boolean!
+
+  ""
+  isContentNode: Boolean!
+
+  ""
+  isFrontPage: Boolean!
+
+  ""
+  isPostsPage: Boolean!
+
+  ""
+  isRestricted: Boolean
+
+  ""
+  isTermNode: Boolean!
+
+  ""
+  link: String
+
+  ""
+  name: String
+
+  ""
+  parentDatabaseId: Int
+
+  ""
+  parentId: ID
+
+  ""
+  slug: String
+
+  ""
+  taxonomyName: String
+
+  ""
+  termGroupId: Int
+
+  ""
+  termTaxonomyId: Int
+
+  ""
+  uri: String
+}
+
+type MediaDetails {
+  ""
+  file: String
+
+  ""
+  filePath: String
+
+  ""
+  height: Int
+
+  ""
+  meta: MediaItemMeta
+
+  ""
+  sizes(exclude: [MediaItemSizeEnum], include: [MediaItemSizeEnum]): [MediaSize]
+
+  ""
+  width: Int
+}
+
+type MediaItem implements Node & ContentNode & UniformResourceIdentifiable & DatabaseIdentifier & NodeWithTemplate & NodeWithTitle & NodeWithAuthor & NodeWithComments & HierarchicalContentNode & HierarchicalNode {
+  ""
+  altText: String
+
+  ""
+  ancestors(after: String, before: String, first: Int, last: Int, where: HierarchicalContentNodeToContentNodeAncestorsConnectionWhereArgs): HierarchicalContentNodeToContentNodeAncestorsConnection
+
+  "Connection between the NodeWithAuthor type and the User type"
+  author: NodeWithAuthorToUserConnectionEdge
+
+  ""
+  authorDatabaseId: Int
+
+  ""
+  authorId: ID
+
+  ""
+  caption(format: PostObjectFieldFormatEnum): String
+
+  "Connection between the HierarchicalContentNode type and the ContentNode type"
+  children(after: String, before: String, first: Int, last: Int, where: HierarchicalContentNodeToContentNodeChildrenConnectionWhereArgs): HierarchicalContentNodeToContentNodeChildrenConnection
+
+  ""
+  commentCount: Int
+
+  ""
+  commentStatus: String
+
+  "Connection between the MediaItem type and the Comment type"
+  comments(after: String, before: String, first: Int, last: Int, where: MediaItemToCommentConnectionWhereArgs): MediaItemToCommentConnection
+
+  "Connection between the ContentNode type and the ContentType type"
+  contentType: ContentNodeToContentTypeConnectionEdge
+
+  ""
+  contentTypeName: String!
+
+  ""
+  databaseId: Int!
+
+  ""
+  date: String
+
+  ""
+  dateGmt: String
+
+  ""
+  description(format: PostObjectFieldFormatEnum): String
+
+  ""
+  desiredSlug: String
+
+  ""
+  editingLockedBy: ContentNodeToEditLockConnectionEdge
+
+  ""
+  enclosure: String
+
+  "Connection between the ContentNode type and the EnqueuedScript type"
+  enqueuedScripts(after: String, before: String, first: Int, last: Int, where: ContentNodeToEnqueuedScriptConnectionWhereArgs): ContentNodeToEnqueuedScriptConnection
+
+  "Connection between the ContentNode type and the EnqueuedStylesheet type"
+  enqueuedStylesheets(after: String, before: String, first: Int, last: Int, where: ContentNodeToEnqueuedStylesheetConnectionWhereArgs): ContentNodeToEnqueuedStylesheetConnection
+
+  ""
+  file(size: MediaItemSizeEnum): String
+
+  ""
+  filePath(size: MediaItemSizeEnum): String
+
+  ""
+  fileSize(size: MediaItemSizeEnum): Int
+
+  ""
+  guid: String
+
+  ""
+  hasPassword: Boolean
+
+  ""
+  id: ID!
+
+  ""
+  isComment: Boolean!
+
+  ""
+  isContentNode: Boolean!
+
+  ""
+  isFrontPage: Boolean!
+
+  ""
+  isPostsPage: Boolean!
+
+  ""
+  isPreview: Boolean
+
+  ""
+  isRestricted: Boolean
+
+  ""
+  isTermNode: Boolean!
+
+  ""
+  lastEditedBy: ContentNodeToEditLastConnectionEdge
+
+  ""
+  link: String
+
+  ""
+  mediaDetails: MediaDetails
+
+  ""
+  mediaItemId: Int!
+
+  ""
+  mediaItemUrl: String
+
+  ""
+  mediaType: String
+
+  ""
+  mimeType: String
+
+  ""
+  modified: String
+
+  ""
+  modifiedGmt: String
+
+  ""
+  parent: HierarchicalContentNodeToParentContentNodeConnectionEdge
+
+  ""
+  parentDatabaseId: Int
+
+  ""
+  parentId: ID
+
+  ""
+  password: String
+
+  ""
+  previewRevisionDatabaseId: Int
+
+  ""
+  previewRevisionId: ID
+
+  "The Yoast SEO data of the ContentNode"
+  seo: PostTypeSEO
+
+  ""
+  sizes(size: MediaItemSizeEnum): String
+
+  ""
+  slug: String
+
+  ""
+  sourceUrl(size: MediaItemSizeEnum): String
+
+  ""
+  srcSet(size: MediaItemSizeEnum): String
+
+  ""
+  status: String
+
+  ""
+  template: ContentTemplate
+
+  ""
+  title(format: PostObjectFieldFormatEnum): String
+
+  ""
+  uri: String
+}
+
+interface MediaItemConnection implements Connection {
+  ""
+  edges: [MediaItemConnectionEdge!]!
+
+  ""
+  nodes: [MediaItem!]!
+
+  ""
+  pageInfo: MediaItemConnectionPageInfo!
+}
+
+interface MediaItemConnectionEdge implements Edge {
+  ""
+  cursor: String
+
+  ""
+  node: MediaItem!
+}
+
+interface MediaItemConnectionPageInfo implements WPPageInfo & PageInfo {
+  ""
+  endCursor: String
+
+  ""
+  hasNextPage: Boolean!
+
+  ""
+  hasPreviousPage: Boolean!
+
+  "Raw schema for page"
+  seo: SEOPostTypePageInfo
+
+  ""
+  startCursor: String
+}
+
+enum MediaItemIdType {
+  "Identify a resource by the Database ID."
+  DATABASE_ID
+
+  "Identify a resource by the (hashed) Global ID."
+  ID
+
+  "Identify a resource by the slug. Available to non-hierarchcial Types where the slug is a unique identifier."
+  SLUG
+
+  "Identify a media item by its source url"
+  SOURCE_URL
+
+  "Identify a resource by the URI."
+  URI
+}
+
+type MediaItemMeta {
+  ""
+  aperture: Float
+
+  ""
+  camera: String
+
+  ""
+  caption: String
+
+  ""
+  copyright: String
+
+  ""
+  createdTimestamp: Int
+
+  ""
+  credit: String
+
+  ""
+  focalLength: Float
+
+  ""
+  iso: Int
+
+  ""
+  keywords: [String]
+
+  ""
+  orientation: String
+
+  ""
+  shutterSpeed: Float
+
+  ""
+  title: String
+}
+
+enum MediaItemSizeEnum {
+  "Large image preview suitable for detail views. (1024x1024)"
+  LARGE
+
+  "Medium image preview typically suitable for listings and detail views. (300x300)"
+  MEDIUM
+
+  "Medium-to-large image preview suitable for listings and detail views. (768x0)"
+  MEDIUM_LARGE
+
+  "Small image preview suitable for thumbnails and listings. (150x150)"
+  THUMBNAIL
+
+  "Custom Image Size. (1536x1536)"
+  _1536X1536
+
+  "Custom Image Size. (2048x2048)"
+  _2048X2048
+}
+
+enum MediaItemStatusEnum {
+  "Automatically created media that has not been finalized"
+  AUTO_DRAFT
+
+  "Media that inherits its publication status from the parent content"
+  INHERIT
+
+  "Media visible only to users with appropriate permissions"
+  PRIVATE
+
+  "Media marked for deletion but still recoverable"
+  TRASH
+}
+
+type MediaItemToCommentConnection implements CommentConnection & Connection {
+  ""
+  edges: [MediaItemToCommentConnectionEdge!]!
+
+  ""
+  nodes: [Comment!]!
+
+  ""
+  pageInfo: MediaItemToCommentConnectionPageInfo!
+}
+
+type MediaItemToCommentConnectionEdge implements CommentConnectionEdge & Edge {
+  ""
+  cursor: String
+
+  ""
+  node: Comment!
+}
+
+type MediaItemToCommentConnectionPageInfo implements CommentConnectionPageInfo & WPPageInfo & PageInfo {
+  ""
+  endCursor: String
+
+  ""
+  hasNextPage: Boolean!
+
+  ""
+  hasPreviousPage: Boolean!
+
+  "Raw schema for page"
+  seo: SEOPostTypePageInfo
+
+  ""
+  startCursor: String
+}
+
+input MediaItemToCommentConnectionWhereArgs {
+  authorEmail: String
+  authorIn: [ID]
+  authorNotIn: [ID]
+  authorUrl: String
+  commentIn: [ID]
+  commentNotIn: [ID]
+  commentType: String
+  commentTypeIn: [String]
+  commentTypeNotIn: String
+  contentAuthor: [ID]
+  contentAuthorIn: [ID]
+  contentAuthorNotIn: [ID]
+  contentId: ID
+  contentIdIn: [ID]
+  contentIdNotIn: [ID]
+  contentName: String
+  contentParent: Int
+  contentStatus: [PostStatusEnum]
+  contentType: [ContentTypeEnum]
+  includeUnapproved: [ID]
+  karma: Int
+  order: OrderEnum
+  orderby: CommentsConnectionOrderbyEnum
+  parent: Int
+  parentIn: [ID]
+  parentNotIn: [ID]
+  search: String
+  status: String
+  statusIn: [CommentStatusEnum]
+  userId: ID
+}
+
+type MediaSize {
+  ""
+  file: String
+
+  ""
+  filePath: String
+
+  ""
+  fileSize: Int
+
+  ""
+  height: String
+
+  ""
+  mimeType: String
+
+  ""
+  name: String
+
+  ""
+  sourceUrl: String
+
+  ""
+  width: String
+}
+
+type Menu implements Node & DatabaseIdentifier {
+  ""
+  count: Int
+
+  ""
+  databaseId: Int!
+
+  ""
+  id: ID!
+
+  ""
+  isRestricted: Boolean
+
+  ""
+  locations: [MenuLocationEnum]
+
+  ""
+  menuId: Int
+
+  "Connection between the Menu type and the MenuItem type"
+  menuItems(after: String, before: String, first: Int, last: Int, where: MenuToMenuItemConnectionWhereArgs): MenuToMenuItemConnection
+
+  ""
+  name: String
+
+  ""
+  slug: String
+}
+
+interface MenuConnection implements Connection {
+  ""
+  edges: [MenuConnectionEdge!]!
+
+  ""
+  nodes: [Menu!]!
+
+  ""
+  pageInfo: MenuConnectionPageInfo!
+}
+
+interface MenuConnectionEdge implements Edge {
+  ""
+  cursor: String
+
+  ""
+  node: Menu!
+}
+
+interface MenuConnectionPageInfo implements WPPageInfo & PageInfo {
+  ""
+  endCursor: String
+
+  ""
+  hasNextPage: Boolean!
+
+  ""
+  hasPreviousPage: Boolean!
+
+  "Raw schema for page"
+  seo: SEOPostTypePageInfo
+
+  ""
+  startCursor: String
+}
+
+type MenuItem implements Node & DatabaseIdentifier {
+  "Connection between the MenuItem type and the MenuItem type"
+  childItems(after: String, before: String, first: Int, last: Int, where: MenuItemToMenuItemConnectionWhereArgs): MenuItemToMenuItemConnection
+
+  ""
+  connectedNode: MenuItemToMenuItemLinkableConnectionEdge
+
+  ""
+  connectedObject: MenuItemObjectUnion
+
+  ""
+  cssClasses: [String]
+
+  ""
+  databaseId: Int!
+
+  ""
+  description: String
+
+  ""
+  id: ID!
+
+  ""
+  isRestricted: Boolean
+
+  ""
+  label: String
+
+  ""
+  linkRelationship: String
+
+  ""
+  locations: [MenuLocationEnum]
+
+  ""
+  menu: MenuItemToMenuConnectionEdge
+
+  ""
+  menuItemId: Int
+
+  ""
+  order: Int
+
+  ""
+  parentDatabaseId: Int
+
+  ""
+  parentId: ID
+
+  ""
+  path: String
+
+  ""
+  target: String
+
+  ""
+  title: String
+
+  ""
+  uri: String
+
+  ""
+  url: String
+}
+
+interface MenuItemConnection implements Connection {
+  ""
+  edges: [MenuItemConnectionEdge!]!
+
+  ""
+  nodes: [MenuItem!]!
+
+  ""
+  pageInfo: MenuItemConnectionPageInfo!
+}
+
+interface MenuItemConnectionEdge implements Edge {
+  ""
+  cursor: String
+
+  ""
+  node: MenuItem!
+}
+
+interface MenuItemConnectionPageInfo implements WPPageInfo & PageInfo {
+  ""
+  endCursor: String
+
+  ""
+  hasNextPage: Boolean!
+
+  ""
+  hasPreviousPage: Boolean!
+
+  "Raw schema for page"
+  seo: SEOPostTypePageInfo
+
+  ""
+  startCursor: String
+}
+
+interface MenuItemLinkable implements Node & UniformResourceIdentifiable & DatabaseIdentifier {
+  ""
+  databaseId: Int!
+
+  ""
+  id: ID!
+
+  ""
+  isComment: Boolean!
+
+  ""
+  isContentNode: Boolean!
+
+  ""
+  isFrontPage: Boolean!
+
+  ""
+  isPostsPage: Boolean!
+
+  ""
+  isTermNode: Boolean!
+
+  ""
+  uri: String
+}
+
+interface MenuItemLinkableConnectionEdge implements Edge {
+  ""
+  cursor: String
+
+  ""
+  node: MenuItemLinkable!
+}
+
+enum MenuItemNodeIdTypeEnum {
+  "Identify a resource by the Database ID."
+  DATABASE_ID
+
+  "Identify a resource by the (hashed) Global ID."
+  ID
+}
+
+union MenuItemObjectUnion = Post | Page | Category | Tag | PostFormat
+
+type MenuItemToMenuConnectionEdge implements OneToOneConnection & Edge & MenuConnectionEdge {
+  ""
+  cursor: String
+
+  ""
+  node: Menu!
+}
+
+type MenuItemToMenuItemConnection implements MenuItemConnection & Connection {
+  ""
+  edges: [MenuItemToMenuItemConnectionEdge!]!
+
+  ""
+  nodes: [MenuItem!]!
+
+  ""
+  pageInfo: MenuItemToMenuItemConnectionPageInfo!
+}
+
+type MenuItemToMenuItemConnectionEdge implements MenuItemConnectionEdge & Edge {
+  ""
+  cursor: String
+
+  ""
+  node: MenuItem!
+}
+
+type MenuItemToMenuItemConnectionPageInfo implements MenuItemConnectionPageInfo & WPPageInfo & PageInfo {
+  ""
+  endCursor: String
+
+  ""
+  hasNextPage: Boolean!
+
+  ""
+  hasPreviousPage: Boolean!
+
+  "Raw schema for page"
+  seo: SEOPostTypePageInfo
+
+  ""
+  startCursor: String
+}
+
+input MenuItemToMenuItemConnectionWhereArgs {
+  id: Int
+  location: MenuLocationEnum
+  parentDatabaseId: Int
+  parentId: ID
+}
+
+type MenuItemToMenuItemLinkableConnectionEdge implements OneToOneConnection & Edge & MenuItemLinkableConnectionEdge {
+  ""
+  cursor: String
+
+  ""
+  node: MenuItemLinkable!
+}
+
+enum MenuLocationEnum {
+  "Put the menu in the blooikos_footer location"
+  BLOOIKOS_FOOTER
+
+  "Put the menu in the blooikos_primary location"
+  BLOOIKOS_PRIMARY
+}
+
+enum MenuNodeIdTypeEnum {
+  "Identify a menu node by the Database ID."
+  DATABASE_ID
+
+  "Identify a menu node by the (hashed) Global ID."
+  ID
+
+  "Identify a menu node by the slug of menu location to which it is assigned"
+  LOCATION
+
+  "Identify a menu node by its name"
+  NAME
+
+  "Identify a menu node by its slug"
+  SLUG
+}
+
+type MenuToMenuItemConnection implements MenuItemConnection & Connection {
+  ""
+  edges: [MenuToMenuItemConnectionEdge!]!
+
+  ""
+  nodes: [MenuItem!]!
+
+  ""
+  pageInfo: MenuToMenuItemConnectionPageInfo!
+}
+
+type MenuToMenuItemConnectionEdge implements MenuItemConnectionEdge & Edge {
+  ""
+  cursor: String
+
+  ""
+  node: MenuItem!
+}
+
+type MenuToMenuItemConnectionPageInfo implements MenuItemConnectionPageInfo & WPPageInfo & PageInfo {
+  ""
+  endCursor: String
+
+  ""
+  hasNextPage: Boolean!
+
+  ""
+  hasPreviousPage: Boolean!
+
+  "Raw schema for page"
+  seo: SEOPostTypePageInfo
+
+  ""
+  startCursor: String
+}
+
+input MenuToMenuItemConnectionWhereArgs {
+  id: Int
+  location: MenuLocationEnum
+  parentDatabaseId: Int
+  parentId: ID
+}
+
+enum MimeTypeEnum {
+  "application/java mime type."
+  APPLICATION_JAVA
+
+  "application/msword mime type."
+  APPLICATION_MSWORD
+
+  "application/octet-stream mime type."
+  APPLICATION_OCTET_STREAM
+
+  "application/onenote mime type."
+  APPLICATION_ONENOTE
+
+  "application/oxps mime type."
+  APPLICATION_OXPS
+
+  "application/pdf mime type."
+  APPLICATION_PDF
+
+  "application/rar mime type."
+  APPLICATION_RAR
+
+  "application/rtf mime type."
+  APPLICATION_RTF
+
+  "application/ttaf+xml mime type."
+  APPLICATION_TTAF_XML
+
+  "application/vnd.apple.keynote mime type."
+  APPLICATION_VND_APPLE_KEYNOTE
+
+  "application/vnd.apple.numbers mime type."
+  APPLICATION_VND_APPLE_NUMBERS
+
+  "application/vnd.apple.pages mime type."
+  APPLICATION_VND_APPLE_PAGES
+
+  "application/vnd.ms-access mime type."
+  APPLICATION_VND_MS_ACCESS
+
+  "application/vnd.ms-excel mime type."
+  APPLICATION_VND_MS_EXCEL
+
+  "application/vnd.ms-excel.addin.macroEnabled.12 mime type."
+  APPLICATION_VND_MS_EXCEL_ADDIN_MACROENABLED_12
+
+  "application/vnd.ms-excel.sheet.binary.macroEnabled.12 mime type."
+  APPLICATION_VND_MS_EXCEL_SHEET_BINARY_MACROENABLED_12
+
+  "application/vnd.ms-excel.sheet.macroEnabled.12 mime type."
+  APPLICATION_VND_MS_EXCEL_SHEET_MACROENABLED_12
+
+  "application/vnd.ms-excel.template.macroEnabled.12 mime type."
+  APPLICATION_VND_MS_EXCEL_TEMPLATE_MACROENABLED_12
+
+  "application/vnd.ms-powerpoint mime type."
+  APPLICATION_VND_MS_POWERPOINT
+
+  "application/vnd.ms-powerpoint.addin.macroEnabled.12 mime type."
+  APPLICATION_VND_MS_POWERPOINT_ADDIN_MACROENABLED_12
+
+  "application/vnd.ms-powerpoint.presentation.macroEnabled.12 mime type."
+  APPLICATION_VND_MS_POWERPOINT_PRESENTATION_MACROENABLED_12
+
+  "application/vnd.ms-powerpoint.slideshow.macroEnabled.12 mime type."
+  APPLICATION_VND_MS_POWERPOINT_SLIDESHOW_MACROENABLED_12
+
+  "application/vnd.ms-powerpoint.slide.macroEnabled.12 mime type."
+  APPLICATION_VND_MS_POWERPOINT_SLIDE_MACROENABLED_12
+
+  "application/vnd.ms-powerpoint.template.macroEnabled.12 mime type."
+  APPLICATION_VND_MS_POWERPOINT_TEMPLATE_MACROENABLED_12
+
+  "application/vnd.ms-project mime type."
+  APPLICATION_VND_MS_PROJECT
+
+  "application/vnd.ms-word.document.macroEnabled.12 mime type."
+  APPLICATION_VND_MS_WORD_DOCUMENT_MACROENABLED_12
+
+  "application/vnd.ms-word.template.macroEnabled.12 mime type."
+  APPLICATION_VND_MS_WORD_TEMPLATE_MACROENABLED_12
+
+  "application/vnd.ms-write mime type."
+  APPLICATION_VND_MS_WRITE
+
+  "application/vnd.ms-xpsdocument mime type."
+  APPLICATION_VND_MS_XPSDOCUMENT
+
+  "application/vnd.oasis.opendocument.chart mime type."
+  APPLICATION_VND_OASIS_OPENDOCUMENT_CHART
+
+  "application/vnd.oasis.opendocument.database mime type."
+  APPLICATION_VND_OASIS_OPENDOCUMENT_DATABASE
+
+  "application/vnd.oasis.opendocument.formula mime type."
+  APPLICATION_VND_OASIS_OPENDOCUMENT_FORMULA
+
+  "application/vnd.oasis.opendocument.graphics mime type."
+  APPLICATION_VND_OASIS_OPENDOCUMENT_GRAPHICS
+
+  "application/vnd.oasis.opendocument.presentation mime type."
+  APPLICATION_VND_OASIS_OPENDOCUMENT_PRESENTATION
+
+  "application/vnd.oasis.opendocument.spreadsheet mime type."
+  APPLICATION_VND_OASIS_OPENDOCUMENT_SPREADSHEET
+
+  "application/vnd.oasis.opendocument.text mime type."
+  APPLICATION_VND_OASIS_OPENDOCUMENT_TEXT
+
+  "application/vnd.openxmlformats-officedocument.presentationml.presentation mime type."
+  APPLICATION_VND_OPENXMLFORMATS_OFFICEDOCUMENT_PRESENTATIONML_PRESENTATION
+
+  "application/vnd.openxmlformats-officedocument.presentationml.slide mime type."
+  APPLICATION_VND_OPENXMLFORMATS_OFFICEDOCUMENT_PRESENTATIONML_SLIDE
+
+  "application/vnd.openxmlformats-officedocument.presentationml.slideshow mime type."
+  APPLICATION_VND_OPENXMLFORMATS_OFFICEDOCUMENT_PRESENTATIONML_SLIDESHOW
+
+  "application/vnd.openxmlformats-officedocument.presentationml.template mime type."
+  APPLICATION_VND_OPENXMLFORMATS_OFFICEDOCUMENT_PRESENTATIONML_TEMPLATE
+
+  "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet mime type."
+  APPLICATION_VND_OPENXMLFORMATS_OFFICEDOCUMENT_SPREADSHEETML_SHEET
+
+  "application/vnd.openxmlformats-officedocument.spreadsheetml.template mime type."
+  APPLICATION_VND_OPENXMLFORMATS_OFFICEDOCUMENT_SPREADSHEETML_TEMPLATE
+
+  "application/vnd.openxmlformats-officedocument.wordprocessingml.document mime type."
+  APPLICATION_VND_OPENXMLFORMATS_OFFICEDOCUMENT_WORDPROCESSINGML_DOCUMENT
+
+  "application/vnd.openxmlformats-officedocument.wordprocessingml.template mime type."
+  APPLICATION_VND_OPENXMLFORMATS_OFFICEDOCUMENT_WORDPROCESSINGML_TEMPLATE
+
+  "application/wordperfect mime type."
+  APPLICATION_WORDPERFECT
+
+  "application/x-7z-compressed mime type."
+  APPLICATION_X_7Z_COMPRESSED
+
+  "application/x-gzip mime type."
+  APPLICATION_X_GZIP
+
+  "application/x-tar mime type."
+  APPLICATION_X_TAR
+
+  "application/zip mime type."
+  APPLICATION_ZIP
+
+  "audio/aac mime type."
+  AUDIO_AAC
+
+  "audio/flac mime type."
+  AUDIO_FLAC
+
+  "audio/midi mime type."
+  AUDIO_MIDI
+
+  "audio/mpeg mime type."
+  AUDIO_MPEG
+
+  "audio/ogg mime type."
+  AUDIO_OGG
+
+  "audio/wav mime type."
+  AUDIO_WAV
+
+  "audio/x-matroska mime type."
+  AUDIO_X_MATROSKA
+
+  "audio/x-ms-wax mime type."
+  AUDIO_X_MS_WAX
+
+  "audio/x-ms-wma mime type."
+  AUDIO_X_MS_WMA
+
+  "audio/x-realaudio mime type."
+  AUDIO_X_REALAUDIO
+
+  "image/avif mime type."
+  IMAGE_AVIF
+
+  "image/bmp mime type."
+  IMAGE_BMP
+
+  "image/gif mime type."
+  IMAGE_GIF
+
+  "image/heic mime type."
+  IMAGE_HEIC
+
+  "image/heic-sequence mime type."
+  IMAGE_HEIC_SEQUENCE
+
+  "image/heif mime type."
+  IMAGE_HEIF
+
+  "image/heif-sequence mime type."
+  IMAGE_HEIF_SEQUENCE
+
+  "image/jpeg mime type."
+  IMAGE_JPEG
+
+  "image/png mime type."
+  IMAGE_PNG
+
+  "image/tiff mime type."
+  IMAGE_TIFF
+
+  "image/webp mime type."
+  IMAGE_WEBP
+
+  "image/x-icon mime type."
+  IMAGE_X_ICON
+
+  "text/calendar mime type."
+  TEXT_CALENDAR
+
+  "text/css mime type."
+  TEXT_CSS
+
+  "text/csv mime type."
+  TEXT_CSV
+
+  "text/plain mime type."
+  TEXT_PLAIN
+
+  "text/richtext mime type."
+  TEXT_RICHTEXT
+
+  "text/tab-separated-values mime type."
+  TEXT_TAB_SEPARATED_VALUES
+
+  "text/vtt mime type."
+  TEXT_VTT
+
+  "video/3gpp mime type."
+  VIDEO_3GPP
+
+  "video/3gpp2 mime type."
+  VIDEO_3GPP2
+
+  "video/avi mime type."
+  VIDEO_AVI
+
+  "video/divx mime type."
+  VIDEO_DIVX
+
+  "video/mp4 mime type."
+  VIDEO_MP4
+
+  "video/mpeg mime type."
+  VIDEO_MPEG
+
+  "video/ogg mime type."
+  VIDEO_OGG
+
+  "video/quicktime mime type."
+  VIDEO_QUICKTIME
+
+  "video/webm mime type."
+  VIDEO_WEBM
+
+  "video/x-flv mime type."
+  VIDEO_X_FLV
+
+  "video/x-matroska mime type."
+  VIDEO_X_MATROSKA
+
+  "video/x-ms-asf mime type."
+  VIDEO_X_MS_ASF
+
+  "video/x-ms-wm mime type."
+  VIDEO_X_MS_WM
+
+  "video/x-ms-wmv mime type."
+  VIDEO_X_MS_WMV
+
+  "video/x-ms-wmx mime type."
+  VIDEO_X_MS_WMX
+}
+
+interface Node {
+  ""
+  id: ID!
+}
+
+interface NodeWithAuthor implements Node {
+  "Connection between the NodeWithAuthor type and the User type"
+  author: NodeWithAuthorToUserConnectionEdge
+
+  ""
+  authorDatabaseId: Int
+
+  ""
+  authorId: ID
+
+  ""
+  id: ID!
+}
+
+type NodeWithAuthorToUserConnectionEdge implements OneToOneConnection & Edge & UserConnectionEdge {
+  ""
+  cursor: String
+
+  ""
+  node: User!
+}
+
+interface NodeWithComments implements Node {
+  ""
+  commentCount: Int
+
+  ""
+  commentStatus: String
+
+  ""
+  id: ID!
+}
+
+interface NodeWithContentEditor implements Node {
+  ""
+  content(format: PostObjectFieldFormatEnum): String
+
+  ""
+  id: ID!
+}
+
+interface NodeWithExcerpt implements Node {
+  ""
+  excerpt(format: PostObjectFieldFormatEnum): String
+
+  ""
+  id: ID!
+}
+
+interface NodeWithFeaturedImage implements Node {
+  "Connection between the NodeWithFeaturedImage type and the MediaItem type"
+  featuredImage: NodeWithFeaturedImageToMediaItemConnectionEdge
+
+  ""
+  featuredImageDatabaseId: Int
+
+  ""
+  featuredImageId: ID
+
+  ""
+  id: ID!
+}
+
+type NodeWithFeaturedImageToMediaItemConnectionEdge implements OneToOneConnection & Edge & MediaItemConnectionEdge {
+  ""
+  cursor: String
+
+  ""
+  node: MediaItem!
+}
+
+interface NodeWithPageAttributes implements Node {
+  ""
+  id: ID!
+
+  ""
+  menuOrder: Int
+}
+
+interface NodeWithRevisions implements Node {
+  ""
+  id: ID!
+
+  ""
+  isRevision: Boolean
+
+  ""
+  revisionOf: NodeWithRevisionsToContentNodeConnectionEdge
+}
+
+type NodeWithRevisionsToContentNodeConnectionEdge implements OneToOneConnection & Edge & ContentNodeConnectionEdge {
+  ""
+  cursor: String
+
+  ""
+  node: ContentNode!
+}
+
+interface NodeWithTemplate implements Node {
+  ""
+  id: ID!
+
+  ""
+  template: ContentTemplate
+}
+
+interface NodeWithTitle implements Node {
+  ""
+  id: ID!
+
+  "The Yoast SEO data of the ContentNode"
+  seo: PostTypeSEO
+
+  ""
+  title(format: PostObjectFieldFormatEnum): String
+}
+
+interface NodeWithTrackbacks implements Node {
+  ""
+  id: ID!
+
+  ""
+  pingStatus: String
+
+  ""
+  pinged: [String]
+
+  ""
+  toPing: [String]
+}
+
+interface OneToOneConnection implements Edge {
+  ""
+  cursor: String
+
+  ""
+  node: Node!
+}
+
+enum OrderEnum {
+  "Results ordered from lowest to highest values (i.e. A-Z, oldest-newest)"
+  ASC
+
+  "Results ordered from highest to lowest values (i.e. Z-A, newest-oldest)"
+  DESC
+}
+
+type Page implements Node & ContentNode & UniformResourceIdentifiable & DatabaseIdentifier & NodeWithTemplate & Previewable & NodeWithTitle & NodeWithContentEditor & NodeWithAuthor & NodeWithFeaturedImage & NodeWithComments & NodeWithRevisions & NodeWithPageAttributes & HierarchicalContentNode & HierarchicalNode & MenuItemLinkable & WithAcfBlooikosHomeHero & WithAcfBlooikosHomeAbout & WithAcfBlooikosHomeInstitutional & WithAcfBlooikosHomeIndicators & WithAcfBlooikosHomeServices & WithAcfBlooikosHomeCompanies & WithAcfBlooikosHomeContact {
+  ""
+  ancestors(after: String, before: String, first: Int, last: Int, where: HierarchicalContentNodeToContentNodeAncestorsConnectionWhereArgs): HierarchicalContentNodeToContentNodeAncestorsConnection
+
+  "Connection between the NodeWithAuthor type and the User type"
+  author: NodeWithAuthorToUserConnectionEdge
+
+  ""
+  authorDatabaseId: Int
+
+  ""
+  authorId: ID
+
+  "Fields of the BlooikosHomeAbout ACF Field Group"
+  blooikosHomeAbout: BlooikosHomeAbout
+
+  "Fields of the BlooikosHomeCompanies ACF Field Group"
+  blooikosHomeCompanies: BlooikosHomeCompanies
+
+  "Fields of the BlooikosHomeContact ACF Field Group"
+  blooikosHomeContact: BlooikosHomeContact
+
+  "Fields of the BlooikosHomeHero ACF Field Group"
+  blooikosHomeHero: BlooikosHomeHero
+
+  "Fields of the BlooikosHomeIndicators ACF Field Group"
+  blooikosHomeIndicators: BlooikosHomeIndicators
+
+  "Fields of the BlooikosHomeInstitutional ACF Field Group"
+  blooikosHomeInstitutional: BlooikosHomeInstitutional
+
+  "Fields of the BlooikosHomeServices ACF Field Group"
+  blooikosHomeServices: BlooikosHomeServices
+
+  "Connection between the HierarchicalContentNode type and the ContentNode type"
+  children(after: String, before: String, first: Int, last: Int, where: HierarchicalContentNodeToContentNodeChildrenConnectionWhereArgs): HierarchicalContentNodeToContentNodeChildrenConnection
+
+  ""
+  commentCount: Int
+
+  ""
+  commentStatus: String
+
+  "Connection between the Page type and the Comment type"
+  comments(after: String, before: String, first: Int, last: Int, where: PageToCommentConnectionWhereArgs): PageToCommentConnection
+
+  ""
+  content(format: PostObjectFieldFormatEnum): String
+
+  "Connection between the ContentNode type and the ContentType type"
+  contentType: ContentNodeToContentTypeConnectionEdge
+
+  ""
+  contentTypeName: String!
+
+  ""
+  databaseId: Int!
+
+  ""
+  date: String
+
+  ""
+  dateGmt: String
+
+  ""
+  desiredSlug: String
+
+  ""
+  editingLockedBy: ContentNodeToEditLockConnectionEdge
+
+  ""
+  enclosure: String
+
+  "Connection between the ContentNode type and the EnqueuedScript type"
+  enqueuedScripts(after: String, before: String, first: Int, last: Int, where: ContentNodeToEnqueuedScriptConnectionWhereArgs): ContentNodeToEnqueuedScriptConnection
+
+  "Connection between the ContentNode type and the EnqueuedStylesheet type"
+  enqueuedStylesheets(after: String, before: String, first: Int, last: Int, where: ContentNodeToEnqueuedStylesheetConnectionWhereArgs): ContentNodeToEnqueuedStylesheetConnection
+
+  "Connection between the NodeWithFeaturedImage type and the MediaItem type"
+  featuredImage: NodeWithFeaturedImageToMediaItemConnectionEdge
+
+  ""
+  featuredImageDatabaseId: Int
+
+  ""
+  featuredImageId: ID
+
+  ""
+  guid: String
+
+  ""
+  hasPassword: Boolean
+
+  ""
+  id: ID!
+
+  ""
+  isComment: Boolean!
+
+  ""
+  isContentNode: Boolean!
+
+  ""
+  isFrontPage: Boolean!
+
+  ""
+  isPostsPage: Boolean!
+
+  ""
+  isPreview: Boolean
+
+  ""
+  isPrivacyPage: Boolean!
+
+  ""
+  isRestricted: Boolean
+
+  ""
+  isRevision: Boolean
+
+  ""
+  isTermNode: Boolean!
+
+  ""
+  lastEditedBy: ContentNodeToEditLastConnectionEdge
+
+  ""
+  link: String
+
+  ""
+  menuOrder: Int
+
+  ""
+  modified: String
+
+  ""
+  modifiedGmt: String
+
+  ""
+  pageId: Int!
+
+  ""
+  parent: HierarchicalContentNodeToParentContentNodeConnectionEdge
+
+  ""
+  parentDatabaseId: Int
+
+  ""
+  parentId: ID
+
+  ""
+  password: String
+
+  "Connection between the page type and the page type"
+  preview: PageToPreviewConnectionEdge
+
+  ""
+  previewRevisionDatabaseId: Int
+
+  ""
+  previewRevisionId: ID
+
+  ""
+  revisionOf: NodeWithRevisionsToContentNodeConnectionEdge
+
+  "Connection between the Page type and the page type"
+  revisions(after: String, before: String, first: Int, last: Int, where: PageToRevisionConnectionWhereArgs): PageToRevisionConnection
+
+  "The Yoast SEO data of the ContentNode"
+  seo: PostTypeSEO
+
+  ""
+  slug: String
+
+  ""
+  status: String
+
+  ""
+  template: ContentTemplate
+
+  ""
+  title(format: PostObjectFieldFormatEnum): String
+
+  ""
+  uri: String
+}
+
+interface PageConnection implements Connection {
+  ""
+  edges: [PageConnectionEdge!]!
+
+  ""
+  nodes: [Page!]!
+
+  ""
+  pageInfo: PageConnectionPageInfo!
+}
+
+interface PageConnectionEdge implements Edge {
+  ""
+  cursor: String
+
+  ""
+  node: Page!
+}
+
+interface PageConnectionPageInfo implements WPPageInfo & PageInfo {
+  ""
+  endCursor: String
+
+  ""
+  hasNextPage: Boolean!
+
+  ""
+  hasPreviousPage: Boolean!
+
+  "Raw schema for page"
+  seo: SEOPostTypePageInfo
+
+  ""
+  startCursor: String
+}
+
+enum PageIdType {
+  "Identify a resource by the Database ID."
+  DATABASE_ID
+
+  "Identify a resource by the (hashed) Global ID."
+  ID
+
+  "Identify a resource by the URI."
+  URI
+}
+
+interface PageInfo {
+  ""
+  endCursor: String
+
+  ""
+  hasNextPage: Boolean!
+
+  ""
+  hasPreviousPage: Boolean!
+
+  ""
+  startCursor: String
+}
+
+type PageToCommentConnection implements CommentConnection & Connection {
+  ""
+  edges: [PageToCommentConnectionEdge!]!
+
+  ""
+  nodes: [Comment!]!
+
+  ""
+  pageInfo: PageToCommentConnectionPageInfo!
+}
+
+type PageToCommentConnectionEdge implements CommentConnectionEdge & Edge {
+  ""
+  cursor: String
+
+  ""
+  node: Comment!
+}
+
+type PageToCommentConnectionPageInfo implements CommentConnectionPageInfo & WPPageInfo & PageInfo {
+  ""
+  endCursor: String
+
+  ""
+  hasNextPage: Boolean!
+
+  ""
+  hasPreviousPage: Boolean!
+
+  "Raw schema for page"
+  seo: SEOPostTypePageInfo
+
+  ""
+  startCursor: String
+}
+
+input PageToCommentConnectionWhereArgs {
+  authorEmail: String
+  authorIn: [ID]
+  authorNotIn: [ID]
+  authorUrl: String
+  commentIn: [ID]
+  commentNotIn: [ID]
+  commentType: String
+  commentTypeIn: [String]
+  commentTypeNotIn: String
+  contentAuthor: [ID]
+  contentAuthorIn: [ID]
+  contentAuthorNotIn: [ID]
+  contentId: ID
+  contentIdIn: [ID]
+  contentIdNotIn: [ID]
+  contentName: String
+  contentParent: Int
+  contentStatus: [PostStatusEnum]
+  contentType: [ContentTypeEnum]
+  includeUnapproved: [ID]
+  karma: Int
+  order: OrderEnum
+  orderby: CommentsConnectionOrderbyEnum
+  parent: Int
+  parentIn: [ID]
+  parentNotIn: [ID]
+  search: String
+  status: String
+  statusIn: [CommentStatusEnum]
+  userId: ID
+}
+
+type PageToPreviewConnectionEdge implements OneToOneConnection & Edge & PageConnectionEdge {
+  ""
+  cursor: String
+
+  ""
+  node: Page!
+}
+
+type PageToRevisionConnection implements PageConnection & Connection {
+  ""
+  edges: [PageToRevisionConnectionEdge!]!
+
+  ""
+  nodes: [Page!]!
+
+  ""
+  pageInfo: PageToRevisionConnectionPageInfo!
+}
+
+type PageToRevisionConnectionEdge implements PageConnectionEdge & Edge {
+  ""
+  cursor: String
+
+  ""
+  node: Page!
+}
+
+type PageToRevisionConnectionPageInfo implements PageConnectionPageInfo & WPPageInfo & PageInfo {
+  ""
+  endCursor: String
+
+  ""
+  hasNextPage: Boolean!
+
+  ""
+  hasPreviousPage: Boolean!
+
+  "Raw schema for page"
+  seo: SEOPostTypePageInfo
+
+  ""
+  startCursor: String
+}
+
+input PageToRevisionConnectionWhereArgs {
+  author: Int
+  authorIn: [ID]
+  authorName: String
+  authorNotIn: [ID]
+  dateQuery: DateQueryInput
+  hasPassword: Boolean
+  id: Int
+  in: [ID]
+  isSticky: Boolean
+  mimeType: MimeTypeEnum
+  name: String
+  nameIn: [String]
+  notIn: [ID]
+  orderby: [PostObjectsConnectionOrderbyInput]
+  parent: ID
+  parentIn: [ID]
+  parentNotIn: [ID]
+  password: String
+  search: String
+  stati: [PostStatusEnum]
+  status: PostStatusEnum
+  template: ContentTemplateEnum
+  title: String
+}
+
+type PermalinkSettings implements Node {
+  ""
+  categoryBase: String
+
+  ""
+  id: ID!
+
+  ""
+  structure: String
+
+  ""
+  tagBase: String
+}
+
+type Plugin implements Node {
+  ""
+  author: String
+
+  ""
+  authorUri: String
+
+  ""
+  description: String
+
+  ""
+  id: ID!
+
+  ""
+  isRestricted: Boolean
+
+  ""
+  name: String
+
+  ""
+  path: String
+
+  ""
+  pluginUri: String
+
+  ""
+  version: String
+}
+
+interface PluginConnection implements Connection {
+  ""
+  edges: [PluginConnectionEdge!]!
+
+  ""
+  nodes: [Plugin!]!
+
+  ""
+  pageInfo: PluginConnectionPageInfo!
+}
+
+interface PluginConnectionEdge implements Edge {
+  ""
+  cursor: String
+
+  ""
+  node: Plugin!
+}
+
+interface PluginConnectionPageInfo implements WPPageInfo & PageInfo {
+  ""
+  endCursor: String
+
+  ""
+  hasNextPage: Boolean!
+
+  ""
+  hasPreviousPage: Boolean!
+
+  "Raw schema for page"
+  seo: SEOPostTypePageInfo
+
+  ""
+  startCursor: String
+}
+
+enum PluginStatusEnum {
+  "The plugin is currently active."
+  ACTIVE
+
+  "The plugin is a drop-in plugin."
+  DROP_IN
+
+  "The plugin is currently inactive."
+  INACTIVE
+
+  "The plugin is a must-use plugin."
+  MUST_USE
+
+  "The plugin is technically active but was paused while loading."
+  PAUSED
+
+  "The plugin was active recently."
+  RECENTLY_ACTIVE
+
+  "The plugin has an upgrade available."
+  UPGRADE
+}
+
+type Post implements Node & ContentNode & UniformResourceIdentifiable & DatabaseIdentifier & NodeWithTemplate & Previewable & NodeWithTitle & NodeWithContentEditor & NodeWithAuthor & NodeWithFeaturedImage & NodeWithExcerpt & NodeWithComments & NodeWithTrackbacks & NodeWithRevisions & MenuItemLinkable {
+  ""
+  ancestors(after: String, before: String, first: Int, last: Int): PostToPostConnection
+
+  "Connection between the NodeWithAuthor type and the User type"
+  author: NodeWithAuthorToUserConnectionEdge
+
+  ""
+  authorDatabaseId: Int
+
+  ""
+  authorId: ID
+
+  "Connection between the Post type and the category type"
+  categories(after: String, before: String, first: Int, last: Int, where: PostToCategoryConnectionWhereArgs): PostToCategoryConnection
+
+  ""
+  commentCount: Int
+
+  ""
+  commentStatus: String
+
+  "Connection between the Post type and the Comment type"
+  comments(after: String, before: String, first: Int, last: Int, where: PostToCommentConnectionWhereArgs): PostToCommentConnection
+
+  ""
+  content(format: PostObjectFieldFormatEnum): String
+
+  "Connection between the ContentNode type and the ContentType type"
+  contentType: ContentNodeToContentTypeConnectionEdge
+
+  ""
+  contentTypeName: String!
+
+  ""
+  databaseId: Int!
+
+  ""
+  date: String
+
+  ""
+  dateGmt: String
+
+  ""
+  desiredSlug: String
+
+  ""
+  editingLockedBy: ContentNodeToEditLockConnectionEdge
+
+  ""
+  enclosure: String
+
+  "Connection between the ContentNode type and the EnqueuedScript type"
+  enqueuedScripts(after: String, before: String, first: Int, last: Int, where: ContentNodeToEnqueuedScriptConnectionWhereArgs): ContentNodeToEnqueuedScriptConnection
+
+  "Connection between the ContentNode type and the EnqueuedStylesheet type"
+  enqueuedStylesheets(after: String, before: String, first: Int, last: Int, where: ContentNodeToEnqueuedStylesheetConnectionWhereArgs): ContentNodeToEnqueuedStylesheetConnection
+
+  ""
+  excerpt(format: PostObjectFieldFormatEnum): String
+
+  "Connection between the NodeWithFeaturedImage type and the MediaItem type"
+  featuredImage: NodeWithFeaturedImageToMediaItemConnectionEdge
+
+  ""
+  featuredImageDatabaseId: Int
+
+  ""
+  featuredImageId: ID
+
+  ""
+  guid: String
+
+  ""
+  hasPassword: Boolean
+
+  ""
+  id: ID!
+
+  ""
+  isComment: Boolean!
+
+  ""
+  isContentNode: Boolean!
+
+  ""
+  isFrontPage: Boolean!
+
+  ""
+  isPostsPage: Boolean!
+
+  ""
+  isPreview: Boolean
+
+  ""
+  isRestricted: Boolean
+
+  ""
+  isRevision: Boolean
+
+  ""
+  isSticky: Boolean!
+
+  ""
+  isTermNode: Boolean!
+
+  ""
+  lastEditedBy: ContentNodeToEditLastConnectionEdge
+
+  ""
+  link: String
+
+  ""
+  modified: String
+
+  ""
+  modifiedGmt: String
+
+  ""
+  parent: PostToParentConnectionEdge
+
+  ""
+  password: String
+
+  ""
+  pingStatus: String
+
+  ""
+  pinged: [String]
+
+  "Connection between the Post type and the postFormat type"
+  postFormats(after: String, before: String, first: Int, last: Int, where: PostToPostFormatConnectionWhereArgs): PostToPostFormatConnection
+
+  ""
+  postId: Int!
+
+  "Connection between the post type and the post type"
+  preview: PostToPreviewConnectionEdge
+
+  ""
+  previewRevisionDatabaseId: Int
+
+  ""
+  previewRevisionId: ID
+
+  ""
+  revisionOf: NodeWithRevisionsToContentNodeConnectionEdge
+
+  "Connection between the Post type and the post type"
+  revisions(after: String, before: String, first: Int, last: Int, where: PostToRevisionConnectionWhereArgs): PostToRevisionConnection
+
+  "The Yoast SEO data of the ContentNode"
+  seo: PostTypeSEO
+
+  ""
+  slug: String
+
+  ""
+  status: String
+
+  "Connection between the Post type and the tag type"
+  tags(after: String, before: String, first: Int, last: Int, where: PostToTagConnectionWhereArgs): PostToTagConnection
+
+  ""
+  template: ContentTemplate
+
+  "Connection between the Post type and the TermNode type"
+  terms(after: String, before: String, first: Int, last: Int, where: PostToTermNodeConnectionWhereArgs): PostToTermNodeConnection
+
+  ""
+  title(format: PostObjectFieldFormatEnum): String
+
+  ""
+  toPing: [String]
+
+  ""
+  uri: String
+}
+
+input PostCategoriesInput {
+  append: Boolean
+  nodes: [PostCategoriesNodeInput]
+}
+
+input PostCategoriesNodeInput {
+  description: String
+  id: ID
+  name: String
+  slug: String
+}
+
+interface PostConnection implements Connection {
+  ""
+  edges: [PostConnectionEdge!]!
+
+  ""
+  nodes: [Post!]!
+
+  ""
+  pageInfo: PostConnectionPageInfo!
+}
+
+interface PostConnectionEdge implements Edge {
+  ""
+  cursor: String
+
+  ""
+  node: Post!
+}
+
+interface PostConnectionPageInfo implements WPPageInfo & PageInfo {
+  ""
+  endCursor: String
+
+  ""
+  hasNextPage: Boolean!
+
+  ""
+  hasPreviousPage: Boolean!
+
+  "Raw schema for page"
+  seo: SEOPostTypePageInfo
+
+  ""
+  startCursor: String
+}
+
+type PostFormat implements Node & TermNode & UniformResourceIdentifiable & DatabaseIdentifier & MenuItemLinkable {
+  "Connection between the PostFormat type and the ContentNode type"
+  contentNodes(after: String, before: String, first: Int, last: Int, where: PostFormatToContentNodeConnectionWhereArgs): PostFormatToContentNodeConnection
+
+  ""
+  count: Int
+
+  ""
+  databaseId: Int!
+
+  ""
+  description: String
+
+  "Connection between the TermNode type and the EnqueuedScript type"
+  enqueuedScripts(after: String, before: String, first: Int, last: Int, where: TermNodeToEnqueuedScriptConnectionWhereArgs): TermNodeToEnqueuedScriptConnection
+
+  "Connection between the TermNode type and the EnqueuedStylesheet type"
+  enqueuedStylesheets(after: String, before: String, first: Int, last: Int, where: TermNodeToEnqueuedStylesheetConnectionWhereArgs): TermNodeToEnqueuedStylesheetConnection
+
+  ""
+  id: ID!
+
+  ""
+  isComment: Boolean!
+
+  ""
+  isContentNode: Boolean!
+
+  ""
+  isFrontPage: Boolean!
+
+  ""
+  isPostsPage: Boolean!
+
+  ""
+  isRestricted: Boolean
+
+  ""
+  isTermNode: Boolean!
+
+  ""
+  link: String
+
+  ""
+  name: String
+
+  ""
+  postFormatId: Int
+
+  "Connection between the PostFormat type and the post type"
+  posts(after: String, before: String, first: Int, last: Int, where: PostFormatToPostConnectionWhereArgs): PostFormatToPostConnection
+
+  "The Yoast SEO data of the Formatos taxonomy."
+  seo: TaxonomySEO
+
+  ""
+  slug: String
+
+  "Connection between the PostFormat type and the Taxonomy type"
+  taxonomy: PostFormatToTaxonomyConnectionEdge
+
+  ""
+  taxonomyName: String
+
+  ""
+  termGroupId: Int
+
+  ""
+  termTaxonomyId: Int
+
+  ""
+  uri: String
+}
+
+interface PostFormatConnection implements Connection {
+  ""
+  edges: [PostFormatConnectionEdge!]!
+
+  ""
+  nodes: [PostFormat!]!
+
+  ""
+  pageInfo: PostFormatConnectionPageInfo!
+}
+
+interface PostFormatConnectionEdge implements Edge {
+  ""
+  cursor: String
+
+  ""
+  node: PostFormat!
+}
+
+interface PostFormatConnectionPageInfo implements WPPageInfo & PageInfo {
+  ""
+  endCursor: String
+
+  ""
+  hasNextPage: Boolean!
+
+  ""
+  hasPreviousPage: Boolean!
+
+  "Raw schema for page"
+  seo: SEOPostTypePageInfo
+
+  ""
+  startCursor: String
+}
+
+enum PostFormatIdType {
+  "The Database ID for the node"
+  DATABASE_ID
+
+  "The hashed Global ID"
+  ID
+
+  "The name of the node"
+  NAME
+
+  "Url friendly name of the node"
+  SLUG
+
+  "The URI for the node"
+  URI
+}
+
+type PostFormatToContentNodeConnection implements ContentNodeConnection & Connection {
+  ""
+  edges: [PostFormatToContentNodeConnectionEdge!]!
+
+  ""
+  nodes: [ContentNode!]!
+
+  ""
+  pageInfo: PostFormatToContentNodeConnectionPageInfo!
+}
+
+type PostFormatToContentNodeConnectionEdge implements ContentNodeConnectionEdge & Edge {
+  ""
+  cursor: String
+
+  ""
+  node: ContentNode!
+}
+
+type PostFormatToContentNodeConnectionPageInfo implements ContentNodeConnectionPageInfo & WPPageInfo & PageInfo {
+  ""
+  endCursor: String
+
+  ""
+  hasNextPage: Boolean!
+
+  ""
+  hasPreviousPage: Boolean!
+
+  "Raw schema for page"
+  seo: SEOPostTypePageInfo
+
+  ""
+  startCursor: String
+}
+
+input PostFormatToContentNodeConnectionWhereArgs {
+  contentTypes: [ContentTypesOfPostFormatEnum]
+  dateQuery: DateQueryInput
+  hasPassword: Boolean
+  id: Int
+  in: [ID]
+  isSticky: Boolean
+  mimeType: MimeTypeEnum
+  name: String
+  nameIn: [String]
+  notIn: [ID]
+  orderby: [PostObjectsConnectionOrderbyInput]
+  parent: ID
+  parentIn: [ID]
+  parentNotIn: [ID]
+  password: String
+  search: String
+  stati: [PostStatusEnum]
+  status: PostStatusEnum
+  template: ContentTemplateEnum
+  title: String
+}
+
+type PostFormatToPostConnection implements PostConnection & Connection {
+  ""
+  edges: [PostFormatToPostConnectionEdge!]!
+
+  ""
+  nodes: [Post!]!
+
+  ""
+  pageInfo: PostFormatToPostConnectionPageInfo!
+}
+
+type PostFormatToPostConnectionEdge implements PostConnectionEdge & Edge {
+  ""
+  cursor: String
+
+  ""
+  node: Post!
+}
+
+type PostFormatToPostConnectionPageInfo implements PostConnectionPageInfo & WPPageInfo & PageInfo {
+  ""
+  endCursor: String
+
+  ""
+  hasNextPage: Boolean!
+
+  ""
+  hasPreviousPage: Boolean!
+
+  "Raw schema for page"
+  seo: SEOPostTypePageInfo
+
+  ""
+  startCursor: String
+}
+
+input PostFormatToPostConnectionWhereArgs {
+  author: Int
+  authorIn: [ID]
+  authorName: String
+  authorNotIn: [ID]
+  categoryId: Int
+  categoryIn: [ID]
+  categoryName: String
+  categoryNotIn: [ID]
+  dateQuery: DateQueryInput
+  hasPassword: Boolean
+  id: Int
+  in: [ID]
+  isSticky: Boolean
+  mimeType: MimeTypeEnum
+  name: String
+  nameIn: [String]
+  notIn: [ID]
+  orderby: [PostObjectsConnectionOrderbyInput]
+  parent: ID
+  parentIn: [ID]
+  parentNotIn: [ID]
+  password: String
+  search: String
+  stati: [PostStatusEnum]
+  status: PostStatusEnum
+  tag: String
+  tagId: String
+  tagIn: [ID]
+  tagNotIn: [ID]
+  tagSlugAnd: [String]
+  tagSlugIn: [String]
+  template: ContentTemplateEnum
+  title: String
+}
+
+type PostFormatToTaxonomyConnectionEdge implements OneToOneConnection & Edge & TaxonomyConnectionEdge {
+  ""
+  cursor: String
+
+  ""
+  node: Taxonomy!
+}
+
+enum PostIdType {
+  "Identify a resource by the Database ID."
+  DATABASE_ID
+
+  "Identify a resource by the (hashed) Global ID."
+  ID
+
+  "Identify a resource by the slug. Available to non-hierarchcial Types where the slug is a unique identifier."
+  SLUG
+
+  "Identify a resource by the URI."
+  URI
+}
+
+enum PostObjectFieldFormatEnum {
+  "Unprocessed content exactly as stored in the database, requires appropriate permissions."
+  RAW
+
+  "Content with all formatting and transformations applied, ready for display."
+  RENDERED
+}
+
+enum PostObjectsConnectionDateColumnEnum {
+  "The date the comment was created in local time."
+  DATE
+
+  "The most recent modification date of the comment."
+  MODIFIED
+}
+
+enum PostObjectsConnectionOrderbyEnum {
+  "Ordering by content author (typically by author name)."
+  AUTHOR
+
+  "Ordering by popularity based on number of comments."
+  COMMENT_COUNT
+
+  "Chronological ordering by publication date."
+  DATE
+
+  "Maintain custom order of IDs exactly as specified in the query with the IN field."
+  IN
+
+  "Ordering by manually defined sort position."
+  MENU_ORDER
+
+  "Chronological ordering by modified date."
+  MODIFIED
+
+  "Maintain custom order of IDs exactly as specified in the query with the NAME_IN field."
+  NAME_IN
+
+  "Ordering by parent-child relationship in hierarchical content."
+  PARENT
+
+  "Alphabetical ordering by URL-friendly name."
+  SLUG
+
+  "Alphabetical ordering by content title"
+  TITLE
+}
+
+input PostObjectsConnectionOrderbyInput {
+  field: PostObjectsConnectionOrderbyEnum!
+  order: OrderEnum!
+}
+
+input PostPostFormatsInput {
+  append: Boolean
+  nodes: [PostPostFormatsNodeInput]
+}
+
+input PostPostFormatsNodeInput {
+  description: String
+  id: ID
+  name: String
+  slug: String
+}
+
+enum PostStatusEnum {
+  "Objects with the acf-disabled status"
+  ACF_DISABLED
+
+  "Automatically saved content that has not been manually saved"
+  AUTO_DRAFT
+
+  "Content that is saved but not yet published or visible to the public"
+  DRAFT
+
+  "Objects with the future status"
+  FUTURE
+
+  "Content that inherits its status from a parent object"
+  INHERIT
+
+  "Content awaiting review before publication"
+  PENDING
+
+  "Content only visible to authorized users with appropriate permissions"
+  PRIVATE
+
+  "Content that is publicly visible to all visitors"
+  PUBLISH
+
+  "Objects with the request-completed status"
+  REQUEST_COMPLETED
+
+  "Objects with the request-confirmed status"
+  REQUEST_CONFIRMED
+
+  "Objects with the request-failed status"
+  REQUEST_FAILED
+
+  "Objects with the request-pending status"
+  REQUEST_PENDING
+
+  "Content marked for deletion but still recoverable"
+  TRASH
+}
+
+input PostTagsInput {
+  append: Boolean
+  nodes: [PostTagsNodeInput]
+}
+
+input PostTagsNodeInput {
+  description: String
+  id: ID
+  name: String
+  slug: String
+}
+
+type PostToCategoryConnection implements CategoryConnection & Connection {
+  ""
+  edges: [PostToCategoryConnectionEdge!]!
+
+  ""
+  nodes: [Category!]!
+
+  ""
+  pageInfo: PostToCategoryConnectionPageInfo!
+}
+
+type PostToCategoryConnectionEdge implements CategoryConnectionEdge & Edge {
+  ""
+  cursor: String
+
+  "The Yoast SEO Primary category"
+  isPrimary: Boolean
+
+  ""
+  node: Category!
+}
+
+type PostToCategoryConnectionPageInfo implements CategoryConnectionPageInfo & WPPageInfo & PageInfo {
+  ""
+  endCursor: String
+
+  ""
+  hasNextPage: Boolean!
+
+  ""
+  hasPreviousPage: Boolean!
+
+  "Raw schema for page"
+  seo: SEOPostTypePageInfo
+
+  ""
+  startCursor: String
+}
+
+input PostToCategoryConnectionWhereArgs {
+  cacheDomain: String
+  childOf: Int
+  childless: Boolean
+  descriptionLike: String
+  exclude: [ID]
+  excludeTree: [ID]
+  hideEmpty: Boolean
+  hierarchical: Boolean
+  include: [ID]
+  name: [String]
+  nameLike: String
+  objectIds: [ID]
+  order: OrderEnum
+  orderby: TermObjectsConnectionOrderbyEnum
+  padCounts: Boolean
+  parent: Int
+  search: String
+  slug: [String]
+  termTaxonomId: [ID]
+  termTaxonomyId: [ID]
+  updateTermMetaCache: Boolean
+}
+
+type PostToCommentConnection implements CommentConnection & Connection {
+  ""
+  edges: [PostToCommentConnectionEdge!]!
+
+  ""
+  nodes: [Comment!]!
+
+  ""
+  pageInfo: PostToCommentConnectionPageInfo!
+}
+
+type PostToCommentConnectionEdge implements CommentConnectionEdge & Edge {
+  ""
+  cursor: String
+
+  ""
+  node: Comment!
+}
+
+type PostToCommentConnectionPageInfo implements CommentConnectionPageInfo & WPPageInfo & PageInfo {
+  ""
+  endCursor: String
+
+  ""
+  hasNextPage: Boolean!
+
+  ""
+  hasPreviousPage: Boolean!
+
+  "Raw schema for page"
+  seo: SEOPostTypePageInfo
+
+  ""
+  startCursor: String
+}
+
+input PostToCommentConnectionWhereArgs {
+  authorEmail: String
+  authorIn: [ID]
+  authorNotIn: [ID]
+  authorUrl: String
+  commentIn: [ID]
+  commentNotIn: [ID]
+  commentType: String
+  commentTypeIn: [String]
+  commentTypeNotIn: String
+  contentAuthor: [ID]
+  contentAuthorIn: [ID]
+  contentAuthorNotIn: [ID]
+  contentId: ID
+  contentIdIn: [ID]
+  contentIdNotIn: [ID]
+  contentName: String
+  contentParent: Int
+  contentStatus: [PostStatusEnum]
+  contentType: [ContentTypeEnum]
+  includeUnapproved: [ID]
+  karma: Int
+  order: OrderEnum
+  orderby: CommentsConnectionOrderbyEnum
+  parent: Int
+  parentIn: [ID]
+  parentNotIn: [ID]
+  search: String
+  status: String
+  statusIn: [CommentStatusEnum]
+  userId: ID
+}
+
+type PostToParentConnectionEdge implements OneToOneConnection & Edge & PostConnectionEdge {
+  ""
+  cursor: String
+
+  ""
+  node: Post!
+}
+
+type PostToPostConnection implements PostConnection & Connection {
+  ""
+  edges: [PostToPostConnectionEdge!]!
+
+  ""
+  nodes: [Post!]!
+
+  ""
+  pageInfo: PostToPostConnectionPageInfo!
+}
+
+type PostToPostConnectionEdge implements PostConnectionEdge & Edge {
+  ""
+  cursor: String
+
+  ""
+  node: Post!
+}
+
+type PostToPostConnectionPageInfo implements PostConnectionPageInfo & WPPageInfo & PageInfo {
+  ""
+  endCursor: String
+
+  ""
+  hasNextPage: Boolean!
+
+  ""
+  hasPreviousPage: Boolean!
+
+  "Raw schema for page"
+  seo: SEOPostTypePageInfo
+
+  ""
+  startCursor: String
+}
+
+type PostToPostFormatConnection implements PostFormatConnection & Connection {
+  ""
+  edges: [PostToPostFormatConnectionEdge!]!
+
+  ""
+  nodes: [PostFormat!]!
+
+  ""
+  pageInfo: PostToPostFormatConnectionPageInfo!
+}
+
+type PostToPostFormatConnectionEdge implements PostFormatConnectionEdge & Edge {
+  ""
+  cursor: String
+
+  "The Yoast SEO Primary post_format"
+  isPrimary: Boolean
+
+  ""
+  node: PostFormat!
+}
+
+type PostToPostFormatConnectionPageInfo implements PostFormatConnectionPageInfo & WPPageInfo & PageInfo {
+  ""
+  endCursor: String
+
+  ""
+  hasNextPage: Boolean!
+
+  ""
+  hasPreviousPage: Boolean!
+
+  "Raw schema for page"
+  seo: SEOPostTypePageInfo
+
+  ""
+  startCursor: String
+}
+
+input PostToPostFormatConnectionWhereArgs {
+  cacheDomain: String
+  childOf: Int
+  childless: Boolean
+  descriptionLike: String
+  exclude: [ID]
+  excludeTree: [ID]
+  hideEmpty: Boolean
+  hierarchical: Boolean
+  include: [ID]
+  name: [String]
+  nameLike: String
+  objectIds: [ID]
+  order: OrderEnum
+  orderby: TermObjectsConnectionOrderbyEnum
+  padCounts: Boolean
+  parent: Int
+  search: String
+  slug: [String]
+  termTaxonomId: [ID]
+  termTaxonomyId: [ID]
+  updateTermMetaCache: Boolean
+}
+
+type PostToPreviewConnectionEdge implements OneToOneConnection & Edge & PostConnectionEdge {
+  ""
+  cursor: String
+
+  ""
+  node: Post!
+}
+
+type PostToRevisionConnection implements PostConnection & Connection {
+  ""
+  edges: [PostToRevisionConnectionEdge!]!
+
+  ""
+  nodes: [Post!]!
+
+  ""
+  pageInfo: PostToRevisionConnectionPageInfo!
+}
+
+type PostToRevisionConnectionEdge implements PostConnectionEdge & Edge {
+  ""
+  cursor: String
+
+  ""
+  node: Post!
+}
+
+type PostToRevisionConnectionPageInfo implements PostConnectionPageInfo & WPPageInfo & PageInfo {
+  ""
+  endCursor: String
+
+  ""
+  hasNextPage: Boolean!
+
+  ""
+  hasPreviousPage: Boolean!
+
+  "Raw schema for page"
+  seo: SEOPostTypePageInfo
+
+  ""
+  startCursor: String
+}
+
+input PostToRevisionConnectionWhereArgs {
+  author: Int
+  authorIn: [ID]
+  authorName: String
+  authorNotIn: [ID]
+  categoryId: Int
+  categoryIn: [ID]
+  categoryName: String
+  categoryNotIn: [ID]
+  dateQuery: DateQueryInput
+  hasPassword: Boolean
+  id: Int
+  in: [ID]
+  isSticky: Boolean
+  mimeType: MimeTypeEnum
+  name: String
+  nameIn: [String]
+  notIn: [ID]
+  orderby: [PostObjectsConnectionOrderbyInput]
+  parent: ID
+  parentIn: [ID]
+  parentNotIn: [ID]
+  password: String
+  search: String
+  stati: [PostStatusEnum]
+  status: PostStatusEnum
+  tag: String
+  tagId: String
+  tagIn: [ID]
+  tagNotIn: [ID]
+  tagSlugAnd: [String]
+  tagSlugIn: [String]
+  template: ContentTemplateEnum
+  title: String
+}
+
+type PostToTagConnection implements TagConnection & Connection {
+  ""
+  edges: [PostToTagConnectionEdge!]!
+
+  ""
+  nodes: [Tag!]!
+
+  ""
+  pageInfo: PostToTagConnectionPageInfo!
+}
+
+type PostToTagConnectionEdge implements TagConnectionEdge & Edge {
+  ""
+  cursor: String
+
+  "The Yoast SEO Primary post_tag"
+  isPrimary: Boolean
+
+  ""
+  node: Tag!
+}
+
+type PostToTagConnectionPageInfo implements TagConnectionPageInfo & WPPageInfo & PageInfo {
+  ""
+  endCursor: String
+
+  ""
+  hasNextPage: Boolean!
+
+  ""
+  hasPreviousPage: Boolean!
+
+  "Raw schema for page"
+  seo: SEOPostTypePageInfo
+
+  ""
+  startCursor: String
+}
+
+input PostToTagConnectionWhereArgs {
+  cacheDomain: String
+  childOf: Int
+  childless: Boolean
+  descriptionLike: String
+  exclude: [ID]
+  excludeTree: [ID]
+  hideEmpty: Boolean
+  hierarchical: Boolean
+  include: [ID]
+  name: [String]
+  nameLike: String
+  objectIds: [ID]
+  order: OrderEnum
+  orderby: TermObjectsConnectionOrderbyEnum
+  padCounts: Boolean
+  parent: Int
+  search: String
+  slug: [String]
+  termTaxonomId: [ID]
+  termTaxonomyId: [ID]
+  updateTermMetaCache: Boolean
+}
+
+type PostToTermNodeConnection implements TermNodeConnection & Connection {
+  ""
+  edges: [PostToTermNodeConnectionEdge!]!
+
+  ""
+  nodes: [TermNode!]!
+
+  ""
+  pageInfo: PostToTermNodeConnectionPageInfo!
+}
+
+type PostToTermNodeConnectionEdge implements TermNodeConnectionEdge & Edge {
+  ""
+  cursor: String
+
+  ""
+  node: TermNode!
+}
+
+type PostToTermNodeConnectionPageInfo implements TermNodeConnectionPageInfo & WPPageInfo & PageInfo {
+  ""
+  endCursor: String
+
+  ""
+  hasNextPage: Boolean!
+
+  ""
+  hasPreviousPage: Boolean!
+
+  "Raw schema for page"
+  seo: SEOPostTypePageInfo
+
+  ""
+  startCursor: String
+}
+
+input PostToTermNodeConnectionWhereArgs {
+  cacheDomain: String
+  childOf: Int
+  childless: Boolean
+  descriptionLike: String
+  exclude: [ID]
+  excludeTree: [ID]
+  hideEmpty: Boolean
+  hierarchical: Boolean
+  include: [ID]
+  name: [String]
+  nameLike: String
+  objectIds: [ID]
+  order: OrderEnum
+  orderby: TermObjectsConnectionOrderbyEnum
+  padCounts: Boolean
+  parent: Int
+  search: String
+  slug: [String]
+  taxonomies: [TaxonomyEnum]
+  termTaxonomId: [ID]
+  termTaxonomyId: [ID]
+  updateTermMetaCache: Boolean
+}
+
+type PostTypeLabelDetails {
+  ""
+  addNew: String
+
+  ""
+  addNewItem: String
+
+  ""
+  allItems: String
+
+  ""
+  archives: String
+
+  ""
+  attributes: String
+
+  ""
+  editItem: String
+
+  ""
+  featuredImage: String
+
+  ""
+  filterItemsList: String
+
+  ""
+  insertIntoItem: String
+
+  ""
+  itemsList: String
+
+  ""
+  itemsListNavigation: String
+
+  ""
+  menuName: String
+
+  ""
+  name: String
+
+  ""
+  newItem: String
+
+  ""
+  notFound: String
+
+  ""
+  notFoundInTrash: String
+
+  ""
+  parentItemColon: String
+
+  ""
+  removeFeaturedImage: String
+
+  ""
+  searchItems: String
+
+  ""
+  setFeaturedImage: String
+
+  ""
+  singularName: String
+
+  ""
+  uploadedToThisItem: String
+
+  ""
+  useFeaturedImage: String
+
+  ""
+  viewItem: String
+
+  ""
+  viewItems: String
+}
+
+type PostTypeSEO {
+  ""
+  analysis: SEOAnalysis
+
+  ""
+  breadcrumbTitle: String
+
+  ""
+  breadcrumbs: [SEOPostTypeBreadcrumbs]
+
+  ""
+  canonical: String
+
+  ""
+  cornerstone: Boolean
+
+  ""
+  focuskw: String
+
+  ""
+  fullHead: String
+
+  ""
+  head: SEOHead
+
+  ""
+  language: String
+
+  ""
+  metaDesc: String
+
+  ""
+  metaKeywords: String
+
+  ""
+  metaRobotsNofollow: String
+
+  ""
+  metaRobotsNoindex: String
+
+  ""
+  objectLastModified: String
+
+  ""
+  objectPublishedAt: String
+
+  ""
+  opengraphAuthor: String
+
+  ""
+  opengraphDescription: String
+
+  ""
+  opengraphEnabled: Boolean
+
+  ""
+  opengraphFbAppId: String
+
+  ""
+  opengraphImage: MediaItem
+
+  ""
+  opengraphLocale: String
+
+  ""
+  opengraphModifiedTime: String
+
+  ""
+  opengraphPublishedTime: String
+
+  ""
+  opengraphPublisher: String
+
+  ""
+  opengraphSiteName: String
+
+  ""
+  opengraphTitle: String
+
+  ""
+  opengraphType: String
+
+  ""
+  opengraphUrl: String
+
+  ""
+  readingTime: Float
+
+  ""
+  region: String
+
+  ""
+  relNext: String
+
+  ""
+  relPrev: String
+
+  ""
+  robots: SEORobots
+
+  ""
+  schema: SEOPostTypeSchema
+
+  ""
+  title: String
+
+  ""
+  twitterCardType: String
+
+  ""
+  twitterCreator: String
+
+  ""
+  twitterDescription: String
+
+  ""
+  twitterImage: MediaItem
+
+  ""
+  twitterSite: String
+
+  ""
+  twitterTitle: String
+}
+
+interface Previewable {
+  ""
+  isPreview: Boolean
+
+  ""
+  previewRevisionDatabaseId: Int
+
+  ""
+  previewRevisionId: ID
+}
+
+input RegisterUserInput {
+  aim: String
+  clientMutationId: String
+  description: String
+  displayName: String
+  email: String
+  firstName: String
+  jabber: String
+  lastName: String
+  locale: String
+  nicename: String
+  nickname: String
+  password: String
+  registered: String
+  richEditing: String
+  username: String!
+  websiteUrl: String
+  yim: String
+}
+
+type RegisterUserPayload {
+  ""
+  clientMutationId: String
+
+  ""
+  user: User
+}
+
+enum RelationEnum {
+  "All conditions must match (more restrictive filtering)"
+  AND
+
+  "Any condition can match (more inclusive filtering)"
+  OR
+}
+
+input ResetUserPasswordInput {
+  clientMutationId: String
+  key: String
+  login: String
+  password: String
+}
+
+type ResetUserPasswordPayload {
+  ""
+  clientMutationId: String
+
+  ""
+  user: User
+}
+
+input RestoreCommentInput {
+  clientMutationId: String
+  id: ID!
+}
+
+type RestoreCommentPayload {
+  ""
+  clientMutationId: String
+
+  ""
+  comment: Comment
+
+  ""
+  restoredId: ID
+}
+
+type RootMutation {
+  ""
+  createCategory(input: CreateCategoryInput!): CreateCategoryPayload
+
+  ""
+  createComment(input: CreateCommentInput!): CreateCommentPayload
+
+  ""
+  createMediaItem(input: CreateMediaItemInput!): CreateMediaItemPayload
+
+  ""
+  createPage(input: CreatePageInput!): CreatePagePayload
+
+  ""
+  createPost(input: CreatePostInput!): CreatePostPayload
+
+  ""
+  createPostFormat(input: CreatePostFormatInput!): CreatePostFormatPayload
+
+  ""
+  createTag(input: CreateTagInput!): CreateTagPayload
+
+  ""
+  createUser(input: CreateUserInput!): CreateUserPayload
+
+  ""
+  deleteCategory(input: DeleteCategoryInput!): DeleteCategoryPayload
+
+  ""
+  deleteComment(input: DeleteCommentInput!): DeleteCommentPayload
+
+  ""
+  deleteMediaItem(input: DeleteMediaItemInput!): DeleteMediaItemPayload
+
+  ""
+  deletePage(input: DeletePageInput!): DeletePagePayload
+
+  ""
+  deletePost(input: DeletePostInput!): DeletePostPayload
+
+  ""
+  deletePostFormat(input: DeletePostFormatInput!): DeletePostFormatPayload
+
+  ""
+  deleteTag(input: DeleteTagInput!): DeleteTagPayload
+
+  ""
+  deleteUser(input: DeleteUserInput!): DeleteUserPayload
+
+  ""
+  increaseCount(count: Int): Int
+
+  ""
+  registerUser(input: RegisterUserInput!): RegisterUserPayload
+
+  ""
+  resetUserPassword(input: ResetUserPasswordInput!): ResetUserPasswordPayload
+
+  ""
+  restoreComment(input: RestoreCommentInput!): RestoreCommentPayload
+
+  ""
+  sendPasswordResetEmail(input: SendPasswordResetEmailInput!): SendPasswordResetEmailPayload
+
+  ""
+  updateCategory(input: UpdateCategoryInput!): UpdateCategoryPayload
+
+  ""
+  updateComment(input: UpdateCommentInput!): UpdateCommentPayload
+
+  ""
+  updateMediaItem(input: UpdateMediaItemInput!): UpdateMediaItemPayload
+
+  ""
+  updatePage(input: UpdatePageInput!): UpdatePagePayload
+
+  ""
+  updatePost(input: UpdatePostInput!): UpdatePostPayload
+
+  ""
+  updatePostFormat(input: UpdatePostFormatInput!): UpdatePostFormatPayload
+
+  ""
+  updateTag(input: UpdateTagInput!): UpdateTagPayload
+
+  ""
+  updateUser(input: UpdateUserInput!): UpdateUserPayload
+}
+
+type RootQuery implements WithAcfOptionsPageBlooikosSettings {
+  ""
+  allSettings: Settings
+
+  ""
+  blooikosSettings: BlooikosSettings
+
+  "Connection between the RootQuery type and the category type"
+  categories(after: String, before: String, first: Int, last: Int, where: RootQueryToCategoryConnectionWhereArgs): RootQueryToCategoryConnection
+
+  ""
+  category(id: ID!, idType: CategoryIdType): Category
+
+  ""
+  comment(id: ID!, idType: CommentNodeIdTypeEnum): Comment
+
+  "Connection between the RootQuery type and the Comment type"
+  comments(after: String, before: String, first: Int, last: Int, where: RootQueryToCommentConnectionWhereArgs): RootQueryToCommentConnection
+
+  ""
+  contentNode(asPreview: Boolean, contentType: ContentTypeEnum, id: ID!, idType: ContentNodeIdTypeEnum): ContentNode
+
+  "Connection between the RootQuery type and the ContentNode type"
+  contentNodes(after: String, before: String, first: Int, last: Int, where: RootQueryToContentNodeConnectionWhereArgs): RootQueryToContentNodeConnection
+
+  ""
+  contentType(id: ID!, idType: ContentTypeIdTypeEnum): ContentType
+
+  "Connection between the RootQuery type and the ContentType type"
+  contentTypes(after: String, before: String, first: Int, last: Int): RootQueryToContentTypeConnection
+
+  ""
+  generalSettings: GeneralSettings
+
+  ""
+  mediaItem(asPreview: Boolean, id: ID!, idType: MediaItemIdType): MediaItem
+
+  ""
+  mediaItemBy(id: ID, mediaItemId: Int, slug: String, uri: String): MediaItem
+
+  "Connection between the RootQuery type and the mediaItem type"
+  mediaItems(after: String, before: String, first: Int, last: Int, where: RootQueryToMediaItemConnectionWhereArgs): RootQueryToMediaItemConnection
+
+  ""
+  menu(id: ID!, idType: MenuNodeIdTypeEnum): Menu
+
+  ""
+  menuItem(id: ID!, idType: MenuItemNodeIdTypeEnum): MenuItem
+
+  "Connection between the RootQuery type and the MenuItem type"
+  menuItems(after: String, before: String, first: Int, last: Int, where: RootQueryToMenuItemConnectionWhereArgs): RootQueryToMenuItemConnection
+
+  "Connection between the RootQuery type and the Menu type"
+  menus(after: String, before: String, first: Int, last: Int, where: RootQueryToMenuConnectionWhereArgs): RootQueryToMenuConnection
+
+  ""
+  node(id: ID): Node
+
+  ""
+  nodeByUri(uri: String!): UniformResourceIdentifiable
+
+  ""
+  page(asPreview: Boolean, id: ID!, idType: PageIdType): Page
+
+  ""
+  pageBy(id: ID, pageId: Int, uri: String): Page
+
+  "Connection between the RootQuery type and the page type"
+  pages(after: String, before: String, first: Int, last: Int, where: RootQueryToPageConnectionWhereArgs): RootQueryToPageConnection
+
+  ""
+  permalinkSettings: PermalinkSettings
+
+  ""
+  plugin(id: ID!): Plugin
+
+  "Connection between the RootQuery type and the Plugin type"
+  plugins(after: String, before: String, first: Int, last: Int, where: RootQueryToPluginConnectionWhereArgs): RootQueryToPluginConnection
+
+  ""
+  post(asPreview: Boolean, id: ID!, idType: PostIdType): Post
+
+  ""
+  postBy(id: ID, postId: Int, slug: String, uri: String): Post
+
+  ""
+  postFormat(id: ID!, idType: PostFormatIdType): PostFormat
+
+  "Connection between the RootQuery type and the postFormat type"
+  postFormats(after: String, before: String, first: Int, last: Int, where: RootQueryToPostFormatConnectionWhereArgs): RootQueryToPostFormatConnection
+
+  "Connection between the RootQuery type and the post type"
+  posts(after: String, before: String, first: Int, last: Int, where: RootQueryToPostConnectionWhereArgs): RootQueryToPostConnection
+
+  "Connection between the RootQuery type and the EnqueuedScript type"
+  registeredScripts(after: String, before: String, first: Int, last: Int, where: RootQueryToEnqueuedScriptConnectionWhereArgs): RootQueryToEnqueuedScriptConnection
+
+  "Connection between the RootQuery type and the EnqueuedStylesheet type"
+  registeredStylesheets(after: String, before: String, first: Int, last: Int, where: RootQueryToEnqueuedStylesheetConnectionWhereArgs): RootQueryToEnqueuedStylesheetConnection
+
+  "Connection between the RootQuery type and the ContentNode type"
+  revisions(after: String, before: String, first: Int, last: Int, where: RootQueryToRevisionsConnectionWhereArgs): RootQueryToRevisionsConnection
+
+  "Returns seo site data"
+  seo: SEOConfig
+
+  ""
+  tag(id: ID!, idType: TagIdType): Tag
+
+  "Connection between the RootQuery type and the tag type"
+  tags(after: String, before: String, first: Int, last: Int, where: RootQueryToTagConnectionWhereArgs): RootQueryToTagConnection
+
+  "Connection between the RootQuery type and the Taxonomy type"
+  taxonomies(after: String, before: String, first: Int, last: Int): RootQueryToTaxonomyConnection
+
+  ""
+  taxonomy(id: ID!, idType: TaxonomyIdTypeEnum): Taxonomy
+
+  ""
+  termNode(id: ID!, idType: TermNodeIdTypeEnum, taxonomy: TaxonomyEnum): TermNode
+
+  "Connection between the RootQuery type and the TermNode type"
+  terms(after: String, before: String, first: Int, last: Int, where: RootQueryToTermNodeConnectionWhereArgs): RootQueryToTermNodeConnection
+
+  ""
+  theme(id: ID!): Theme
+
+  "Connection between the RootQuery type and the Theme type"
+  themes(after: String, before: String, first: Int, last: Int): RootQueryToThemeConnection
+
+  ""
+  user(id: ID!, idType: UserNodeIdTypeEnum): User
+
+  ""
+  userRole(id: ID!): UserRole
+
+  "Connection between the RootQuery type and the UserRole type"
+  userRoles(after: String, before: String, first: Int, last: Int): RootQueryToUserRoleConnection
+
+  "Connection between the RootQuery type and the User type"
+  users(after: String, before: String, first: Int, last: Int, where: RootQueryToUserConnectionWhereArgs): RootQueryToUserConnection
+
+  ""
+  viewer: User
+}
+
+type RootQueryToCategoryConnection implements CategoryConnection & Connection {
+  ""
+  edges: [RootQueryToCategoryConnectionEdge!]!
+
+  ""
+  nodes: [Category!]!
+
+  ""
+  pageInfo: RootQueryToCategoryConnectionPageInfo!
+}
+
+type RootQueryToCategoryConnectionEdge implements CategoryConnectionEdge & Edge {
+  ""
+  cursor: String
+
+  ""
+  node: Category!
+}
+
+type RootQueryToCategoryConnectionPageInfo implements CategoryConnectionPageInfo & WPPageInfo & PageInfo {
+  ""
+  endCursor: String
+
+  ""
+  hasNextPage: Boolean!
+
+  ""
+  hasPreviousPage: Boolean!
+
+  "Raw schema for page"
+  seo: SEOPostTypePageInfo
+
+  ""
+  startCursor: String
+}
+
+input RootQueryToCategoryConnectionWhereArgs {
+  cacheDomain: String
+  childOf: Int
+  childless: Boolean
+  descriptionLike: String
+  exclude: [ID]
+  excludeTree: [ID]
+  hideEmpty: Boolean
+  hierarchical: Boolean
+  include: [ID]
+  name: [String]
+  nameLike: String
+  objectIds: [ID]
+  order: OrderEnum
+  orderby: TermObjectsConnectionOrderbyEnum
+  padCounts: Boolean
+  parent: Int
+  search: String
+  slug: [String]
+  termTaxonomId: [ID]
+  termTaxonomyId: [ID]
+  updateTermMetaCache: Boolean
+}
+
+type RootQueryToCommentConnection implements CommentConnection & Connection {
+  ""
+  edges: [RootQueryToCommentConnectionEdge!]!
+
+  ""
+  nodes: [Comment!]!
+
+  ""
+  pageInfo: RootQueryToCommentConnectionPageInfo!
+}
+
+type RootQueryToCommentConnectionEdge implements CommentConnectionEdge & Edge {
+  ""
+  cursor: String
+
+  ""
+  node: Comment!
+}
+
+type RootQueryToCommentConnectionPageInfo implements CommentConnectionPageInfo & WPPageInfo & PageInfo {
+  ""
+  endCursor: String
+
+  ""
+  hasNextPage: Boolean!
+
+  ""
+  hasPreviousPage: Boolean!
+
+  "Raw schema for page"
+  seo: SEOPostTypePageInfo
+
+  ""
+  startCursor: String
+}
+
+input RootQueryToCommentConnectionWhereArgs {
+  authorEmail: String
+  authorIn: [ID]
+  authorNotIn: [ID]
+  authorUrl: String
+  commentIn: [ID]
+  commentNotIn: [ID]
+  commentType: String
+  commentTypeIn: [String]
+  commentTypeNotIn: String
+  contentAuthor: [ID]
+  contentAuthorIn: [ID]
+  contentAuthorNotIn: [ID]
+  contentId: ID
+  contentIdIn: [ID]
+  contentIdNotIn: [ID]
+  contentName: String
+  contentParent: Int
+  contentStatus: [PostStatusEnum]
+  contentType: [ContentTypeEnum]
+  includeUnapproved: [ID]
+  karma: Int
+  order: OrderEnum
+  orderby: CommentsConnectionOrderbyEnum
+  parent: Int
+  parentIn: [ID]
+  parentNotIn: [ID]
+  search: String
+  status: String
+  statusIn: [CommentStatusEnum]
+  userId: ID
+}
+
+type RootQueryToContentNodeConnection implements ContentNodeConnection & Connection {
+  ""
+  edges: [RootQueryToContentNodeConnectionEdge!]!
+
+  ""
+  nodes: [ContentNode!]!
+
+  ""
+  pageInfo: RootQueryToContentNodeConnectionPageInfo!
+}
+
+type RootQueryToContentNodeConnectionEdge implements ContentNodeConnectionEdge & Edge {
+  ""
+  cursor: String
+
+  ""
+  node: ContentNode!
+}
+
+type RootQueryToContentNodeConnectionPageInfo implements ContentNodeConnectionPageInfo & WPPageInfo & PageInfo {
+  ""
+  endCursor: String
+
+  ""
+  hasNextPage: Boolean!
+
+  ""
+  hasPreviousPage: Boolean!
+
+  "Raw schema for page"
+  seo: SEOPostTypePageInfo
+
+  ""
+  startCursor: String
+}
+
+input RootQueryToContentNodeConnectionWhereArgs {
+  contentTypes: [ContentTypeEnum]
+  dateQuery: DateQueryInput
+  hasPassword: Boolean
+  id: Int
+  in: [ID]
+  isSticky: Boolean
+  mimeType: MimeTypeEnum
+  name: String
+  nameIn: [String]
+  notIn: [ID]
+  orderby: [PostObjectsConnectionOrderbyInput]
+  parent: ID
+  parentIn: [ID]
+  parentNotIn: [ID]
+  password: String
+  search: String
+  stati: [PostStatusEnum]
+  status: PostStatusEnum
+  template: ContentTemplateEnum
+  title: String
+}
+
+type RootQueryToContentTypeConnection implements ContentTypeConnection & Connection {
+  ""
+  edges: [RootQueryToContentTypeConnectionEdge!]!
+
+  ""
+  nodes: [ContentType!]!
+
+  ""
+  pageInfo: RootQueryToContentTypeConnectionPageInfo!
+}
+
+type RootQueryToContentTypeConnectionEdge implements ContentTypeConnectionEdge & Edge {
+  ""
+  cursor: String
+
+  ""
+  node: ContentType!
+}
+
+type RootQueryToContentTypeConnectionPageInfo implements ContentTypeConnectionPageInfo & WPPageInfo & PageInfo {
+  ""
+  endCursor: String
+
+  ""
+  hasNextPage: Boolean!
+
+  ""
+  hasPreviousPage: Boolean!
+
+  "Raw schema for page"
+  seo: SEOPostTypePageInfo
+
+  ""
+  startCursor: String
+}
+
+type RootQueryToEnqueuedScriptConnection implements EnqueuedScriptConnection & Connection {
+  ""
+  edges: [RootQueryToEnqueuedScriptConnectionEdge!]!
+
+  ""
+  nodes: [EnqueuedScript!]!
+
+  ""
+  pageInfo: RootQueryToEnqueuedScriptConnectionPageInfo!
+}
+
+type RootQueryToEnqueuedScriptConnectionEdge implements EnqueuedScriptConnectionEdge & Edge {
+  ""
+  cursor: String
+
+  ""
+  node: EnqueuedScript!
+}
+
+type RootQueryToEnqueuedScriptConnectionPageInfo implements EnqueuedScriptConnectionPageInfo & WPPageInfo & PageInfo {
+  ""
+  endCursor: String
+
+  ""
+  hasNextPage: Boolean!
+
+  ""
+  hasPreviousPage: Boolean!
+
+  "Raw schema for page"
+  seo: SEOPostTypePageInfo
+
+  ""
+  startCursor: String
+}
+
+input RootQueryToEnqueuedScriptConnectionWhereArgs {
+  handlesIn: [String]
+}
+
+type RootQueryToEnqueuedStylesheetConnection implements EnqueuedStylesheetConnection & Connection {
+  ""
+  edges: [RootQueryToEnqueuedStylesheetConnectionEdge!]!
+
+  ""
+  nodes: [EnqueuedStylesheet!]!
+
+  ""
+  pageInfo: RootQueryToEnqueuedStylesheetConnectionPageInfo!
+}
+
+type RootQueryToEnqueuedStylesheetConnectionEdge implements EnqueuedStylesheetConnectionEdge & Edge {
+  ""
+  cursor: String
+
+  ""
+  node: EnqueuedStylesheet!
+}
+
+type RootQueryToEnqueuedStylesheetConnectionPageInfo implements EnqueuedStylesheetConnectionPageInfo & WPPageInfo & PageInfo {
+  ""
+  endCursor: String
+
+  ""
+  hasNextPage: Boolean!
+
+  ""
+  hasPreviousPage: Boolean!
+
+  "Raw schema for page"
+  seo: SEOPostTypePageInfo
+
+  ""
+  startCursor: String
+}
+
+input RootQueryToEnqueuedStylesheetConnectionWhereArgs {
+  handlesIn: [String]
+}
+
+type RootQueryToMediaItemConnection implements MediaItemConnection & Connection {
+  ""
+  edges: [RootQueryToMediaItemConnectionEdge!]!
+
+  ""
+  nodes: [MediaItem!]!
+
+  ""
+  pageInfo: RootQueryToMediaItemConnectionPageInfo!
+}
+
+type RootQueryToMediaItemConnectionEdge implements MediaItemConnectionEdge & Edge {
+  ""
+  cursor: String
+
+  ""
+  node: MediaItem!
+}
+
+type RootQueryToMediaItemConnectionPageInfo implements MediaItemConnectionPageInfo & WPPageInfo & PageInfo {
+  ""
+  endCursor: String
+
+  ""
+  hasNextPage: Boolean!
+
+  ""
+  hasPreviousPage: Boolean!
+
+  "Raw schema for page"
+  seo: SEOPostTypePageInfo
+
+  ""
+  startCursor: String
+}
+
+input RootQueryToMediaItemConnectionWhereArgs {
+  author: Int
+  authorIn: [ID]
+  authorName: String
+  authorNotIn: [ID]
+  dateQuery: DateQueryInput
+  hasPassword: Boolean
+  id: Int
+  in: [ID]
+  isSticky: Boolean
+  mimeType: MimeTypeEnum
+  name: String
+  nameIn: [String]
+  notIn: [ID]
+  orderby: [PostObjectsConnectionOrderbyInput]
+  parent: ID
+  parentIn: [ID]
+  parentNotIn: [ID]
+  password: String
+  search: String
+  stati: [PostStatusEnum]
+  status: PostStatusEnum
+  template: ContentTemplateEnum
+  title: String
+}
+
+type RootQueryToMenuConnection implements MenuConnection & Connection {
+  ""
+  edges: [RootQueryToMenuConnectionEdge!]!
+
+  ""
+  nodes: [Menu!]!
+
+  ""
+  pageInfo: RootQueryToMenuConnectionPageInfo!
+}
+
+type RootQueryToMenuConnectionEdge implements MenuConnectionEdge & Edge {
+  ""
+  cursor: String
+
+  ""
+  node: Menu!
+}
+
+type RootQueryToMenuConnectionPageInfo implements MenuConnectionPageInfo & WPPageInfo & PageInfo {
+  ""
+  endCursor: String
+
+  ""
+  hasNextPage: Boolean!
+
+  ""
+  hasPreviousPage: Boolean!
+
+  "Raw schema for page"
+  seo: SEOPostTypePageInfo
+
+  ""
+  startCursor: String
+}
+
+input RootQueryToMenuConnectionWhereArgs {
+  id: Int
+  location: MenuLocationEnum
+  slug: String
+}
+
+type RootQueryToMenuItemConnection implements MenuItemConnection & Connection {
+  ""
+  edges: [RootQueryToMenuItemConnectionEdge!]!
+
+  ""
+  nodes: [MenuItem!]!
+
+  ""
+  pageInfo: RootQueryToMenuItemConnectionPageInfo!
+}
+
+type RootQueryToMenuItemConnectionEdge implements MenuItemConnectionEdge & Edge {
+  ""
+  cursor: String
+
+  ""
+  node: MenuItem!
+}
+
+type RootQueryToMenuItemConnectionPageInfo implements MenuItemConnectionPageInfo & WPPageInfo & PageInfo {
+  ""
+  endCursor: String
+
+  ""
+  hasNextPage: Boolean!
+
+  ""
+  hasPreviousPage: Boolean!
+
+  "Raw schema for page"
+  seo: SEOPostTypePageInfo
+
+  ""
+  startCursor: String
+}
+
+input RootQueryToMenuItemConnectionWhereArgs {
+  id: Int
+  location: MenuLocationEnum
+  parentDatabaseId: Int
+  parentId: ID
+}
+
+type RootQueryToPageConnection implements PageConnection & Connection {
+  ""
+  edges: [RootQueryToPageConnectionEdge!]!
+
+  ""
+  nodes: [Page!]!
+
+  ""
+  pageInfo: RootQueryToPageConnectionPageInfo!
+}
+
+type RootQueryToPageConnectionEdge implements PageConnectionEdge & Edge {
+  ""
+  cursor: String
+
+  ""
+  node: Page!
+}
+
+type RootQueryToPageConnectionPageInfo implements PageConnectionPageInfo & WPPageInfo & PageInfo {
+  ""
+  endCursor: String
+
+  ""
+  hasNextPage: Boolean!
+
+  ""
+  hasPreviousPage: Boolean!
+
+  "Raw schema for page"
+  seo: SEOPostTypePageInfo
+
+  ""
+  startCursor: String
+}
+
+input RootQueryToPageConnectionWhereArgs {
+  author: Int
+  authorIn: [ID]
+  authorName: String
+  authorNotIn: [ID]
+  dateQuery: DateQueryInput
+  hasPassword: Boolean
+  id: Int
+  in: [ID]
+  isSticky: Boolean
+  mimeType: MimeTypeEnum
+  name: String
+  nameIn: [String]
+  notIn: [ID]
+  orderby: [PostObjectsConnectionOrderbyInput]
+  parent: ID
+  parentIn: [ID]
+  parentNotIn: [ID]
+  password: String
+  search: String
+  stati: [PostStatusEnum]
+  status: PostStatusEnum
+  template: ContentTemplateEnum
+  title: String
+}
+
+type RootQueryToPluginConnection implements PluginConnection & Connection {
+  ""
+  edges: [RootQueryToPluginConnectionEdge!]!
+
+  ""
+  nodes: [Plugin!]!
+
+  ""
+  pageInfo: RootQueryToPluginConnectionPageInfo!
+}
+
+type RootQueryToPluginConnectionEdge implements PluginConnectionEdge & Edge {
+  ""
+  cursor: String
+
+  ""
+  node: Plugin!
+}
+
+type RootQueryToPluginConnectionPageInfo implements PluginConnectionPageInfo & WPPageInfo & PageInfo {
+  ""
+  endCursor: String
+
+  ""
+  hasNextPage: Boolean!
+
+  ""
+  hasPreviousPage: Boolean!
+
+  "Raw schema for page"
+  seo: SEOPostTypePageInfo
+
+  ""
+  startCursor: String
+}
+
+input RootQueryToPluginConnectionWhereArgs {
+  search: String
+  stati: [PluginStatusEnum]
+  status: PluginStatusEnum
+}
+
+type RootQueryToPostConnection implements PostConnection & Connection {
+  ""
+  edges: [RootQueryToPostConnectionEdge!]!
+
+  ""
+  nodes: [Post!]!
+
+  ""
+  pageInfo: RootQueryToPostConnectionPageInfo!
+}
+
+type RootQueryToPostConnectionEdge implements PostConnectionEdge & Edge {
+  ""
+  cursor: String
+
+  ""
+  node: Post!
+}
+
+type RootQueryToPostConnectionPageInfo implements PostConnectionPageInfo & WPPageInfo & PageInfo {
+  ""
+  endCursor: String
+
+  ""
+  hasNextPage: Boolean!
+
+  ""
+  hasPreviousPage: Boolean!
+
+  "Raw schema for page"
+  seo: SEOPostTypePageInfo
+
+  ""
+  startCursor: String
+}
+
+input RootQueryToPostConnectionWhereArgs {
+  author: Int
+  authorIn: [ID]
+  authorName: String
+  authorNotIn: [ID]
+  categoryId: Int
+  categoryIn: [ID]
+  categoryName: String
+  categoryNotIn: [ID]
+  dateQuery: DateQueryInput
+  hasPassword: Boolean
+  id: Int
+  in: [ID]
+  isSticky: Boolean
+  mimeType: MimeTypeEnum
+  name: String
+  nameIn: [String]
+  notIn: [ID]
+  orderby: [PostObjectsConnectionOrderbyInput]
+  parent: ID
+  parentIn: [ID]
+  parentNotIn: [ID]
+  password: String
+  search: String
+  stati: [PostStatusEnum]
+  status: PostStatusEnum
+  tag: String
+  tagId: String
+  tagIn: [ID]
+  tagNotIn: [ID]
+  tagSlugAnd: [String]
+  tagSlugIn: [String]
+  template: ContentTemplateEnum
+  title: String
+}
+
+type RootQueryToPostFormatConnection implements PostFormatConnection & Connection {
+  ""
+  edges: [RootQueryToPostFormatConnectionEdge!]!
+
+  ""
+  nodes: [PostFormat!]!
+
+  ""
+  pageInfo: RootQueryToPostFormatConnectionPageInfo!
+}
+
+type RootQueryToPostFormatConnectionEdge implements PostFormatConnectionEdge & Edge {
+  ""
+  cursor: String
+
+  ""
+  node: PostFormat!
+}
+
+type RootQueryToPostFormatConnectionPageInfo implements PostFormatConnectionPageInfo & WPPageInfo & PageInfo {
+  ""
+  endCursor: String
+
+  ""
+  hasNextPage: Boolean!
+
+  ""
+  hasPreviousPage: Boolean!
+
+  "Raw schema for page"
+  seo: SEOPostTypePageInfo
+
+  ""
+  startCursor: String
+}
+
+input RootQueryToPostFormatConnectionWhereArgs {
+  cacheDomain: String
+  childOf: Int
+  childless: Boolean
+  descriptionLike: String
+  exclude: [ID]
+  excludeTree: [ID]
+  hideEmpty: Boolean
+  hierarchical: Boolean
+  include: [ID]
+  name: [String]
+  nameLike: String
+  objectIds: [ID]
+  order: OrderEnum
+  orderby: TermObjectsConnectionOrderbyEnum
+  padCounts: Boolean
+  parent: Int
+  search: String
+  slug: [String]
+  termTaxonomId: [ID]
+  termTaxonomyId: [ID]
+  updateTermMetaCache: Boolean
+}
+
+type RootQueryToRevisionsConnection implements ContentNodeConnection & Connection {
+  ""
+  edges: [RootQueryToRevisionsConnectionEdge!]!
+
+  ""
+  nodes: [ContentNode!]!
+
+  ""
+  pageInfo: RootQueryToRevisionsConnectionPageInfo!
+}
+
+type RootQueryToRevisionsConnectionEdge implements ContentNodeConnectionEdge & Edge {
+  ""
+  cursor: String
+
+  ""
+  node: ContentNode!
+}
+
+type RootQueryToRevisionsConnectionPageInfo implements ContentNodeConnectionPageInfo & WPPageInfo & PageInfo {
+  ""
+  endCursor: String
+
+  ""
+  hasNextPage: Boolean!
+
+  ""
+  hasPreviousPage: Boolean!
+
+  "Raw schema for page"
+  seo: SEOPostTypePageInfo
+
+  ""
+  startCursor: String
+}
+
+input RootQueryToRevisionsConnectionWhereArgs {
+  contentTypes: [ContentTypeEnum]
+  dateQuery: DateQueryInput
+  hasPassword: Boolean
+  id: Int
+  in: [ID]
+  isSticky: Boolean
+  mimeType: MimeTypeEnum
+  name: String
+  nameIn: [String]
+  notIn: [ID]
+  orderby: [PostObjectsConnectionOrderbyInput]
+  parent: ID
+  parentIn: [ID]
+  parentNotIn: [ID]
+  password: String
+  search: String
+  stati: [PostStatusEnum]
+  status: PostStatusEnum
+  template: ContentTemplateEnum
+  title: String
+}
+
+type RootQueryToTagConnection implements TagConnection & Connection {
+  ""
+  edges: [RootQueryToTagConnectionEdge!]!
+
+  ""
+  nodes: [Tag!]!
+
+  ""
+  pageInfo: RootQueryToTagConnectionPageInfo!
+}
+
+type RootQueryToTagConnectionEdge implements TagConnectionEdge & Edge {
+  ""
+  cursor: String
+
+  ""
+  node: Tag!
+}
+
+type RootQueryToTagConnectionPageInfo implements TagConnectionPageInfo & WPPageInfo & PageInfo {
+  ""
+  endCursor: String
+
+  ""
+  hasNextPage: Boolean!
+
+  ""
+  hasPreviousPage: Boolean!
+
+  "Raw schema for page"
+  seo: SEOPostTypePageInfo
+
+  ""
+  startCursor: String
+}
+
+input RootQueryToTagConnectionWhereArgs {
+  cacheDomain: String
+  childOf: Int
+  childless: Boolean
+  descriptionLike: String
+  exclude: [ID]
+  excludeTree: [ID]
+  hideEmpty: Boolean
+  hierarchical: Boolean
+  include: [ID]
+  name: [String]
+  nameLike: String
+  objectIds: [ID]
+  order: OrderEnum
+  orderby: TermObjectsConnectionOrderbyEnum
+  padCounts: Boolean
+  parent: Int
+  search: String
+  slug: [String]
+  termTaxonomId: [ID]
+  termTaxonomyId: [ID]
+  updateTermMetaCache: Boolean
+}
+
+type RootQueryToTaxonomyConnection implements TaxonomyConnection & Connection {
+  ""
+  edges: [RootQueryToTaxonomyConnectionEdge!]!
+
+  ""
+  nodes: [Taxonomy!]!
+
+  ""
+  pageInfo: RootQueryToTaxonomyConnectionPageInfo!
+}
+
+type RootQueryToTaxonomyConnectionEdge implements TaxonomyConnectionEdge & Edge {
+  ""
+  cursor: String
+
+  ""
+  node: Taxonomy!
+}
+
+type RootQueryToTaxonomyConnectionPageInfo implements TaxonomyConnectionPageInfo & WPPageInfo & PageInfo {
+  ""
+  endCursor: String
+
+  ""
+  hasNextPage: Boolean!
+
+  ""
+  hasPreviousPage: Boolean!
+
+  "Raw schema for page"
+  seo: SEOPostTypePageInfo
+
+  ""
+  startCursor: String
+}
+
+type RootQueryToTermNodeConnection implements TermNodeConnection & Connection {
+  ""
+  edges: [RootQueryToTermNodeConnectionEdge!]!
+
+  ""
+  nodes: [TermNode!]!
+
+  ""
+  pageInfo: RootQueryToTermNodeConnectionPageInfo!
+}
+
+type RootQueryToTermNodeConnectionEdge implements TermNodeConnectionEdge & Edge {
+  ""
+  cursor: String
+
+  ""
+  node: TermNode!
+}
+
+type RootQueryToTermNodeConnectionPageInfo implements TermNodeConnectionPageInfo & WPPageInfo & PageInfo {
+  ""
+  endCursor: String
+
+  ""
+  hasNextPage: Boolean!
+
+  ""
+  hasPreviousPage: Boolean!
+
+  "Raw schema for page"
+  seo: SEOPostTypePageInfo
+
+  ""
+  startCursor: String
+}
+
+input RootQueryToTermNodeConnectionWhereArgs {
+  cacheDomain: String
+  childOf: Int
+  childless: Boolean
+  descriptionLike: String
+  exclude: [ID]
+  excludeTree: [ID]
+  hideEmpty: Boolean
+  hierarchical: Boolean
+  include: [ID]
+  name: [String]
+  nameLike: String
+  objectIds: [ID]
+  order: OrderEnum
+  orderby: TermObjectsConnectionOrderbyEnum
+  padCounts: Boolean
+  parent: Int
+  search: String
+  slug: [String]
+  taxonomies: [TaxonomyEnum]
+  termTaxonomId: [ID]
+  termTaxonomyId: [ID]
+  updateTermMetaCache: Boolean
+}
+
+type RootQueryToThemeConnection implements ThemeConnection & Connection {
+  ""
+  edges: [RootQueryToThemeConnectionEdge!]!
+
+  ""
+  nodes: [Theme!]!
+
+  ""
+  pageInfo: RootQueryToThemeConnectionPageInfo!
+}
+
+type RootQueryToThemeConnectionEdge implements ThemeConnectionEdge & Edge {
+  ""
+  cursor: String
+
+  ""
+  node: Theme!
+}
+
+type RootQueryToThemeConnectionPageInfo implements ThemeConnectionPageInfo & WPPageInfo & PageInfo {
+  ""
+  endCursor: String
+
+  ""
+  hasNextPage: Boolean!
+
+  ""
+  hasPreviousPage: Boolean!
+
+  "Raw schema for page"
+  seo: SEOPostTypePageInfo
+
+  ""
+  startCursor: String
+}
+
+type RootQueryToUserConnection implements UserConnection & Connection {
+  ""
+  edges: [RootQueryToUserConnectionEdge!]!
+
+  ""
+  nodes: [User!]!
+
+  ""
+  pageInfo: RootQueryToUserConnectionPageInfo!
+}
+
+type RootQueryToUserConnectionEdge implements UserConnectionEdge & Edge {
+  ""
+  cursor: String
+
+  ""
+  node: User!
+}
+
+type RootQueryToUserConnectionPageInfo implements UserConnectionPageInfo & WPPageInfo & PageInfo {
+  ""
+  endCursor: String
+
+  ""
+  hasNextPage: Boolean!
+
+  ""
+  hasPreviousPage: Boolean!
+
+  "Raw schema for page"
+  seo: SEOPostTypePageInfo
+
+  ""
+  startCursor: String
+}
+
+input RootQueryToUserConnectionWhereArgs {
+  exclude: [Int]
+  hasPublishedPosts: [ContentTypeEnum]
+  include: [Int]
+  login: String
+  loginIn: [String]
+  loginNotIn: [String]
+  nicename: String
+  nicenameIn: [String]
+  nicenameNotIn: [String]
+  orderby: [UsersConnectionOrderbyInput]
+  role: UserRoleEnum
+  roleIn: [UserRoleEnum]
+  roleNotIn: [UserRoleEnum]
+  search: String
+  searchColumns: [UsersConnectionSearchColumnEnum]
+}
+
+type RootQueryToUserRoleConnection implements UserRoleConnection & Connection {
+  ""
+  edges: [RootQueryToUserRoleConnectionEdge!]!
+
+  ""
+  nodes: [UserRole!]!
+
+  ""
+  pageInfo: RootQueryToUserRoleConnectionPageInfo!
+}
+
+type RootQueryToUserRoleConnectionEdge implements UserRoleConnectionEdge & Edge {
+  ""
+  cursor: String
+
+  ""
+  node: UserRole!
+}
+
+type RootQueryToUserRoleConnectionPageInfo implements UserRoleConnectionPageInfo & WPPageInfo & PageInfo {
+  ""
+  endCursor: String
+
+  ""
+  hasNextPage: Boolean!
+
+  ""
+  hasPreviousPage: Boolean!
+
+  "Raw schema for page"
+  seo: SEOPostTypePageInfo
+
+  ""
+  startCursor: String
+}
+
+"The Yoast SEO advanced site configuration"
+type SEOAdvanced {
+  ""
+  contentAnalysisActive: Boolean
+
+  ""
+  environmentType: String
+
+  ""
+  hasMultipleAuthors: Boolean
+
+  ""
+  inclusiveLanguageAnalysisActive: Boolean
+
+  ""
+  indexNowEnabled: Boolean
+
+  ""
+  indexNowKey: String
+
+  ""
+  keywordAnalysisActive: Boolean
+
+  ""
+  siteType: String
+
+  ""
+  xmlSitemapEnabled: Boolean
+}
+
+"The Yoast SEO analysis scores and link counts"
+type SEOAnalysis {
+  ""
+  inclusiveLanguageScore: Int
+
+  ""
+  incomingLinkCount: Int
+
+  ""
+  keywordScore: Int
+
+  ""
+  linkCount: Int
+
+  ""
+  readabilityScore: Int
+}
+
+"The Yoast SEO breadcrumb config"
+type SEOBreadcrumbs {
+  ""
+  archivePrefix: String
+
+  ""
+  boldLast: Boolean
+
+  ""
+  enabled: Boolean
+
+  ""
+  homeText: String
+
+  ""
+  notFoundText: String
+
+  ""
+  prefix: String
+
+  ""
+  searchPrefix: String
+
+  ""
+  separator: String
+
+  ""
+  showBlogPage: Boolean
+}
+
+"Types of cards"
+enum SEOCardType {
+  ""
+  summary
+
+  ""
+  summary_large_image
+}
+
+"The Yoast SEO site level configuration data"
+type SEOConfig {
+  ""
+  advanced: SEOAdvanced
+
+  ""
+  breadcrumbs: SEOBreadcrumbs
+
+  ""
+  contentTypes: SEOContentTypes
+
+  ""
+  meta: SEOGlobalMeta
+
+  ""
+  openGraph: SEOOpenGraph
+
+  ""
+  redirects: [SEORedirect]
+
+  ""
+  schema: SEOSchema
+
+  ""
+  social: SEOSocial
+
+  ""
+  taxonomyArchives: SEOTaxonomyTypes
+
+  ""
+  webmaster: SEOWebmaster
+}
+
+"The Yoast SEO search appearance content types fields"
+type SEOContentType {
+  ""
+  archive: SEOContentTypeArchive
+
+  ""
+  articleType: String
+
+  ""
+  metaDesc: String
+
+  ""
+  metaRobotsNoindex: Boolean
+
+  ""
+  schema: SEOPageInfoSchema
+
+  ""
+  schemaType: String
+
+  ""
+  title: String
+}
+
+"The Yoast SEO search appearance content types fields"
+type SEOContentTypeArchive {
+  ""
+  archiveLink: String
+
+  ""
+  breadcrumbTitle: String
+
+  ""
+  fullHead: String
+
+  ""
+  hasArchive: Boolean
+
+  ""
+  head: SEOHead
+
+  ""
+  metaDesc: String
+
+  ""
+  metaRobotsFollow: String
+
+  ""
+  metaRobotsIndex: String
+
+  ""
+  metaRobotsNofollow: Boolean
+
+  ""
+  metaRobotsNoindex: Boolean
+
+  ""
+  social: SEOSocialArchive
+
+  ""
+  title: String
+}
+
+"The Yoast SEO search appearance content types"
+type SEOContentTypes {
+  ""
+  blooikosCompany: SEOContentType
+
+  ""
+  mediaItem: SEOContentType
+
+  ""
+  page: SEOContentType
+
+  ""
+  post: SEOContentType
+}
+
+"The Yoast SEO meta data"
+type SEOGlobalMeta {
+  ""
+  author: SEOGlobalMetaAuthor
+
+  ""
+  config: SEOGlobalMetaConfig
+
+  ""
+  date: SEOGlobalMetaDate
+
+  ""
+  homepage: SEOGlobalMetaHome
+
+  ""
+  notFound: SEOGlobalMeta404
+
+  ""
+  search: SEOGlobalMetaSearch
+}
+
+"The Yoast SEO meta 404 data"
+type SEOGlobalMeta404 {
+  ""
+  breadcrumb: String
+
+  ""
+  title: String
+}
+
+"The Yoast SEO Author data"
+type SEOGlobalMetaAuthor {
+  ""
+  description: String
+
+  ""
+  noindex: Boolean
+
+  ""
+  noindexNoPosts: Boolean
+
+  ""
+  social: SEOSocialArchive
+
+  ""
+  title: String
+}
+
+"The Yoast SEO meta config data"
+type SEOGlobalMetaConfig {
+  ""
+  separator: String
+}
+
+"The Yoast SEO Date data"
+type SEOGlobalMetaDate {
+  ""
+  description: String
+
+  ""
+  noindex: Boolean
+
+  ""
+  social: SEOSocialArchive
+
+  ""
+  title: String
+}
+
+"The Yoast SEO homepage data"
+type SEOGlobalMetaHome {
+  ""
+  description: String
+
+  ""
+  title: String
+}
+
+"The Yoast SEO search results data"
+type SEOGlobalMetaSearch {
+  ""
+  title: String
+}
+
+"The Yoast SEO head output as structured HTML and JSON"
+type SEOHead {
+  ""
+  html: String
+
+  ""
+  json: String
+}
+
+"The Open Graph data"
+type SEOOpenGraph {
+  ""
+  defaultImage: MediaItem
+
+  ""
+  enabled: Boolean
+
+  ""
+  frontPage: SEOOpenGraphFrontPage
+}
+
+"The Open Graph Front page data"
+type SEOOpenGraphFrontPage {
+  ""
+  description: String
+
+  ""
+  image: MediaItem
+
+  ""
+  title: String
+}
+
+"The Schema for post type"
+type SEOPageInfoSchema {
+  ""
+  raw: String
+}
+
+type SEOPostTypeBreadcrumbs {
+  ""
+  text: String
+
+  ""
+  url: String
+}
+
+"The page info SEO details"
+type SEOPostTypePageInfo {
+  ""
+  schema: SEOPageInfoSchema
+}
+
+"The Schema types"
+type SEOPostTypeSchema {
+  ""
+  articleType: [String]
+
+  ""
+  pageType: [String]
+
+  ""
+  raw: String
+}
+
+"The Yoast redirect data  (Yoast Premium only)"
+type SEORedirect {
+  ""
+  format: String
+
+  ""
+  origin: String
+
+  ""
+  target: String
+
+  ""
+  type: Int
+}
+
+"The Yoast SEO robots directives"
+type SEORobots {
+  ""
+  noarchive: Boolean
+
+  ""
+  nofollow: String
+
+  ""
+  noimageindex: Boolean
+
+  ""
+  noindex: String
+
+  ""
+  nosnippet: Boolean
+}
+
+"The Yoast SEO schema data"
+type SEOSchema {
+  ""
+  companyLogo: MediaItem
+
+  ""
+  companyName: String
+
+  ""
+  companyOrPerson: String
+
+  ""
+  homeUrl: String
+
+  ""
+  inLanguage: String
+
+  ""
+  logo: MediaItem
+
+  ""
+  personLogo: MediaItem
+
+  ""
+  personName: String
+
+  ""
+  siteName: String
+
+  ""
+  siteUrl: String
+
+  ""
+  wordpressSiteName: String
+}
+
+"The Yoast SEO Social media links"
+type SEOSocial {
+  ""
+  facebook: SEOSocialFacebook
+
+  ""
+  instagram: SEOSocialInstagram
+
+  ""
+  linkedIn: SEOSocialLinkedIn
+
+  ""
+  mastodon: SEOSocialMastodon
+
+  ""
+  mySpace: SEOSocialMySpace
+
+  ""
+  otherSocials: [String]
+
+  ""
+  pinterest: SEOSocialPinterest
+
+  ""
+  twitter: SEOSocialTwitter
+
+  ""
+  wikipedia: SEOSocialWikipedia
+
+  ""
+  youTube: SEOSocialYoutube
+}
+
+"The Yoast SEO Premium social settings for an archive"
+type SEOSocialArchive {
+  ""
+  description: String
+
+  ""
+  image: MediaItem
+
+  ""
+  title: String
+}
+
+type SEOSocialFacebook {
+  ""
+  defaultImage: MediaItem
+
+  ""
+  url: String
+}
+
+type SEOSocialInstagram {
+  ""
+  url: String
+}
+
+type SEOSocialLinkedIn {
+  ""
+  url: String
+}
+
+type SEOSocialMastodon {
+  ""
+  url: String
+}
+
+type SEOSocialMySpace {
+  ""
+  url: String
+}
+
+type SEOSocialPinterest {
+  ""
+  metaTag: String
+
+  ""
+  url: String
+}
+
+type SEOSocialTwitter {
+  ""
+  cardType: SEOCardType
+
+  ""
+  enabled: Boolean
+
+  ""
+  username: String
+}
+
+type SEOSocialWikipedia {
+  ""
+  url: String
+}
+
+type SEOSocialYoutube {
+  ""
+  url: String
+}
+
+"The Schema types for Taxonomy"
+type SEOTaxonomySchema {
+  ""
+  raw: String
+}
+
+"The Yoast SEO search appearance Taxonomy types fields"
+type SEOTaxonomyType {
+  ""
+  archive: SEOTaxonomyTypeArchive
+}
+
+"The Yoast SEO search appearance Taxonomy types fields"
+type SEOTaxonomyTypeArchive {
+  ""
+  metaDesc: String
+
+  ""
+  metaRobotsNoindex: Boolean
+
+  ""
+  social: SEOSocialArchive
+
+  ""
+  title: String
+}
+
+"The Yoast SEO archive configuration data for taxonomies"
+type SEOTaxonomyTypes {
+  ""
+  category: SEOTaxonomyType
+
+  ""
+  postFormat: SEOTaxonomyType
+
+  ""
+  tag: SEOTaxonomyType
+}
+
+type SEOUser {
+  ""
+  analysis: SEOAnalysis
+
+  ""
+  breadcrumbTitle: String
+
+  ""
+  canonical: String
+
+  ""
+  fullHead: String
+
+  ""
+  head: SEOHead
+
+  ""
+  language: String
+
+  ""
+  metaDesc: String
+
+  ""
+  metaRobotsNofollow: String
+
+  ""
+  metaRobotsNoindex: String
+
+  ""
+  opengraphDescription: String
+
+  ""
+  opengraphEnabled: Boolean
+
+  ""
+  opengraphFbAppId: String
+
+  ""
+  opengraphImage: MediaItem
+
+  ""
+  opengraphLocale: String
+
+  ""
+  opengraphTitle: String
+
+  ""
+  region: String
+
+  ""
+  relNext: String
+
+  ""
+  relPrev: String
+
+  ""
+  robots: SEORobots
+
+  ""
+  schema: SEOUserSchema
+
+  ""
+  social: SEOUserSocial
+
+  ""
+  title: String
+
+  ""
+  twitterCreator: String
+
+  ""
+  twitterDescription: String
+
+  ""
+  twitterImage: MediaItem
+
+  ""
+  twitterSite: String
+
+  ""
+  twitterTitle: String
+}
+
+"The Schema types for User"
+type SEOUserSchema {
+  ""
+  articleType: [String]
+
+  ""
+  pageType: [String]
+
+  ""
+  raw: String
+}
+
+type SEOUserSocial {
+  ""
+  facebook: String
+
+  ""
+  instagram: String
+
+  ""
+  linkedIn: String
+
+  ""
+  mastodon: String
+
+  ""
+  mySpace: String
+
+  ""
+  pinterest: String
+
+  ""
+  soundCloud: String
+
+  ""
+  twitter: String
+
+  ""
+  wikipedia: String
+
+  ""
+  youTube: String
+}
+
+"The Yoast SEO  webmaster fields"
+type SEOWebmaster {
+  ""
+  baiduVerify: String
+
+  ""
+  googleVerify: String
+
+  ""
+  msVerify: String
+
+  ""
+  yandexVerify: String
+}
+
+enum ScriptLoadingGroupLocationEnum {
+  "Delayed loading at end of document, right before the closing `<body>` tag. (allows content to render first)"
+  FOOTER
+
+  "Early loading in document `<head>` tag. (executes before page content renders)"
+  HEADER
+}
+
+enum ScriptLoadingStrategyEnum {
+  "Load script in parallel with page rendering, executing as soon as downloaded"
+  ASYNC
+
+  "Download script in parallel but defer execution until page is fully parsed"
+  DEFER
+}
+
+input SendPasswordResetEmailInput {
+  clientMutationId: String
+  username: String!
+}
+
+type SendPasswordResetEmailPayload {
+  ""
+  clientMutationId: String
+
+  ""
+  success: Boolean
+
+  ""
+  user: User
+}
+
+type Settings {
+  ""
+  generalSettingsHomeUrl: String
+
+  ""
+  generalSettingsUrl: String
+
+  ""
+  permalinkSettingsCategoryBase: String
+
+  ""
+  permalinkSettingsStructure: String
+
+  ""
+  permalinkSettingsTagBase: String
+}
+
+type Tag implements Node & TermNode & UniformResourceIdentifiable & DatabaseIdentifier & MenuItemLinkable {
+  "Connection between the Tag type and the ContentNode type"
+  contentNodes(after: String, before: String, first: Int, last: Int, where: TagToContentNodeConnectionWhereArgs): TagToContentNodeConnection
+
+  ""
+  count: Int
+
+  ""
+  databaseId: Int!
+
+  ""
+  description: String
+
+  "Connection between the TermNode type and the EnqueuedScript type"
+  enqueuedScripts(after: String, before: String, first: Int, last: Int, where: TermNodeToEnqueuedScriptConnectionWhereArgs): TermNodeToEnqueuedScriptConnection
+
+  "Connection between the TermNode type and the EnqueuedStylesheet type"
+  enqueuedStylesheets(after: String, before: String, first: Int, last: Int, where: TermNodeToEnqueuedStylesheetConnectionWhereArgs): TermNodeToEnqueuedStylesheetConnection
+
+  ""
+  id: ID!
+
+  ""
+  isComment: Boolean!
+
+  ""
+  isContentNode: Boolean!
+
+  ""
+  isFrontPage: Boolean!
+
+  ""
+  isPostsPage: Boolean!
+
+  ""
+  isRestricted: Boolean
+
+  ""
+  isTermNode: Boolean!
+
+  ""
+  link: String
+
+  ""
+  name: String
+
+  "Connection between the Tag type and the post type"
+  posts(after: String, before: String, first: Int, last: Int, where: TagToPostConnectionWhereArgs): TagToPostConnection
+
+  "The Yoast SEO data of the Tags taxonomy."
+  seo: TaxonomySEO
+
+  ""
+  slug: String
+
+  ""
+  tagId: Int
+
+  "Connection between the Tag type and the Taxonomy type"
+  taxonomy: TagToTaxonomyConnectionEdge
+
+  ""
+  taxonomyName: String
+
+  ""
+  termGroupId: Int
+
+  ""
+  termTaxonomyId: Int
+
+  ""
+  uri: String
+}
+
+interface TagConnection implements Connection {
+  ""
+  edges: [TagConnectionEdge!]!
+
+  ""
+  nodes: [Tag!]!
+
+  ""
+  pageInfo: TagConnectionPageInfo!
+}
+
+interface TagConnectionEdge implements Edge {
+  ""
+  cursor: String
+
+  ""
+  node: Tag!
+}
+
+interface TagConnectionPageInfo implements WPPageInfo & PageInfo {
+  ""
+  endCursor: String
+
+  ""
+  hasNextPage: Boolean!
+
+  ""
+  hasPreviousPage: Boolean!
+
+  "Raw schema for page"
+  seo: SEOPostTypePageInfo
+
+  ""
+  startCursor: String
+}
+
+enum TagIdType {
+  "The Database ID for the node"
+  DATABASE_ID
+
+  "The hashed Global ID"
+  ID
+
+  "The name of the node"
+  NAME
+
+  "Url friendly name of the node"
+  SLUG
+
+  "The URI for the node"
+  URI
+}
+
+type TagToContentNodeConnection implements ContentNodeConnection & Connection {
+  ""
+  edges: [TagToContentNodeConnectionEdge!]!
+
+  ""
+  nodes: [ContentNode!]!
+
+  ""
+  pageInfo: TagToContentNodeConnectionPageInfo!
+}
+
+type TagToContentNodeConnectionEdge implements ContentNodeConnectionEdge & Edge {
+  ""
+  cursor: String
+
+  ""
+  node: ContentNode!
+}
+
+type TagToContentNodeConnectionPageInfo implements ContentNodeConnectionPageInfo & WPPageInfo & PageInfo {
+  ""
+  endCursor: String
+
+  ""
+  hasNextPage: Boolean!
+
+  ""
+  hasPreviousPage: Boolean!
+
+  "Raw schema for page"
+  seo: SEOPostTypePageInfo
+
+  ""
+  startCursor: String
+}
+
+input TagToContentNodeConnectionWhereArgs {
+  contentTypes: [ContentTypesOfTagEnum]
+  dateQuery: DateQueryInput
+  hasPassword: Boolean
+  id: Int
+  in: [ID]
+  isSticky: Boolean
+  mimeType: MimeTypeEnum
+  name: String
+  nameIn: [String]
+  notIn: [ID]
+  orderby: [PostObjectsConnectionOrderbyInput]
+  parent: ID
+  parentIn: [ID]
+  parentNotIn: [ID]
+  password: String
+  search: String
+  stati: [PostStatusEnum]
+  status: PostStatusEnum
+  template: ContentTemplateEnum
+  title: String
+}
+
+type TagToPostConnection implements PostConnection & Connection {
+  ""
+  edges: [TagToPostConnectionEdge!]!
+
+  ""
+  nodes: [Post!]!
+
+  ""
+  pageInfo: TagToPostConnectionPageInfo!
+}
+
+type TagToPostConnectionEdge implements PostConnectionEdge & Edge {
+  ""
+  cursor: String
+
+  ""
+  node: Post!
+}
+
+type TagToPostConnectionPageInfo implements PostConnectionPageInfo & WPPageInfo & PageInfo {
+  ""
+  endCursor: String
+
+  ""
+  hasNextPage: Boolean!
+
+  ""
+  hasPreviousPage: Boolean!
+
+  "Raw schema for page"
+  seo: SEOPostTypePageInfo
+
+  ""
+  startCursor: String
+}
+
+input TagToPostConnectionWhereArgs {
+  author: Int
+  authorIn: [ID]
+  authorName: String
+  authorNotIn: [ID]
+  categoryId: Int
+  categoryIn: [ID]
+  categoryName: String
+  categoryNotIn: [ID]
+  dateQuery: DateQueryInput
+  hasPassword: Boolean
+  id: Int
+  in: [ID]
+  isSticky: Boolean
+  mimeType: MimeTypeEnum
+  name: String
+  nameIn: [String]
+  notIn: [ID]
+  orderby: [PostObjectsConnectionOrderbyInput]
+  parent: ID
+  parentIn: [ID]
+  parentNotIn: [ID]
+  password: String
+  search: String
+  stati: [PostStatusEnum]
+  status: PostStatusEnum
+  tag: String
+  tagId: String
+  tagIn: [ID]
+  tagNotIn: [ID]
+  tagSlugAnd: [String]
+  tagSlugIn: [String]
+  template: ContentTemplateEnum
+  title: String
+}
+
+type TagToTaxonomyConnectionEdge implements OneToOneConnection & Edge & TaxonomyConnectionEdge {
+  ""
+  cursor: String
+
+  ""
+  node: Taxonomy!
+}
+
+type Taxonomy implements Node {
+  ""
+  connectedContentTypes(after: String, before: String, first: Int, last: Int): TaxonomyToContentTypeConnection
+
+  ""
+  connectedTerms(after: String, before: String, first: Int, last: Int): TaxonomyToTermNodeConnection
+
+  ""
+  description: String
+
+  ""
+  graphqlPluralName: String
+
+  ""
+  graphqlSingleName: String
+
+  ""
+  hierarchical: Boolean
+
+  ""
+  id: ID!
+
+  ""
+  isRestricted: Boolean
+
+  ""
+  label: String
+
+  ""
+  name: String
+
+  ""
+  public: Boolean
+
+  ""
+  publiclyQueryable: Boolean
+
+  ""
+  restBase: String
+
+  ""
+  restControllerClass: String
+
+  ""
+  showCloud: Boolean
+
+  ""
+  showInAdminColumn: Boolean
+
+  ""
+  showInGraphql: Boolean
+
+  ""
+  showInMenu: Boolean
+
+  ""
+  showInNavMenus: Boolean
+
+  ""
+  showInQuickEdit: Boolean
+
+  ""
+  showInRest: Boolean
+
+  ""
+  showUi: Boolean
+}
+
+interface TaxonomyConnection implements Connection {
+  ""
+  edges: [TaxonomyConnectionEdge!]!
+
+  ""
+  nodes: [Taxonomy!]!
+
+  ""
+  pageInfo: TaxonomyConnectionPageInfo!
+}
+
+interface TaxonomyConnectionEdge implements Edge {
+  ""
+  cursor: String
+
+  ""
+  node: Taxonomy!
+}
+
+interface TaxonomyConnectionPageInfo implements WPPageInfo & PageInfo {
+  ""
+  endCursor: String
+
+  ""
+  hasNextPage: Boolean!
+
+  ""
+  hasPreviousPage: Boolean!
+
+  "Raw schema for page"
+  seo: SEOPostTypePageInfo
+
+  ""
+  startCursor: String
+}
+
+enum TaxonomyEnum {
+  "Taxonomy enum category"
+  CATEGORY
+
+  "Taxonomy enum post_format"
+  POSTFORMAT
+
+  "Taxonomy enum post_tag"
+  TAG
+}
+
+enum TaxonomyIdTypeEnum {
+  "The globally unique ID"
+  ID
+
+  "The name of the taxonomy"
+  NAME
+}
+
+type TaxonomySEO {
+  ""
+  analysis: SEOAnalysis
+
+  ""
+  breadcrumbTitle: String
+
+  ""
+  breadcrumbs: [SEOPostTypeBreadcrumbs]
+
+  ""
+  canonical: String
+
+  ""
+  cornerstone: Boolean
+
+  ""
+  focuskw: String
+
+  ""
+  fullHead: String
+
+  ""
+  head: SEOHead
+
+  ""
+  language: String
+
+  ""
+  metaDesc: String
+
+  ""
+  metaKeywords: String
+
+  ""
+  metaRobotsNofollow: String
+
+  ""
+  metaRobotsNoindex: String
+
+  ""
+  objectLastModified: String
+
+  ""
+  objectPublishedAt: String
+
+  ""
+  opengraphAuthor: String
+
+  ""
+  opengraphDescription: String
+
+  ""
+  opengraphEnabled: Boolean
+
+  ""
+  opengraphFbAppId: String
+
+  ""
+  opengraphImage: MediaItem
+
+  ""
+  opengraphLocale: String
+
+  ""
+  opengraphModifiedTime: String
+
+  ""
+  opengraphPublishedTime: String
+
+  ""
+  opengraphPublisher: String
+
+  ""
+  opengraphSiteName: String
+
+  ""
+  opengraphTitle: String
+
+  ""
+  opengraphType: String
+
+  ""
+  opengraphUrl: String
+
+  ""
+  region: String
+
+  ""
+  relNext: String
+
+  ""
+  relPrev: String
+
+  ""
+  robots: SEORobots
+
+  ""
+  schema: SEOTaxonomySchema
+
+  ""
+  title: String
+
+  ""
+  twitterCardType: String
+
+  ""
+  twitterCreator: String
+
+  ""
+  twitterDescription: String
+
+  ""
+  twitterImage: MediaItem
+
+  ""
+  twitterSite: String
+
+  ""
+  twitterTitle: String
+}
+
+type TaxonomyToContentTypeConnection implements ContentTypeConnection & Connection {
+  ""
+  edges: [TaxonomyToContentTypeConnectionEdge!]!
+
+  ""
+  nodes: [ContentType!]!
+
+  ""
+  pageInfo: TaxonomyToContentTypeConnectionPageInfo!
+}
+
+type TaxonomyToContentTypeConnectionEdge implements ContentTypeConnectionEdge & Edge {
+  ""
+  cursor: String
+
+  ""
+  node: ContentType!
+}
+
+type TaxonomyToContentTypeConnectionPageInfo implements ContentTypeConnectionPageInfo & WPPageInfo & PageInfo {
+  ""
+  endCursor: String
+
+  ""
+  hasNextPage: Boolean!
+
+  ""
+  hasPreviousPage: Boolean!
+
+  "Raw schema for page"
+  seo: SEOPostTypePageInfo
+
+  ""
+  startCursor: String
+}
+
+type TaxonomyToTermNodeConnection implements TermNodeConnection & Connection {
+  ""
+  edges: [TaxonomyToTermNodeConnectionEdge!]!
+
+  ""
+  nodes: [TermNode!]!
+
+  ""
+  pageInfo: TaxonomyToTermNodeConnectionPageInfo!
+}
+
+type TaxonomyToTermNodeConnectionEdge implements TermNodeConnectionEdge & Edge {
+  ""
+  cursor: String
+
+  ""
+  node: TermNode!
+}
+
+type TaxonomyToTermNodeConnectionPageInfo implements TermNodeConnectionPageInfo & WPPageInfo & PageInfo {
+  ""
+  endCursor: String
+
+  ""
+  hasNextPage: Boolean!
+
+  ""
+  hasPreviousPage: Boolean!
+
+  "Raw schema for page"
+  seo: SEOPostTypePageInfo
+
+  ""
+  startCursor: String
+}
+
+interface TermNode implements Node & UniformResourceIdentifiable {
+  ""
+  count: Int
+
+  ""
+  databaseId: Int!
+
+  ""
+  description: String
+
+  "Connection between the TermNode type and the EnqueuedScript type"
+  enqueuedScripts(after: String, before: String, first: Int, last: Int, where: TermNodeToEnqueuedScriptConnectionWhereArgs): TermNodeToEnqueuedScriptConnection
+
+  "Connection between the TermNode type and the EnqueuedStylesheet type"
+  enqueuedStylesheets(after: String, before: String, first: Int, last: Int, where: TermNodeToEnqueuedStylesheetConnectionWhereArgs): TermNodeToEnqueuedStylesheetConnection
+
+  ""
+  id: ID!
+
+  ""
+  isComment: Boolean!
+
+  ""
+  isContentNode: Boolean!
+
+  ""
+  isFrontPage: Boolean!
+
+  ""
+  isPostsPage: Boolean!
+
+  ""
+  isRestricted: Boolean
+
+  ""
+  isTermNode: Boolean!
+
+  ""
+  link: String
+
+  ""
+  name: String
+
+  ""
+  slug: String
+
+  ""
+  taxonomyName: String
+
+  ""
+  termGroupId: Int
+
+  ""
+  termTaxonomyId: Int
+
+  ""
+  uri: String
+}
+
+interface TermNodeConnection implements Connection {
+  ""
+  edges: [TermNodeConnectionEdge!]!
+
+  ""
+  nodes: [TermNode!]!
+
+  ""
+  pageInfo: TermNodeConnectionPageInfo!
+}
+
+interface TermNodeConnectionEdge implements Edge {
+  ""
+  cursor: String
+
+  ""
+  node: TermNode!
+}
+
+interface TermNodeConnectionPageInfo implements WPPageInfo & PageInfo {
+  ""
+  endCursor: String
+
+  ""
+  hasNextPage: Boolean!
+
+  ""
+  hasPreviousPage: Boolean!
+
+  "Raw schema for page"
+  seo: SEOPostTypePageInfo
+
+  ""
+  startCursor: String
+}
+
+enum TermNodeIdTypeEnum {
+  "The Database ID for the node"
+  DATABASE_ID
+
+  "The hashed Global ID"
+  ID
+
+  "The name of the node"
+  NAME
+
+  "Url friendly name of the node"
+  SLUG
+
+  "The URI for the node"
+  URI
+}
+
+type TermNodeToEnqueuedScriptConnection implements EnqueuedScriptConnection & Connection {
+  ""
+  edges: [TermNodeToEnqueuedScriptConnectionEdge!]!
+
+  ""
+  nodes: [EnqueuedScript!]!
+
+  ""
+  pageInfo: TermNodeToEnqueuedScriptConnectionPageInfo!
+}
+
+type TermNodeToEnqueuedScriptConnectionEdge implements EnqueuedScriptConnectionEdge & Edge {
+  ""
+  cursor: String
+
+  ""
+  node: EnqueuedScript!
+}
+
+type TermNodeToEnqueuedScriptConnectionPageInfo implements EnqueuedScriptConnectionPageInfo & WPPageInfo & PageInfo {
+  ""
+  endCursor: String
+
+  ""
+  hasNextPage: Boolean!
+
+  ""
+  hasPreviousPage: Boolean!
+
+  "Raw schema for page"
+  seo: SEOPostTypePageInfo
+
+  ""
+  startCursor: String
+}
+
+input TermNodeToEnqueuedScriptConnectionWhereArgs {
+  handlesIn: [String]
+}
+
+type TermNodeToEnqueuedStylesheetConnection implements EnqueuedStylesheetConnection & Connection {
+  ""
+  edges: [TermNodeToEnqueuedStylesheetConnectionEdge!]!
+
+  ""
+  nodes: [EnqueuedStylesheet!]!
+
+  ""
+  pageInfo: TermNodeToEnqueuedStylesheetConnectionPageInfo!
+}
+
+type TermNodeToEnqueuedStylesheetConnectionEdge implements EnqueuedStylesheetConnectionEdge & Edge {
+  ""
+  cursor: String
+
+  ""
+  node: EnqueuedStylesheet!
+}
+
+type TermNodeToEnqueuedStylesheetConnectionPageInfo implements EnqueuedStylesheetConnectionPageInfo & WPPageInfo & PageInfo {
+  ""
+  endCursor: String
+
+  ""
+  hasNextPage: Boolean!
+
+  ""
+  hasPreviousPage: Boolean!
+
+  "Raw schema for page"
+  seo: SEOPostTypePageInfo
+
+  ""
+  startCursor: String
+}
+
+input TermNodeToEnqueuedStylesheetConnectionWhereArgs {
+  handlesIn: [String]
+}
+
+enum TermObjectsConnectionOrderbyEnum {
+  "Ordering by number of associated content items."
+  COUNT
+
+  "Alphabetical ordering by term description text."
+  DESCRIPTION
+
+  "Alphabetical ordering by term name."
+  NAME
+
+  "Alphabetical ordering by URL-friendly name."
+  SLUG
+
+  "Ordering by assigned term grouping value."
+  TERM_GROUP
+
+  "Ordering by internal identifier."
+  TERM_ID
+
+  "Ordering by manually defined sort position."
+  TERM_ORDER
+}
+
+type Theme implements Node {
+  ""
+  author: String
+
+  ""
+  authorUri: String
+
+  ""
+  description: String
+
+  ""
+  id: ID!
+
+  ""
+  isRestricted: Boolean
+
+  ""
+  name: String
+
+  ""
+  screenshot: String
+
+  ""
+  slug: String
+
+  ""
+  tags: [String]
+
+  ""
+  themeUri: String
+
+  ""
+  version: String
+}
+
+interface ThemeConnection implements Connection {
+  ""
+  edges: [ThemeConnectionEdge!]!
+
+  ""
+  nodes: [Theme!]!
+
+  ""
+  pageInfo: ThemeConnectionPageInfo!
+}
+
+interface ThemeConnectionEdge implements Edge {
+  ""
+  cursor: String
+
+  ""
+  node: Theme!
+}
+
+interface ThemeConnectionPageInfo implements WPPageInfo & PageInfo {
+  ""
+  endCursor: String
+
+  ""
+  hasNextPage: Boolean!
+
+  ""
+  hasPreviousPage: Boolean!
+
+  "Raw schema for page"
+  seo: SEOPostTypePageInfo
+
+  ""
+  startCursor: String
+}
+
+interface UniformResourceIdentifiable implements Node {
+  ""
+  id: ID!
+
+  ""
+  isComment: Boolean!
+
+  ""
+  isContentNode: Boolean!
+
+  ""
+  isFrontPage: Boolean!
+
+  ""
+  isPostsPage: Boolean!
+
+  ""
+  isTermNode: Boolean!
+
+  ""
+  uri: String
+}
+
+input UpdateCategoryInput {
+  aliasOf: String
+  clientMutationId: String
+  description: String
+  id: ID!
+  name: String
+  parentDatabaseId: Int
+  parentId: ID
+  slug: String
+}
+
+type UpdateCategoryPayload {
+  ""
+  category: Category
+
+  ""
+  clientMutationId: String
+}
+
+input UpdateCommentInput {
+  approved: String
+  author: String
+  authorEmail: String
+  authorUrl: String
+  clientMutationId: String
+  commentOn: Int
+  content: String
+  date: String
+  id: ID!
+  parent: ID
+  status: CommentStatusEnum
+  type: String
+}
+
+type UpdateCommentPayload {
+  ""
+  clientMutationId: String
+
+  ""
+  comment: Comment
+
+  ""
+  success: Boolean
+}
+
+input UpdateMediaItemInput {
+  altText: String
+  authorId: ID
+  caption: String
+  clientMutationId: String
+  commentStatus: String
+  date: String
+  dateGmt: String
+  description: String
+  filePath: String
+  fileType: MimeTypeEnum
+  id: ID!
+  parentId: ID
+  pingStatus: String
+  slug: String
+  status: MediaItemStatusEnum
+  title: String
+}
+
+type UpdateMediaItemPayload {
+  ""
+  clientMutationId: String
+
+  ""
+  mediaItem: MediaItem
+}
+
+input UpdatePageInput {
+  authorId: ID
+  clientMutationId: String
+  commentStatus: String
+  content: String
+  date: String
+  id: ID!
+  ignoreEditLock: Boolean
+  menuOrder: Int
+  parentId: ID
+  password: String
+  slug: String
+  status: PostStatusEnum
+  title: String
+}
+
+type UpdatePagePayload {
+  ""
+  clientMutationId: String
+
+  ""
+  page: Page
+}
+
+input UpdatePostFormatInput {
+  aliasOf: String
+  clientMutationId: String
+  description: String
+  id: ID!
+  name: String
+  slug: String
+}
+
+type UpdatePostFormatPayload {
+  ""
+  clientMutationId: String
+
+  ""
+  postFormat: PostFormat
+}
+
+input UpdatePostInput {
+  authorId: ID
+  categories: PostCategoriesInput
+  clientMutationId: String
+  commentStatus: String
+  content: String
+  date: String
+  excerpt: String
+  id: ID!
+  ignoreEditLock: Boolean
+  menuOrder: Int
+  password: String
+  pingStatus: String
+  pinged: [String]
+  postFormats: PostPostFormatsInput
+  slug: String
+  status: PostStatusEnum
+  tags: PostTagsInput
+  title: String
+  toPing: [String]
+}
+
+type UpdatePostPayload {
+  ""
+  clientMutationId: String
+
+  ""
+  post: Post
+}
+
+input UpdateTagInput {
+  aliasOf: String
+  clientMutationId: String
+  description: String
+  id: ID!
+  name: String
+  slug: String
+}
+
+type UpdateTagPayload {
+  ""
+  clientMutationId: String
+
+  ""
+  tag: Tag
+}
+
+input UpdateUserInput {
+  aim: String
+  clientMutationId: String
+  description: String
+  displayName: String
+  email: String
+  firstName: String
+  id: ID!
+  jabber: String
+  lastName: String
+  locale: String
+  nicename: String
+  nickname: String
+  password: String
+  registered: String
+  richEditing: String
+  roles: [String]
+  websiteUrl: String
+  yim: String
+}
+
+type UpdateUserPayload {
+  ""
+  clientMutationId: String
+
+  ""
+  user: User
+}
+
+type User implements Node & UniformResourceIdentifiable & Commenter & DatabaseIdentifier {
+  ""
+  adminColor: String
+
+  ""
+  avatar(forceDefault: Boolean, rating: AvatarRatingEnum, size: Int = 96): Avatar
+
+  ""
+  capKey: String
+
+  ""
+  capabilities: [String]
+
+  "Connection between the User type and the Comment type"
+  comments(after: String, before: String, first: Int, last: Int, where: UserToCommentConnectionWhereArgs): UserToCommentConnection
+
+  ""
+  databaseId: Int!
+
+  ""
+  description: String
+
+  ""
+  email: String
+
+  "Connection between the User type and the EnqueuedScript type"
+  enqueuedScripts(after: String, before: String, first: Int, last: Int, where: UserToEnqueuedScriptConnectionWhereArgs): UserToEnqueuedScriptConnection
+
+  "Connection between the User type and the EnqueuedStylesheet type"
+  enqueuedStylesheets(after: String, before: String, first: Int, last: Int, where: UserToEnqueuedStylesheetConnectionWhereArgs): UserToEnqueuedStylesheetConnection
+
+  ""
+  extraCapabilities: [String]
+
+  ""
+  firstName: String
+
+  ""
+  hasCommentShortcutsEnabled: Boolean
+
+  ""
+  hasRichEditingEnabled: Boolean
+
+  ""
+  hasSyntaxHighlightingEnabled: Boolean
+
+  ""
+  id: ID!
+
+  ""
+  isComment: Boolean!
+
+  ""
+  isContentNode: Boolean!
+
+  ""
+  isFrontPage: Boolean!
+
+  ""
+  isPostsPage: Boolean!
+
+  ""
+  isRestricted: Boolean
+
+  ""
+  isTermNode: Boolean!
+
+  ""
+  lastName: String
+
+  ""
+  locale: String
+
+  "Connection between the User type and the mediaItem type"
+  mediaItems(after: String, before: String, first: Int, last: Int, where: UserToMediaItemConnectionWhereArgs): UserToMediaItemConnection
+
+  ""
+  name: String
+
+  ""
+  nicename: String
+
+  ""
+  nickname: String
+
+  "Connection between the User type and the page type"
+  pages(after: String, before: String, first: Int, last: Int, where: UserToPageConnectionWhereArgs): UserToPageConnection
+
+  "Connection between the User type and the post type"
+  posts(after: String, before: String, first: Int, last: Int, where: UserToPostConnectionWhereArgs): UserToPostConnection
+
+  ""
+  registeredDate: String
+
+  ""
+  revisions(after: String, before: String, first: Int, last: Int, where: UserToRevisionsConnectionWhereArgs): UserToRevisionsConnection
+
+  "Connection between the User type and the UserRole type"
+  roles(after: String, before: String, first: Int, last: Int): UserToUserRoleConnection
+
+  "The Yoast SEO data of a user"
+  seo: SEOUser
+
+  ""
+  shouldShowAdminToolbar: Boolean
+
+  ""
+  slug: String
+
+  ""
+  uri: String
+
+  ""
+  url: String
+
+  ""
+  userId: Int
+
+  ""
+  username: String
+}
+
+interface UserConnection implements Connection {
+  ""
+  edges: [UserConnectionEdge!]!
+
+  ""
+  nodes: [User!]!
+
+  ""
+  pageInfo: UserConnectionPageInfo!
+}
+
+interface UserConnectionEdge implements Edge {
+  ""
+  cursor: String
+
+  ""
+  node: User!
+}
+
+interface UserConnectionPageInfo implements WPPageInfo & PageInfo {
+  ""
+  endCursor: String
+
+  ""
+  hasNextPage: Boolean!
+
+  ""
+  hasPreviousPage: Boolean!
+
+  "Raw schema for page"
+  seo: SEOPostTypePageInfo
+
+  ""
+  startCursor: String
+}
+
+enum UserNodeIdTypeEnum {
+  "The Database ID for the node"
+  DATABASE_ID
+
+  "The Email of the User"
+  EMAIL
+
+  "The hashed Global ID"
+  ID
+
+  "The slug of the User"
+  SLUG
+
+  "The URI for the node"
+  URI
+
+  "The username the User uses to login with"
+  USERNAME
+}
+
+type UserRole implements Node {
+  ""
+  capabilities: [String]
+
+  ""
+  displayName: String
+
+  ""
+  id: ID!
+
+  ""
+  isRestricted: Boolean
+
+  ""
+  name: String
+}
+
+interface UserRoleConnection implements Connection {
+  ""
+  edges: [UserRoleConnectionEdge!]!
+
+  ""
+  nodes: [UserRole!]!
+
+  ""
+  pageInfo: UserRoleConnectionPageInfo!
+}
+
+interface UserRoleConnectionEdge implements Edge {
+  ""
+  cursor: String
+
+  ""
+  node: UserRole!
+}
+
+interface UserRoleConnectionPageInfo implements WPPageInfo & PageInfo {
+  ""
+  endCursor: String
+
+  ""
+  hasNextPage: Boolean!
+
+  ""
+  hasPreviousPage: Boolean!
+
+  "Raw schema for page"
+  seo: SEOPostTypePageInfo
+
+  ""
+  startCursor: String
+}
+
+enum UserRoleEnum {
+  "Full system access with ability to manage all aspects of the site."
+  ADMINISTRATOR
+
+  "Can publish and manage their own content."
+  AUTHOR
+
+  "Can write and manage their own content but cannot publish."
+  CONTRIBUTOR
+
+  "Content management access without administrative capabilities."
+  EDITOR
+
+  "User role with specific capabilities"
+  SEO_EDITOR
+
+  "User role with specific capabilities"
+  SEO_MANAGER
+
+  "Can only manage their profile and read content."
+  SUBSCRIBER
+}
+
+type UserToCommentConnection implements CommentConnection & Connection {
+  ""
+  edges: [UserToCommentConnectionEdge!]!
+
+  ""
+  nodes: [Comment!]!
+
+  ""
+  pageInfo: UserToCommentConnectionPageInfo!
+}
+
+type UserToCommentConnectionEdge implements CommentConnectionEdge & Edge {
+  ""
+  cursor: String
+
+  ""
+  node: Comment!
+}
+
+type UserToCommentConnectionPageInfo implements CommentConnectionPageInfo & WPPageInfo & PageInfo {
+  ""
+  endCursor: String
+
+  ""
+  hasNextPage: Boolean!
+
+  ""
+  hasPreviousPage: Boolean!
+
+  "Raw schema for page"
+  seo: SEOPostTypePageInfo
+
+  ""
+  startCursor: String
+}
+
+input UserToCommentConnectionWhereArgs {
+  authorEmail: String
+  authorIn: [ID]
+  authorNotIn: [ID]
+  authorUrl: String
+  commentIn: [ID]
+  commentNotIn: [ID]
+  commentType: String
+  commentTypeIn: [String]
+  commentTypeNotIn: String
+  contentAuthor: [ID]
+  contentAuthorIn: [ID]
+  contentAuthorNotIn: [ID]
+  contentId: ID
+  contentIdIn: [ID]
+  contentIdNotIn: [ID]
+  contentName: String
+  contentParent: Int
+  contentStatus: [PostStatusEnum]
+  contentType: [ContentTypeEnum]
+  includeUnapproved: [ID]
+  karma: Int
+  order: OrderEnum
+  orderby: CommentsConnectionOrderbyEnum
+  parent: Int
+  parentIn: [ID]
+  parentNotIn: [ID]
+  search: String
+  status: String
+  statusIn: [CommentStatusEnum]
+  userId: ID
+}
+
+type UserToEnqueuedScriptConnection implements EnqueuedScriptConnection & Connection {
+  ""
+  edges: [UserToEnqueuedScriptConnectionEdge!]!
+
+  ""
+  nodes: [EnqueuedScript!]!
+
+  ""
+  pageInfo: UserToEnqueuedScriptConnectionPageInfo!
+}
+
+type UserToEnqueuedScriptConnectionEdge implements EnqueuedScriptConnectionEdge & Edge {
+  ""
+  cursor: String
+
+  ""
+  node: EnqueuedScript!
+}
+
+type UserToEnqueuedScriptConnectionPageInfo implements EnqueuedScriptConnectionPageInfo & WPPageInfo & PageInfo {
+  ""
+  endCursor: String
+
+  ""
+  hasNextPage: Boolean!
+
+  ""
+  hasPreviousPage: Boolean!
+
+  "Raw schema for page"
+  seo: SEOPostTypePageInfo
+
+  ""
+  startCursor: String
+}
+
+input UserToEnqueuedScriptConnectionWhereArgs {
+  handlesIn: [String]
+}
+
+type UserToEnqueuedStylesheetConnection implements EnqueuedStylesheetConnection & Connection {
+  ""
+  edges: [UserToEnqueuedStylesheetConnectionEdge!]!
+
+  ""
+  nodes: [EnqueuedStylesheet!]!
+
+  ""
+  pageInfo: UserToEnqueuedStylesheetConnectionPageInfo!
+}
+
+type UserToEnqueuedStylesheetConnectionEdge implements EnqueuedStylesheetConnectionEdge & Edge {
+  ""
+  cursor: String
+
+  ""
+  node: EnqueuedStylesheet!
+}
+
+type UserToEnqueuedStylesheetConnectionPageInfo implements EnqueuedStylesheetConnectionPageInfo & WPPageInfo & PageInfo {
+  ""
+  endCursor: String
+
+  ""
+  hasNextPage: Boolean!
+
+  ""
+  hasPreviousPage: Boolean!
+
+  "Raw schema for page"
+  seo: SEOPostTypePageInfo
+
+  ""
+  startCursor: String
+}
+
+input UserToEnqueuedStylesheetConnectionWhereArgs {
+  handlesIn: [String]
+}
+
+type UserToMediaItemConnection implements MediaItemConnection & Connection {
+  ""
+  edges: [UserToMediaItemConnectionEdge!]!
+
+  ""
+  nodes: [MediaItem!]!
+
+  ""
+  pageInfo: UserToMediaItemConnectionPageInfo!
+}
+
+type UserToMediaItemConnectionEdge implements MediaItemConnectionEdge & Edge {
+  ""
+  cursor: String
+
+  ""
+  node: MediaItem!
+}
+
+type UserToMediaItemConnectionPageInfo implements MediaItemConnectionPageInfo & WPPageInfo & PageInfo {
+  ""
+  endCursor: String
+
+  ""
+  hasNextPage: Boolean!
+
+  ""
+  hasPreviousPage: Boolean!
+
+  "Raw schema for page"
+  seo: SEOPostTypePageInfo
+
+  ""
+  startCursor: String
+}
+
+input UserToMediaItemConnectionWhereArgs {
+  author: Int
+  authorIn: [ID]
+  authorName: String
+  authorNotIn: [ID]
+  dateQuery: DateQueryInput
+  hasPassword: Boolean
+  id: Int
+  in: [ID]
+  isSticky: Boolean
+  mimeType: MimeTypeEnum
+  name: String
+  nameIn: [String]
+  notIn: [ID]
+  orderby: [PostObjectsConnectionOrderbyInput]
+  parent: ID
+  parentIn: [ID]
+  parentNotIn: [ID]
+  password: String
+  search: String
+  stati: [PostStatusEnum]
+  status: PostStatusEnum
+  template: ContentTemplateEnum
+  title: String
+}
+
+type UserToPageConnection implements PageConnection & Connection {
+  ""
+  edges: [UserToPageConnectionEdge!]!
+
+  ""
+  nodes: [Page!]!
+
+  ""
+  pageInfo: UserToPageConnectionPageInfo!
+}
+
+type UserToPageConnectionEdge implements PageConnectionEdge & Edge {
+  ""
+  cursor: String
+
+  ""
+  node: Page!
+}
+
+type UserToPageConnectionPageInfo implements PageConnectionPageInfo & WPPageInfo & PageInfo {
+  ""
+  endCursor: String
+
+  ""
+  hasNextPage: Boolean!
+
+  ""
+  hasPreviousPage: Boolean!
+
+  "Raw schema for page"
+  seo: SEOPostTypePageInfo
+
+  ""
+  startCursor: String
+}
+
+input UserToPageConnectionWhereArgs {
+  author: Int
+  authorIn: [ID]
+  authorName: String
+  authorNotIn: [ID]
+  dateQuery: DateQueryInput
+  hasPassword: Boolean
+  id: Int
+  in: [ID]
+  isSticky: Boolean
+  mimeType: MimeTypeEnum
+  name: String
+  nameIn: [String]
+  notIn: [ID]
+  orderby: [PostObjectsConnectionOrderbyInput]
+  parent: ID
+  parentIn: [ID]
+  parentNotIn: [ID]
+  password: String
+  search: String
+  stati: [PostStatusEnum]
+  status: PostStatusEnum
+  template: ContentTemplateEnum
+  title: String
+}
+
+type UserToPostConnection implements PostConnection & Connection {
+  ""
+  edges: [UserToPostConnectionEdge!]!
+
+  ""
+  nodes: [Post!]!
+
+  ""
+  pageInfo: UserToPostConnectionPageInfo!
+}
+
+type UserToPostConnectionEdge implements PostConnectionEdge & Edge {
+  ""
+  cursor: String
+
+  ""
+  node: Post!
+}
+
+type UserToPostConnectionPageInfo implements PostConnectionPageInfo & WPPageInfo & PageInfo {
+  ""
+  endCursor: String
+
+  ""
+  hasNextPage: Boolean!
+
+  ""
+  hasPreviousPage: Boolean!
+
+  "Raw schema for page"
+  seo: SEOPostTypePageInfo
+
+  ""
+  startCursor: String
+}
+
+input UserToPostConnectionWhereArgs {
+  author: Int
+  authorIn: [ID]
+  authorName: String
+  authorNotIn: [ID]
+  categoryId: Int
+  categoryIn: [ID]
+  categoryName: String
+  categoryNotIn: [ID]
+  dateQuery: DateQueryInput
+  hasPassword: Boolean
+  id: Int
+  in: [ID]
+  isSticky: Boolean
+  mimeType: MimeTypeEnum
+  name: String
+  nameIn: [String]
+  notIn: [ID]
+  orderby: [PostObjectsConnectionOrderbyInput]
+  parent: ID
+  parentIn: [ID]
+  parentNotIn: [ID]
+  password: String
+  search: String
+  stati: [PostStatusEnum]
+  status: PostStatusEnum
+  tag: String
+  tagId: String
+  tagIn: [ID]
+  tagNotIn: [ID]
+  tagSlugAnd: [String]
+  tagSlugIn: [String]
+  template: ContentTemplateEnum
+  title: String
+}
+
+type UserToRevisionsConnection implements ContentNodeConnection & Connection {
+  ""
+  edges: [UserToRevisionsConnectionEdge!]!
+
+  ""
+  nodes: [ContentNode!]!
+
+  ""
+  pageInfo: UserToRevisionsConnectionPageInfo!
+}
+
+type UserToRevisionsConnectionEdge implements ContentNodeConnectionEdge & Edge {
+  ""
+  cursor: String
+
+  ""
+  node: ContentNode!
+}
+
+type UserToRevisionsConnectionPageInfo implements ContentNodeConnectionPageInfo & WPPageInfo & PageInfo {
+  ""
+  endCursor: String
+
+  ""
+  hasNextPage: Boolean!
+
+  ""
+  hasPreviousPage: Boolean!
+
+  "Raw schema for page"
+  seo: SEOPostTypePageInfo
+
+  ""
+  startCursor: String
+}
+
+input UserToRevisionsConnectionWhereArgs {
+  contentTypes: [ContentTypeEnum]
+  dateQuery: DateQueryInput
+  hasPassword: Boolean
+  id: Int
+  in: [ID]
+  isSticky: Boolean
+  mimeType: MimeTypeEnum
+  name: String
+  nameIn: [String]
+  notIn: [ID]
+  orderby: [PostObjectsConnectionOrderbyInput]
+  parent: ID
+  parentIn: [ID]
+  parentNotIn: [ID]
+  password: String
+  search: String
+  stati: [PostStatusEnum]
+  status: PostStatusEnum
+  template: ContentTemplateEnum
+  title: String
+}
+
+type UserToUserRoleConnection implements UserRoleConnection & Connection {
+  ""
+  edges: [UserToUserRoleConnectionEdge!]!
+
+  ""
+  nodes: [UserRole!]!
+
+  ""
+  pageInfo: UserToUserRoleConnectionPageInfo!
+}
+
+type UserToUserRoleConnectionEdge implements UserRoleConnectionEdge & Edge {
+  ""
+  cursor: String
+
+  ""
+  node: UserRole!
+}
+
+type UserToUserRoleConnectionPageInfo implements UserRoleConnectionPageInfo & WPPageInfo & PageInfo {
+  ""
+  endCursor: String
+
+  ""
+  hasNextPage: Boolean!
+
+  ""
+  hasPreviousPage: Boolean!
+
+  "Raw schema for page"
+  seo: SEOPostTypePageInfo
+
+  ""
+  startCursor: String
+}
+
+enum UsersConnectionOrderbyEnum {
+  "Order by display name"
+  DISPLAY_NAME
+
+  "Order by email address"
+  EMAIL
+
+  "Order by login"
+  LOGIN
+
+  "Preserve the login order given in the LOGIN_IN array"
+  LOGIN_IN
+
+  "Order by nice name"
+  NICE_NAME
+
+  "Preserve the nice name order given in the NICE_NAME_IN array"
+  NICE_NAME_IN
+
+  "Order by registration date"
+  REGISTERED
+
+  "Order by URL"
+  URL
+}
+
+input UsersConnectionOrderbyInput {
+  field: UsersConnectionOrderbyEnum!
+  order: OrderEnum
+}
+
+enum UsersConnectionSearchColumnEnum {
+  "The user's email address."
+  EMAIL
+
+  "The globally unique ID."
+  ID
+
+  "The username the User uses to login with."
+  LOGIN
+
+  "A URL-friendly name for the user. The default is the user's username."
+  NICENAME
+
+  "The URL of the user's website."
+  URL
+}
+
+interface WPPageInfo implements PageInfo {
+  ""
+  endCursor: String
+
+  ""
+  hasNextPage: Boolean!
+
+  ""
+  hasPreviousPage: Boolean!
+
+  "Raw schema for page"
+  seo: SEOPostTypePageInfo
+
+  ""
+  startCursor: String
+}
+
+"Provides access to fields of the &quot;BlooikosCompanyFields&quot; ACF Field Group via the &quot;blooikosCompanyFields&quot; field"
+interface WithAcfBlooikosCompanyFields {
+  "Fields of the BlooikosCompanyFields ACF Field Group"
+  blooikosCompanyFields: BlooikosCompanyFields
+}
+
+"Provides access to fields of the &quot;BlooikosHomeAbout&quot; ACF Field Group via the &quot;blooikosHomeAbout&quot; field"
+interface WithAcfBlooikosHomeAbout {
+  "Fields of the BlooikosHomeAbout ACF Field Group"
+  blooikosHomeAbout: BlooikosHomeAbout
+}
+
+"Provides access to fields of the &quot;BlooikosHomeCompanies&quot; ACF Field Group via the &quot;blooikosHomeCompanies&quot; field"
+interface WithAcfBlooikosHomeCompanies {
+  "Fields of the BlooikosHomeCompanies ACF Field Group"
+  blooikosHomeCompanies: BlooikosHomeCompanies
+}
+
+"Provides access to fields of the &quot;BlooikosHomeContact&quot; ACF Field Group via the &quot;blooikosHomeContact&quot; field"
+interface WithAcfBlooikosHomeContact {
+  "Fields of the BlooikosHomeContact ACF Field Group"
+  blooikosHomeContact: BlooikosHomeContact
+}
+
+"Provides access to fields of the &quot;BlooikosHomeHero&quot; ACF Field Group via the &quot;blooikosHomeHero&quot; field"
+interface WithAcfBlooikosHomeHero {
+  "Fields of the BlooikosHomeHero ACF Field Group"
+  blooikosHomeHero: BlooikosHomeHero
+}
+
+"Provides access to fields of the &quot;BlooikosHomeIndicators&quot; ACF Field Group via the &quot;blooikosHomeIndicators&quot; field"
+interface WithAcfBlooikosHomeIndicators {
+  "Fields of the BlooikosHomeIndicators ACF Field Group"
+  blooikosHomeIndicators: BlooikosHomeIndicators
+}
+
+"Provides access to fields of the &quot;BlooikosHomeInstitutional&quot; ACF Field Group via the &quot;blooikosHomeInstitutional&quot; field"
+interface WithAcfBlooikosHomeInstitutional {
+  "Fields of the BlooikosHomeInstitutional ACF Field Group"
+  blooikosHomeInstitutional: BlooikosHomeInstitutional
+}
+
+"Provides access to fields of the &quot;BlooikosHomeServices&quot; ACF Field Group via the &quot;blooikosHomeServices&quot; field"
+interface WithAcfBlooikosHomeServices {
+  "Fields of the BlooikosHomeServices ACF Field Group"
+  blooikosHomeServices: BlooikosHomeServices
+}
+
+"Provides access to fields of the &quot;BlooikosSiteContact&quot; ACF Field Group via the &quot;blooikosSiteContact&quot; field"
+interface WithAcfBlooikosSiteContact {
+  "Fields of the BlooikosSiteContact ACF Field Group"
+  blooikosSiteContact: BlooikosSiteContact
+}
+
+"Provides access to fields of the &quot;BlooikosSiteFooter&quot; ACF Field Group via the &quot;blooikosSiteFooter&quot; field"
+interface WithAcfBlooikosSiteFooter {
+  "Fields of the BlooikosSiteFooter ACF Field Group"
+  blooikosSiteFooter: BlooikosSiteFooter
+}
+
+"Provides access to fields of the &quot;BlooikosSiteIdentity&quot; ACF Field Group via the &quot;blooikosSiteIdentity&quot; field"
+interface WithAcfBlooikosSiteIdentity {
+  "Fields of the BlooikosSiteIdentity ACF Field Group"
+  blooikosSiteIdentity: BlooikosSiteIdentity
+}
+
+"Access point for the &quot;BlooikosSettings&quot; ACF Options Page"
+interface WithAcfOptionsPageBlooikosSettings {
+  ""
+  blooikosSettings: BlooikosSettings
+}
