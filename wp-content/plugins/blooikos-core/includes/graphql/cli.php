@@ -13,22 +13,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
- * Executa uma leitura anônima e restaura o usuário mesmo em caso de erro.
- *
- * @param callable $callback Leitura local.
- * @return mixed
- */
-function blooikos_core_graphql_anonymous( $callback ) {
-	$user_id = get_current_user_id();
-	wp_set_current_user( 0 );
-	try {
-		return $callback();
-	} finally {
-		wp_set_current_user( $user_id );
-	}
-}
-
-/**
  * Diretório portátil dos artefatos do plugin.
  *
  * @return string
@@ -88,7 +72,8 @@ function blooikos_core_graphql_manifest( $schema, $sdl, $operations ) {
 	}
 	return array(
 		'contractVersion' => BLOOIKOS_CORE_CONTRACT_VERSION,
-		'pluginVersion'   => BLOOIKOS_CORE_VERSION,
+		// Proveniência do contrato editorial 1.0.0; o módulo operacional 0.4 não o altera.
+		'pluginVersion'   => '0.3.0',
 		'dependencies'    => array(
 			'wordpress'    => get_bloginfo( 'version' ),
 			'php'          => PHP_VERSION,
