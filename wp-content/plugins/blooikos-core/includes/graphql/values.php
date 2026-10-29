@@ -36,7 +36,7 @@ function blooikos_core_graphql_raw_value( $source, $field ) {
  */
 function blooikos_core_graphql_scalar( $value, $field ) {
 	$type   = $field['type'];
-	$absent = null === $value || false === $value || '' === $value;
+	$absent = null === $value || false === $value || ( is_string( $value ) && '' === trim( $value ) );
 	if ( 'true_false' === $type ) {
 		if ( ! $absent && ! in_array( $value, array( 0, 1, '0', '1', true ), true ) ) {
 			blooikos_core_graphql_fail();
@@ -44,7 +44,9 @@ function blooikos_core_graphql_scalar( $value, $field ) {
 		return (bool) $value;
 	}
 	if ( 'select' === $type ) {
-		$value = $absent ? $field['default_value'] : $value;
+		if ( $absent ) {
+			return null;
+		}
 		if ( is_array( $value ) ) {
 			$value = 1 === count( $value ) ? reset( $value ) : null;
 		}
@@ -57,10 +59,7 @@ function blooikos_core_graphql_scalar( $value, $field ) {
 		return null;
 	}
 	if ( 'link' === $type ) {
-		if ( true !== blooikos_core_validate_link( $value ) ) {
-			blooikos_core_graphql_fail();
-		}
-		if ( '' === ( $value['url'] ?? '' ) ) {
+		if ( ! is_array( $value ) || ! is_string( $value['title'] ?? null ) || '' === trim( $value['title'] ) || ! is_string( $value['url'] ?? null ) || '' === trim( $value['url'] ) || true !== blooikos_core_validate_link( $value ) ) {
 			return null;
 		}
 		return blooikos_core_sanitize_field( $value, 0, $field );

@@ -24,14 +24,30 @@ function blooikos_core_rebuild_options() {
  * @return array
  */
 function blooikos_core_rebuild_dependencies() {
-	$deps         = array(
+	$deps              = array(
 		'companies' => array_map( 'intval', array_merge( (array) get_option( 'options_blooikos_site_footer_companies', array() ), (array) get_option( 'options_blooikos_site_contact_company', array() ) ) ),
 		'media'     => array_map( 'intval', array( get_option( 'options_blooikos_site_logo' ), get_option( 'options_blooikos_site_logo_inverse' ) ) ),
 	);
-	$deps['home'] = 'home-hero' === blooikos_core_rebuild_profile() && 'page' === get_option( 'show_on_front' ) ? (int) get_option( 'page_on_front' ) : 0;
+	$deps['home']      = 'page' === get_option( 'show_on_front' ) ? (int) get_option( 'page_on_front' ) : 0;
+	$cards             = $deps['home'] ? (array) get_post_meta( $deps['home'], 'blooikos_home_about_companies', true ) : array();
+	$featured          = $deps['home'] ? (array) get_post_meta( $deps['home'], 'blooikos_home_companies_featured', true ) : array();
+	$deps['companies'] = array_values( array_unique( array_map( 'intval', array_merge( $deps['companies'], $cards, $featured ) ) ) );
 	if ( $deps['home'] ) {
-		$deps['media'][] = (int) get_post_meta( $deps['home'], 'blooikos_home_hero_background', true );
+		foreach ( get_post_meta( $deps['home'] ) as $key => $values ) {
+			if ( in_array( $key, array( 'blooikos_home_hero_background', 'blooikos_home_institutional_image' ), true ) || preg_match( '/^blooikos_home_services_items_[0-9]+_icon$/D', $key ) ) {
+				$deps['media'][] = (int) ( $values[0] ?? 0 );
+			}
+		}
 	}
+	foreach ( $cards as $id ) {
+		$deps['media'][] = (int) get_post_meta( (int) $id, 'blooikos_company_card_icon', true );
+	}
+	foreach ( $featured as $id ) {
+		foreach ( array( 'logo', 'image' ) as $field ) {
+			$deps['media'][] = (int) get_post_meta( (int) $id, 'blooikos_company_' . $field, true );
+		}
+	}
+	$deps['media'] = array_values( array_unique( $deps['media'] ) );
 	return $deps;
 }
 /**
@@ -41,7 +57,7 @@ function blooikos_core_rebuild_dependencies() {
  * @return bool
  */
 function blooikos_core_rebuild_option_relevant( $name ) {
-	return in_array( preg_replace( '/^_?options_/', '', $name ), blooikos_core_rebuild_options(), true ) || ( 'home-hero' === blooikos_core_rebuild_profile() && in_array( $name, array( 'page_on_front', 'show_on_front' ), true ) );
+	return in_array( preg_replace( '/^_?options_/', '', $name ), blooikos_core_rebuild_options(), true ) || in_array( $name, array( 'page_on_front', 'show_on_front' ), true );
 }
 /**
  * Filtro antes da persistência.
@@ -97,17 +113,16 @@ function blooikos_core_rebuild_post_relevant( $id ) {
  */
 function blooikos_core_rebuild_meta( $check, $id, $key ) {
 	$keys = array( 'blooikos_company_short_name', 'blooikos_company_cta', '_blooikos_company_short_name', '_blooikos_company_cta', '_wp_attachment_image_alt', '_wp_attachment_metadata', '_wp_attached_file', '_menu_item_type', '_menu_item_menu_item_parent', '_menu_item_object_id', '_menu_item_object', '_menu_item_target', '_menu_item_url' );
-	if ( 'home-hero' === blooikos_core_rebuild_profile() && blooikos_core_rebuild_dependencies()['home'] === (int) $id ) {
-		$keys = array_merge(
-			$keys,
-			blooikos_core_rebuild_hero_fields(),
-			array_map(
-				static function ( $field ) {
-					return '_' . $field;
-				},
-				blooikos_core_rebuild_hero_fields()
-			)
-		);
+	$deps = blooikos_core_rebuild_dependencies();
+	if ( function_exists( 'blooikos_core_graphql_fields' ) ) {
+		foreach ( array_keys( blooikos_core_graphql_fields() ) as $field ) {
+			$name  = substr( $field, 6 );
+			$owner = str_starts_with( $name, 'blooikos_home_' ) ? (int) $id === $deps['home'] : in_array( (int) $id, $deps['companies'], true );
+			if ( $owner && preg_match( '/^_?' . preg_quote( $name, '/' ) . '(?:$|_[0-9]+_)/D', $key ) ) {
+				$keys[] = $key;
+				break;
+			}
+		}
 	}
 	if ( in_array( $key, $keys, true ) && blooikos_core_rebuild_post_relevant( $id ) ) {
 		blooikos_core_rebuild_begin();

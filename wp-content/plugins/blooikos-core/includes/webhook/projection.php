@@ -60,23 +60,19 @@ function blooikos_core_rebuild_projection( $media_revision, $previous_media_dige
 	// phpcs:ignore WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents -- Artefato local versionado, sem URL.
 	$operation = file_get_contents( dirname( __DIR__, 2 ) . '/contracts/graphql/v1/operations.graphql' );
 	$profile   = blooikos_core_rebuild_profile();
-	if ( 'home-hero' === $profile ) {
-		// phpcs:ignore WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents -- Operação local versionada.
-		$operation .= "\n" . file_get_contents( dirname( __DIR__, 2 ) . '/contracts/rebuild/v1/home-hero.graphql' );
-	}
-	$response = blooikos_core_graphql_anonymous(
-		static function () use ( $operation, $profile ) {
+	$response  = blooikos_core_graphql_anonymous(
+		static function () use ( $operation ) {
 			return graphql(
 				array(
 					'query'         => $operation,
-					'operationName' => 'home-hero' === $profile ? 'BlooikosHomeHero' : 'BlooikosHeaderFooter',
+					'operationName' => 'BlooikosHome',
 				)
 			);
 		}
 	);
-	$result   = 'home-hero' === $profile ? blooikos_core_rebuild_validate_hero( $response ) : blooikos_core_graphql_validate_response( $response, 'poc' );
+	$result    = blooikos_core_graphql_validate_response( $response, 'home' );
 	if ( ! $result['valid'] ) {
-		throw new RuntimeException( 'EDITORIAL_INVALID' );
+		throw new RuntimeException( 'GRAPHQL_RESPONSE_INVALID' );
 	}
 	$media_digest = blooikos_core_rebuild_media_digest();
 	if ( $media_digest !== $previous_media_digest ) {
