@@ -59,17 +59,22 @@ function blooikos_core_rebuild_projection( $media_revision, $previous_media_dige
 	acf_get_store( 'values' )->reset(); // Um tick não herda valores lidos por outra tarefa no mesmo processo.
 	// phpcs:ignore WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents -- Artefato local versionado, sem URL.
 	$operation = file_get_contents( dirname( __DIR__, 2 ) . '/contracts/graphql/v1/operations.graphql' );
-	$response  = blooikos_core_graphql_anonymous(
-		static function () use ( $operation ) {
+	$profile   = blooikos_core_rebuild_profile();
+	if ( 'home-hero' === $profile ) {
+		// phpcs:ignore WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents -- Operação local versionada.
+		$operation .= "\n" . file_get_contents( dirname( __DIR__, 2 ) . '/contracts/rebuild/v1/home-hero.graphql' );
+	}
+	$response = blooikos_core_graphql_anonymous(
+		static function () use ( $operation, $profile ) {
 			return graphql(
 				array(
 					'query'         => $operation,
-					'operationName' => 'BlooikosHeaderFooter',
+					'operationName' => 'home-hero' === $profile ? 'BlooikosHomeHero' : 'BlooikosHeaderFooter',
 				)
 			);
 		}
 	);
-	$result    = blooikos_core_graphql_validate_response( $response, 'poc' );
+	$result   = 'home-hero' === $profile ? blooikos_core_rebuild_validate_hero( $response ) : blooikos_core_graphql_validate_response( $response, 'poc' );
 	if ( ! $result['valid'] ) {
 		throw new RuntimeException( 'EDITORIAL_INVALID' );
 	}
@@ -84,7 +89,7 @@ function blooikos_core_rebuild_projection( $media_revision, $previous_media_dige
 		blooikos_core_rebuild_canonical(
 			array(
 				'protocolVersion' => '1',
-				'profile'         => 'poc',
+				'profile'         => $profile,
 				'operationDigest' => $operation_digest,
 				'dataDigest'      => $data_digest,
 				'mediaRevision'   => $media_revision,
@@ -92,6 +97,7 @@ function blooikos_core_rebuild_projection( $media_revision, $previous_media_dige
 		)
 	);
 	return array(
+		'profile'         => $profile,
 		'mediaDigest'     => $media_digest,
 		'mediaRevision'   => $media_revision,
 		'dataDigest'      => $data_digest,
@@ -108,11 +114,11 @@ function blooikos_core_rebuild_projection( $media_revision, $previous_media_dige
 function blooikos_core_rebuild_version( $state ) {
 	return array_intersect_key( $state, array_flip( array( 'epoch', 'contentVersion', 'contentDigest', 'dataDigest', 'operationDigest', 'mediaRevision' ) ) ) + array(
 		'protocolVersion' => '1',
-		'profile'         => 'poc',
+		'profile'         => $state['profile'] ?? 'poc',
 	);
 }
 
-/** Hash dos dois arquivos referenciados, executado somente pelo worker.
+/** Hash dos arquivos referenciados no perfil, executado somente pelo worker.
  *
  * @return string
  * @throws RuntimeException Mídia ausente, externa ao diretório ou grande demais.

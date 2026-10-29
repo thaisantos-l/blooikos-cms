@@ -1,0 +1,48 @@
+query BlooikosHomeHero {
+  blooikosSettings {
+    ...BlooikosGlobalSettings
+  }
+  primaryMenu: menuItems(first: 20, where: { location: BLOOIKOS_PRIMARY }) {
+    nodes {
+      ...BlooikosNavigationItem
+    }
+    pageInfo {
+      hasNextPage
+      endCursor
+    }
+  }
+  footerMenu: menuItems(first: 20, where: { location: BLOOIKOS_FOOTER }) {
+    nodes {
+      ...BlooikosNavigationItem
+    }
+    pageInfo {
+      hasNextPage
+      endCursor
+    }
+  }
+  home: nodeByUri(uri: "/") {
+    __typename
+    ... on Page {
+      id
+      isFrontPage
+      blooikosHomeHero {
+        eyebrow
+        titleBefore
+        titleHighlight
+        titleAfter
+        description
+        background {
+          node {
+            ...BlooikosImage
+          }
+        }
+        primaryCta {
+          ...BlooikosLink
+        }
+        secondaryCta {
+          ...BlooikosLink
+        }
+      }
+    }
+  }
+}
