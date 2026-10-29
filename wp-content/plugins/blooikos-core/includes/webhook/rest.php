@@ -17,7 +17,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  */
 function blooikos_core_rebuild_rest() {
 	$state    = blooikos_core_rebuild_state();
-	$ready    = $state && ! empty( $state['projectionValid'] ) && '0' !== $state['contentVersion'] && $state['dirtySequence'] === $state['processedSequence'] && ! blooikos_core_rebuild_writing();
+	$ready    = $state && ! isset( $GLOBALS['blooikos_core_rebuild_fault'] ) && ( $state['profile'] ?? 'poc' ) === blooikos_core_rebuild_profile() && ! empty( $state['projectionValid'] ) && '0' !== $state['contentVersion'] && $state['dirtySequence'] === $state['processedSequence'] && ! blooikos_core_rebuild_writing();
 	$response = new WP_REST_Response( $ready ? blooikos_core_rebuild_version( $state ) : array( 'code' => 'CONTENT_NOT_READY' ), $ready ? 200 : 409 );
 	$response->header( 'Cache-Control', 'no-store, max-age=0' );
 	$response->header( 'X-Robots-Tag', 'noindex' );

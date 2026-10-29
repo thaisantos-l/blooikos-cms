@@ -47,6 +47,8 @@ function blooikos_core_rebuild_increment( $value ) {
 function blooikos_core_rebuild_initial() {
 	return array(
 		'schemaVersion'     => 1,
+		'profile'           => 'poc',
+		'requestedProfile'  => 'poc',
 		'projectionValid'   => false,
 		'epoch'             => wp_generate_uuid4(),
 		'dirtySequence'     => '1',

@@ -11,6 +11,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 
 require_once __DIR__ . '/storage.php';
+require_once __DIR__ . '/profile.php';
 require_once __DIR__ . '/projection.php';
 require_once __DIR__ . '/github.php';
 require_once __DIR__ . '/worker.php';
@@ -41,6 +42,7 @@ function blooikos_core_rebuild_bootstrap() {
 			$GLOBALS['blooikos_core_rebuild_fault'] = 'STORAGE_UNAVAILABLE';
 			return;
 		}
+		blooikos_core_rebuild_sync_profile();
 		require_once __DIR__ . '/events.php';
 		if ( ! wp_next_scheduled( 'blooikos_core_rebuild_tick' ) ) {
 			wp_schedule_event( time() + 60, 'blooikos_minute', 'blooikos_core_rebuild_tick' );

@@ -2,7 +2,7 @@
 /**
  * Plugin Name: Blooikos Core
  * Description: Fundação das regras e integrações do CMS Blooikos.
- * Version: 0.4.0
+ * Version: 0.4.1
  * Requires at least: 7.1.3
  * Requires PHP: 8.2.4
  * Text Domain: blooikos-core
@@ -14,7 +14,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'BLOOIKOS_CORE_VERSION', '0.4.0' );
+define( 'BLOOIKOS_CORE_VERSION', '0.4.1' );
 
 require_once __DIR__ . '/includes/dependencies.php';
 require_once __DIR__ . '/includes/admin-notices.php';

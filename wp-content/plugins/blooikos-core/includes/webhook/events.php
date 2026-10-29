@@ -24,10 +24,15 @@ function blooikos_core_rebuild_options() {
  * @return array
  */
 function blooikos_core_rebuild_dependencies() {
-	return array(
+	$deps         = array(
 		'companies' => array_map( 'intval', array_merge( (array) get_option( 'options_blooikos_site_footer_companies', array() ), (array) get_option( 'options_blooikos_site_contact_company', array() ) ) ),
 		'media'     => array_map( 'intval', array( get_option( 'options_blooikos_site_logo' ), get_option( 'options_blooikos_site_logo_inverse' ) ) ),
 	);
+	$deps['home'] = 'home-hero' === blooikos_core_rebuild_profile() && 'page' === get_option( 'show_on_front' ) ? (int) get_option( 'page_on_front' ) : 0;
+	if ( $deps['home'] ) {
+		$deps['media'][] = (int) get_post_meta( $deps['home'], 'blooikos_home_hero_background', true );
+	}
+	return $deps;
 }
 /**
  * Opção relevante; referências ACF não ampliam a lista de campos.
@@ -36,7 +41,7 @@ function blooikos_core_rebuild_dependencies() {
  * @return bool
  */
 function blooikos_core_rebuild_option_relevant( $name ) {
-	return in_array( preg_replace( '/^_?options_/', '', $name ), blooikos_core_rebuild_options(), true );
+	return in_array( preg_replace( '/^_?options_/', '', $name ), blooikos_core_rebuild_options(), true ) || ( 'home-hero' === blooikos_core_rebuild_profile() && in_array( $name, array( 'page_on_front', 'show_on_front' ), true ) );
 }
 /**
  * Filtro antes da persistência.
@@ -81,7 +86,7 @@ function blooikos_core_rebuild_post_relevant( $id ) {
 	if ( wp_is_post_revision( $id ) || wp_is_post_autosave( $id ) ) {
 		return false;
 	}
-	return in_array( (int) $id, $deps['companies'], true ) || in_array( (int) $id, $deps['media'], true ) || 'nav_menu_item' === get_post_type( $id );
+	return ( $deps['home'] && (int) $id === $deps['home'] ) || in_array( (int) $id, $deps['companies'], true ) || in_array( (int) $id, $deps['media'], true ) || 'nav_menu_item' === get_post_type( $id );
 }
 /** Metas consumidas; candidatos sem efeito são eliminados na projeção.
  *
@@ -92,6 +97,18 @@ function blooikos_core_rebuild_post_relevant( $id ) {
  */
 function blooikos_core_rebuild_meta( $check, $id, $key ) {
 	$keys = array( 'blooikos_company_short_name', 'blooikos_company_cta', '_blooikos_company_short_name', '_blooikos_company_cta', '_wp_attachment_image_alt', '_wp_attachment_metadata', '_wp_attached_file', '_menu_item_type', '_menu_item_menu_item_parent', '_menu_item_object_id', '_menu_item_object', '_menu_item_target', '_menu_item_url' );
+	if ( 'home-hero' === blooikos_core_rebuild_profile() && blooikos_core_rebuild_dependencies()['home'] === (int) $id ) {
+		$keys = array_merge(
+			$keys,
+			blooikos_core_rebuild_hero_fields(),
+			array_map(
+				static function ( $field ) {
+					return '_' . $field;
+				},
+				blooikos_core_rebuild_hero_fields()
+			)
+		);
+	}
 	if ( in_array( $key, $keys, true ) && blooikos_core_rebuild_post_relevant( $id ) ) {
 		blooikos_core_rebuild_begin();
 	}
