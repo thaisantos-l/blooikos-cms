@@ -59,13 +59,21 @@ function blooikos_core_graphql_fail( $code = 'BLOOIKOS_CONTENT_INVALID' ) {
  * @return int[]
  */
 function blooikos_core_graphql_company_ids( $value, $field ) {
-	if ( null === $value || false === $value || '' === $value || array() === $value ) {
+	if ( null === $value || false === $value || ( is_string( $value ) && '' === trim( $value ) ) || array() === $value ) {
 		return array();
 	}
 	$ids = 'post_object' === $field['type'] ? array( $value ) : $value;
 	if ( ! is_array( $ids ) ) {
 		blooikos_core_graphql_fail( 'BLOOIKOS_REFERENCE_UNAVAILABLE' );
 	}
+	$ids = array_values(
+		array_filter(
+			$ids,
+			static function ( $id ) {
+				return null !== $id && false !== $id && ! ( is_string( $id ) && '' === trim( $id ) );
+			}
+		)
+	);
 	if ( count( $ids ) > ( $field['max'] ?? 1 ) ) {
 		blooikos_core_graphql_fail( 'BLOOIKOS_LIMIT_EXCEEDED' );
 	}
@@ -124,7 +132,7 @@ function blooikos_core_graphql_company_connection( $value, $field, $source, $arg
  * @return mixed
  */
 function blooikos_core_graphql_image_connection( $value, $source, $args, $context, $info ) {
-	if ( null === $value || false === $value || '' === $value ) {
+	if ( null === $value || false === $value || ( is_string( $value ) && '' === trim( $value ) ) ) {
 		return null;
 	}
 	if ( ! is_scalar( $value ) || ! ctype_digit( (string) $value ) || ! wp_attachment_is_image( (int) $value ) || ! in_array( get_post_mime_type( (int) $value ), array( 'image/jpeg', 'image/png', 'image/webp' ), true ) ) {

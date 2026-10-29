@@ -62,10 +62,11 @@ function blooikos_core_rebuild_consolidate( $lease ) {
 		$projection = blooikos_core_rebuild_projection( $state['mediaRevision'], $state['mediaDigest'] ?? '' );
 	} catch ( Throwable $error ) {
 			blooikos_core_rebuild_change(
-				static function ( &$current ) use ( $state ) {
+				static function ( &$current ) use ( $state, $error ) {
 					if ( $current['dirtySequence'] === $state['dirtySequence'] ) {
 						$current['processedSequence'] = $state['dirtySequence'];
-						$current['lastError']         = 'EDITORIAL_INVALID';
+						$codes                        = array( 'DEPENDENCIES_UNAVAILABLE', 'GRAPHQL_RESPONSE_INVALID', 'MEDIA_UNAVAILABLE', 'MEDIA_FILE_LIMIT', 'MEDIA_BYTE_LIMIT', 'INVALID_CANONICAL_KEY', 'INVALID_CANONICAL_NUMBER', 'INVALID_CANONICAL_VALUE' );
+						$current['lastError']         = in_array( $error->getMessage(), $codes, true ) ? $error->getMessage() : 'PROJECTION_FAILED';
 						$current['projectionValid']   = false;
 					}
 				},
@@ -86,7 +87,7 @@ function blooikos_core_rebuild_consolidate( $lease ) {
 						$current[ $key ] = $value;
 					}
 				}
-				if ( in_array( $current['lastError'], array( '', 'EDITORIAL_INVALID', 'DEPENDENCIES_UNAVAILABLE' ), true ) ) {
+				if ( in_array( $current['lastError'], array( '', 'EDITORIAL_INVALID', 'DEPENDENCIES_UNAVAILABLE', 'GRAPHQL_RESPONSE_INVALID', 'PROJECTION_FAILED', 'MEDIA_UNAVAILABLE', 'MEDIA_FILE_LIMIT', 'MEDIA_BYTE_LIMIT' ), true ) ) {
 					$current['lastError'] = '';
 				}
 			},
@@ -407,7 +408,7 @@ function blooikos_core_rebuild_tick() {
 			}
 				return;
 		}
-		if ( empty( $state['projectionValid'] ) || $state['dirtySequence'] !== $state['processedSequence'] || '0' === $state['contentVersion'] || 'EDITORIAL_INVALID' === $state['lastError'] || blooikos_core_rebuild_writing() ) {
+		if ( empty( $state['projectionValid'] ) || $state['dirtySequence'] !== $state['processedSequence'] || '0' === $state['contentVersion'] || blooikos_core_rebuild_writing() ) {
 			return;
 		}
 		if ( $state['published'] && $state['published']['epoch'] === $state['epoch'] && $state['published']['version'] === $state['contentVersion'] && $state['published']['digest'] === $state['contentDigest'] ) {
