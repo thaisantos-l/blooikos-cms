@@ -67,7 +67,9 @@ function blooikos_core_graphql_scalar( $value, $field ) {
 	if ( ! is_scalar( $value ) || true !== blooikos_core_validate_text( $value, $field ) ) {
 		blooikos_core_graphql_fail();
 	}
-	$value = blooikos_core_sanitize_field( (string) $value, 0, $field );
+	$value = 'wysiwyg' === $type
+		? blooikos_core_format_rich_text( null, (string) $value, 0, $field )
+		: blooikos_core_sanitize_field( (string) $value, 0, $field );
 	return '' === trim( $value ) ? null : $value;
 }
 

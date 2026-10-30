@@ -20,7 +20,7 @@ function blooikos_core_graphql_is_published( $post ) {
 }
 
 /**
- * Abre somente empresas publicadas; demais casos mantêm capabilities nativas.
+ * Abre empresas publicadas e mídias herdadas delas; preserva os demais casos.
  *
  * @param bool|null $is_private Decisão anterior.
  * @param string    $model Nome do modelo nativo.
@@ -28,8 +28,18 @@ function blooikos_core_graphql_is_published( $post ) {
  * @return bool|null
  */
 function blooikos_core_graphql_company_visibility( $is_private, $model, $data ) {
-	if ( 'PostObject' === $model && $data instanceof WP_Post && 'blooikos_company' === $data->post_type && blooikos_core_graphql_is_published( $data ) ) {
+	if ( 'PostObject' !== $model || ! $data instanceof WP_Post ) {
+		return $is_private;
+	}
+	if ( 'blooikos_company' === $data->post_type && blooikos_core_graphql_is_published( $data ) ) {
 		return false;
+	}
+	if ( 'attachment' === $data->post_type && 'inherit' === $data->post_status && '' === $data->post_password ) {
+		$parent = get_post( $data->post_parent );
+		// O modelo de mídia consulta is_private() do pai sem passar pelo filtro acima.
+		if ( $parent instanceof WP_Post && 'blooikos_company' === $parent->post_type && blooikos_core_graphql_is_published( $parent ) ) {
+			return false;
+		}
 	}
 	return $is_private;
 }

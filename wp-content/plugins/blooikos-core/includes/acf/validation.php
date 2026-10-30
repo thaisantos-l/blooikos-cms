@@ -364,7 +364,8 @@ function blooikos_core_format_rich_text( $formatted, $value, $post_id, $field ) 
 	if ( null !== $formatted || ! in_array( $field['key'], array( 'field_blooikos_company_body', 'field_blooikos_home_about_body' ), true ) ) {
 		return $formatted;
 	}
-	return is_string( $value ) ? blooikos_core_sanitize_rich_text( $value ) : '';
+	// O editor salva parágrafos como quebras de linha; restaurar só essa formatação.
+	return is_string( $value ) ? blooikos_core_sanitize_rich_text( wpautop( $value ) ) : '';
 }
 
 /**
