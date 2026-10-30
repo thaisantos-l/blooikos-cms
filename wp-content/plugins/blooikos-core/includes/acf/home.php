@@ -194,6 +194,8 @@ function blooikos_core_register_home_about_fields() {
 					'toolbar'            => 'basic',
 					'media_upload'       => 0,
 					'tabs'               => 'visual',
+					// Inicializa após a montagem dos metaboxes, preservando o documento do iframe.
+					'delay'              => 1,
 				),
 				array(
 					'key'                => 'field_blooikos_home_about_cta',
