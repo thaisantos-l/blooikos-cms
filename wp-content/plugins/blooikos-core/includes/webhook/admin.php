@@ -23,7 +23,13 @@ function blooikos_core_rebuild_status() {
 			'error'  => 'STORAGE_UNAVAILABLE',
 		);
 	}
-	$status = ! blooikos_core_rebuild_enabled() ? 'Desativado' : 'Pendente';
+	$configuration = array(
+		'activationRequested'   => defined( 'BLOOIKOS_REBUILD_ENABLED' ) && true === BLOOIKOS_REBUILD_ENABLED,
+		'productionEnvironment' => defined( 'BLOOIKOS_REBUILD_ENVIRONMENT' ) && 'production' === BLOOIKOS_REBUILD_ENVIRONMENT,
+		'productionOrigin'      => 'https://cms.blooikos.com.br' === untrailingslashit( home_url() ),
+		'tokenPresent'          => defined( 'BLOOIKOS_REBUILD_GITHUB_TOKEN' ) && is_string( BLOOIKOS_REBUILD_GITHUB_TOKEN ) && '' !== BLOOIKOS_REBUILD_GITHUB_TOKEN,
+	);
+	$status        = ! blooikos_core_rebuild_enabled() ? ( $configuration['activationRequested'] ? 'Configuração incompleta' : 'Desativado' ) : 'Aguardando consolidação';
 	if ( blooikos_core_rebuild_enabled() ) {
 		if ( $state['pauseReason'] ) {
 			$status = 'Pausado';
@@ -31,18 +37,19 @@ function blooikos_core_rebuild_status() {
 					$status = 'Falhou ou aguarda verificação';
 		} elseif ( $state['request'] ) {
 				$status = $state['request']['run'] ? 'Construindo/publicando' : 'Aguardando execução';
-		} elseif ( $state['published'] && $state['published']['version'] === $state['contentVersion'] && $state['processedSequence'] === $state['dirtySequence'] ) {
+		} elseif ( $state['published'] && 'artifact-http-v1' === ( $state['published']['verification'] ?? '' ) && ! empty( $state['projectionValid'] ) && ! empty( $state['reconciled'] ) && empty( $state['reconcileRequested'] ) && $state['published']['epoch'] === $state['epoch'] && $state['published']['digest'] === $state['contentDigest'] && $state['published']['version'] === $state['contentVersion'] && $state['processedSequence'] === $state['dirtySequence'] && ! blooikos_core_rebuild_writing() ) {
 						$status = 'Publicado';
 		}
 	}
 	return array(
 		'status'           => $status,
 		'enabled'          => blooikos_core_rebuild_enabled(),
+		'configuration'    => $configuration,
 		'epoch'            => $state['epoch'],
 		'desiredVersion'   => $state['contentVersion'],
 		'published'        => $state['published'],
 		'pendingChanges'   => $state['dirtySequence'] !== $state['processedSequence'],
-		'newerPending'     => $state['request'] && ( $state['request']['version'] !== $state['contentVersion'] || $state['dirtySequence'] !== $state['processedSequence'] ),
+		'newerPending'     => $state['request'] && ( $state['request']['epoch'] !== $state['epoch'] || $state['request']['digest'] !== $state['contentDigest'] || $state['request']['version'] !== $state['contentVersion'] || $state['dirtySequence'] !== $state['processedSequence'] ),
 		'lastTickAt'       => $state['lastTickAt'],
 		'schedulerDelayed' => time() - $state['lastTickAt'] > 180,
 		'nextAttemptAt'    => $state['request']['nextAt'] ?? null,
@@ -81,10 +88,12 @@ function blooikos_core_rebuild_action( $action, $adopt_published = false ) {
 				$state['blocked']   = '';
 				$state['lastError'] = '';
 				if ( $state['request'] ) {
-					$state['request']['stage']      = $state['request']['run'] ? 'run' : ( $state['request']['delivery'] ? 'uncertain' : 'dispatch' );
-					$state['request']['nextAt']     = time();
-					$state['request']['delivery']   = 0;
-					$state['request']['executions'] = 0;
+					$state['request']['stage']           = $state['request']['run'] ? 'run' : ( $state['request']['delivery'] ? 'uncertain' : 'dispatch' );
+					$state['request']['nextAt']          = time();
+					$state['request']['delivery']        = 'uncertain' === $state['request']['stage'] ? max( 1, $state['request']['delivery'] ) : 0;
+					$state['request']['executions']      = 0;
+					$state['request']['lookupResumedAt'] = time();
+					unset( $state['request']['confirmationStartedAt'], $state['request']['confirmationAttempts'], $state['request']['proof'] );
 				}
 			}
 			if ( 'reconcile' === $action || 'retry' === $action ) {
@@ -143,7 +152,17 @@ function blooikos_core_rebuild_admin_page() {
 	if ( ! empty( $status['runId'] ) && blooikos_core_rebuild_decimal( $status['runId'] ) ) {
 		echo '<p><a href="' . esc_url( 'https://github.com/thaisantos-l/blooikos-frontend/actions/runs/' . $status['runId'] ) . '">Consultar execução no GitHub</a></p>';
 	}
-	echo '<p>Retomar aqui não desfaz a pausa de um rollback na hospedagem. Primeiro use a ação manual de retomada do workflow e depois reconcilie.</p>';
+	foreach ( array(
+		'activationRequested'   => 'Ativação solicitada',
+		'productionEnvironment' => 'Ambiente de produção',
+		'productionOrigin'      => 'Origem de produção',
+		'tokenPresent'          => 'Credencial configurada',
+	) as $key => $label ) {
+		if ( isset( $status['configuration'][ $key ] ) ) {
+			echo '<p>' . esc_html( $label ) . ': ' . esc_html( $status['configuration'][ $key ] ? 'Sim' : 'Não' ) . '</p>';
+		}
+	}
+	echo '<p>Estas ações são de recuperação. Uma edição normal não exige tentar novamente ou reconciliar. Uma pausa informada pela hospedagem deve ser resolvida pelo responsável antes da retomada.</p>';
 	foreach ( array(
 		'retry'     => 'Tentar novamente',
 		'pause'     => 'Pausar',
