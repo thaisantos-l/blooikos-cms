@@ -34,7 +34,10 @@ máxima de consolidação de 300 segundos. Não há HTTP durante o salvamento.
 ## Contrato de confirmação
 
 O marcador continua com schema 2 e os mesmos campos. O ZIP continua determinístico.
-O workflow transfere com `rsync --checksum`, mantendo SSH, exclusões e diretórios.
+O workflow transfere com `rsync --checksum --no-times`, mantendo SSH, exclusões e
+diretórios, inclusive o legado `blooikos-static/`. O timestamp fixo permanece no
+ZIP; arquivos alterados recebem mtime atual no destino. Isso permite que o
+servidor regenere variantes gzip antigas quando os bytes da publicação mudam.
 `scripts/deploy/confirm.py` verifica hashes/proveniência do pacote antes de extrair,
 e depois compara os bytes HTTP de `/` e `/blooikos-release.json` com esse artefato.
 Não segue redirecionamentos. Faz no máximo três rodadas de duas requisições,
