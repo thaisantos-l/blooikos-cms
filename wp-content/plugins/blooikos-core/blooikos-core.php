@@ -22,6 +22,11 @@ require_once __DIR__ . '/includes/webhook/bootstrap.php';
 register_activation_hook( __FILE__, 'blooikos_core_rebuild_activate' );
 register_deactivation_hook( __FILE__, 'blooikos_core_rebuild_deactivate' );
 
+require_once __DIR__ . '/includes/contact/validation.php';
+require_once __DIR__ . '/includes/contact/storage.php';
+require_once __DIR__ . '/includes/contact/rest.php';
+register_activation_hook( __FILE__, 'blooikos_core_contact_install' );
+
 /**
  * Verifica dependências uma vez, após a inicialização dos plugins externos.
  *
