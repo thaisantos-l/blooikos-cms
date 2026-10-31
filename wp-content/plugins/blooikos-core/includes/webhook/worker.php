@@ -121,6 +121,11 @@ function blooikos_core_rebuild_start( $state, $lease ) {
 		blooikos_core_rebuild_save_request( null, $lease, 'PUBLISHER_PAUSED' );
 		return;
 	}
+	if ( $remote['code'] || ! in_array( $remote['status'], array( 200, 404 ), true ) ) {
+		$request['stage'] = 'failed';
+		blooikos_core_rebuild_save_request( $request, $lease, $remote['code'] ? $remote['code'] : 'PUBLICATION_UNVERIFIED' );
+		return;
+	}
 	$marker_content = $remote['data']['content'] ?? null;
 	if ( is_array( $marker_content ) && ( ( $marker_content['epoch'] ?? '' ) !== $state['epoch'] || ( strlen( (string) ( $marker_content['contentVersion'] ?? '' ) ) > strlen( $state['contentVersion'] ) || ( strlen( (string) ( $marker_content['contentVersion'] ?? '' ) ) === strlen( $state['contentVersion'] ) && strcmp( (string) $marker_content['contentVersion'], $state['contentVersion'] ) > 0 ) ) ) ) {
 		blooikos_core_rebuild_change(
@@ -164,13 +169,14 @@ function blooikos_core_rebuild_acknowledge( $request, $marker, $lease ) {
 				$state['reconcileRequested'] = false;
 			}
 			$state['published']  = array(
-				'epoch'     => $request['epoch'],
-				'version'   => $request['version'],
-				'digest'    => $request['digest'],
-				'run'       => $request['run'],
-				'attempt'   => $request['attempt'],
-				'releaseId' => $marker['releaseId'],
-				'at'        => time(),
+				'verification' => 'artifact-http-v1',
+				'epoch'        => $request['epoch'],
+				'version'      => $request['version'],
+				'digest'       => $request['digest'],
+				'run'          => $request['run'],
+				'attempt'      => $request['attempt'],
+				'releaseId'    => $marker['releaseId'],
+				'at'           => time(),
 			);
 			$state['request']    = null;
 			$state['reconciled'] = true;
@@ -183,6 +189,48 @@ function blooikos_core_rebuild_acknowledge( $request, $marker, $lease ) {
 		$lease
 	);
 }
+/** Confere os bytes atuais contra hashes atestados pelo job do mesmo artefato.
+ *
+ * @param array $request Pedido com proveniência e hashes verificados.
+ * @param array $lease Posse atual.
+ * @return void
+ */
+function blooikos_core_rebuild_confirm( $request, $lease ) {
+	// A rerun between ticks invalidates the previously verified attempt/job.
+	$remote = blooikos_core_rebuild_http( 'actions/runs/' . $request['run'] );
+	if ( $remote['code'] || 200 !== $remote['status'] ) {
+		$request['nextAt'] = time() + $remote['delay'];
+		blooikos_core_rebuild_save_request( $request, $lease, $remote['code'] ? $remote['code'] : 'RUN_UNVERIFIED' );
+		return;
+	}
+	$run = $remote['data'];
+	if ( ! is_array( $run ) || ! blooikos_core_rebuild_run_valid( $run ) || (string) $run['id'] !== $request['run'] || (string) $run['run_attempt'] !== $request['attempt'] || $run['head_sha'] !== $request['sha'] || 'completed' !== $run['status'] || 'success' !== $run['conclusion'] || ( 'editorial' === $request['source'] && ( 'workflow_dispatch' !== $run['event'] || ( $run['display_title'] ?? '' ) !== 'Blooikos content ' . $request['id'] ) ) ) {
+		$request['stage'] = 'failed';
+		blooikos_core_rebuild_save_request( $request, $lease, 'RUN_PROVENANCE_CHANGED' );
+		return;
+	}
+	$marker = blooikos_core_rebuild_http( 'marker' );
+	if ( ( $marker['paused'] ?? false ) && 'baseline' !== $request['source'] ) {
+		blooikos_core_rebuild_save_request( $request, $lease, 'PUBLISHER_PAUSED' );
+		return;
+	}
+	$html = blooikos_core_rebuild_http( 'html' );
+	$data = $marker['data'];
+	if ( 200 === $marker['status'] && 200 === $html['status'] && blooikos_core_rebuild_marker_matches( $data, $request ) && $data['runId'] === $request['run'] && $data['attempt'] === $request['attempt'] && $data['commitSHA'] === $request['sha'] && ( 'editorial' !== $request['source'] || ( $data['requestId'] ?? null ) === $request['id'] ) && hash_equals( $request['proof']['marker'], $marker['sha256'] ?? '' ) && hash_equals( $request['proof']['index'], $html['sha256'] ?? '' ) ) {
+		blooikos_core_rebuild_acknowledge( $request, $data, $lease );
+		return;
+	}
+	// A publication by another run must prove its own job and artifact next tick.
+	if ( blooikos_core_rebuild_marker_matches( $data, $request ) && $data['runId'] !== $request['run'] ) {
+		$request['source']  = 'observed';
+		$request['run']     = $data['runId'];
+		$request['attempt'] = $data['attempt'];
+		$request['stage']   = 'run';
+		unset( $request['proof'] );
+	}
+	$request['nextAt'] = time() + max( $marker['delay'], $html['delay'] );
+	blooikos_core_rebuild_save_request( $request, $lease, $marker['code'] ? $marker['code'] : ( $html['code'] ? $html['code'] : 'PUBLICATION_UNVERIFIED' ) );
+}
 /** Reconcilia uma etapa por tick; máximo três HTTP, nenhum sleep.
  *
  * @param array $request Pedido.
@@ -190,10 +238,28 @@ function blooikos_core_rebuild_acknowledge( $request, $marker, $lease ) {
  * @return void
  */
 function blooikos_core_rebuild_process( $request, $lease ) {
-	if ( $request['nextAt'] > time() || 'failed' === $request['stage'] ) {
+	if ( 'failed' === $request['stage'] ) {
+		return;
+	}
+	if ( isset( $request['confirmationStartedAt'] ) ) {
+		if ( time() - $request['confirmationStartedAt'] >= 600 || ( $request['confirmationAttempts'] ?? 0 ) >= 10 ) {
+			$request['stage'] = 'failed';
+			blooikos_core_rebuild_save_request( $request, $lease, 'PUBLICATION_CONFIRMATION_EXHAUSTED' );
+			return;
+		}
+		if ( $request['nextAt'] > time() ) {
+			return;
+		}
+		$request['confirmationAttempts'] = ( $request['confirmationAttempts'] ?? 0 ) + 1;
+	}
+	if ( $request['nextAt'] > time() ) {
 		return;
 	}
 	$stage = $request['stage'];
+	if ( 'confirm' === $stage ) {
+		blooikos_core_rebuild_confirm( $request, $lease );
+		return;
+	}
 	if ( 'dispatch' === $stage ) {
 		$current = blooikos_core_rebuild_state();
 		if ( $current['pauseReason'] || $current['blocked'] || ! blooikos_core_rebuild_enabled() ) {
@@ -222,11 +288,19 @@ function blooikos_core_rebuild_process( $request, $lease ) {
 		if ( 'CONFIGURATION_BLOCKED' === $remote['code'] ) {
 			$request['stage'] = 'failed';
 		}
+		if ( 'RATE_LIMITED' === $remote['code'] ) {
+			$request['stage'] = 'dispatch';
+		}
 		$request['nextAt'] = blooikos_core_rebuild_retry_at( $request['delivery'], $remote['delay'] );
 		blooikos_core_rebuild_save_request( $request, $lease, $remote['code'] );
 		return;
 	}
 	if ( 'uncertain' === $stage ) {
+		if ( time() - ( $request['lookupResumedAt'] ?? $request['startedAt'] ) >= 900 ) {
+			$request['stage'] = 'failed';
+			blooikos_core_rebuild_save_request( $request, $lease, 'DISPATCH_LOOKUP_EXHAUSTED' );
+			return;
+		}
 		$remote = blooikos_core_rebuild_http( 'actions/workflows/deploy-production.yml/runs?event=workflow_dispatch&branch=main&per_page=100&page=' . (int) $request['page'] . '&created=' . rawurlencode( '>=' . gmdate( 'Y-m-d\TH:i:s\Z', $request['startedAt'] - 5 ) ) );
 		if ( 200 === $remote['status'] && is_array( $remote['data']['workflow_runs'] ?? null ) ) {
 			$runs = $remote['data']['workflow_runs'];
@@ -240,9 +314,8 @@ function blooikos_core_rebuild_process( $request, $lease ) {
 			if ( 'uncertain' === $request['stage'] ) {
 				if ( count( $runs ) === 100 ) {
 					++$request['page'];
-				} elseif ( time() - $request['startedAt'] >= 120 ) {
-								$request['stage'] = 'dispatch';
-								$request['page']  = 1;
+				} else {
+					$request['page'] = 1;
 				}
 			}
 		}
@@ -274,20 +347,37 @@ function blooikos_core_rebuild_process( $request, $lease ) {
 		blooikos_core_rebuild_save_request( $request, $lease, time() - $request['startedAt'] > 3600 ? 'RUN_DELAYED' : '' );
 		return;
 	}
-	$jobs_response = blooikos_core_rebuild_http( 'actions/runs/' . $request['run'] . '/attempts/' . $request['attempt'] . '/jobs?per_page=100' );
+	$request['confirmationStartedAt'] ??= time();
+	$jobs_response                      = blooikos_core_rebuild_http( 'actions/runs/' . $request['run'] . '/attempts/' . $request['attempt'] . '/jobs?per_page=100' );
 	if ( 200 !== $jobs_response['status'] || ! is_array( $jobs_response['data']['jobs'] ?? null ) || ( $jobs_response['data']['total_count'] ?? 101 ) > 100 ) {
 		$request['nextAt'] = time() + $jobs_response['delay'];
 		blooikos_core_rebuild_save_request( $request, $lease, $jobs_response['code'] ? $jobs_response['code'] : 'JOBS_UNVERIFIED' );
 		return;
 	}
-	$publish   = false;
-	$editorial = false;
+	$publish             = false;
+	$proof               = null;
+	$confirmation_failed = false;
+	$editorial           = false;
 	foreach ( $jobs_response['data']['jobs'] as $job ) {
 		if ( (string) ( $job['run_id'] ?? '' ) !== $request['run'] || (string) ( $job['run_attempt'] ?? '' ) !== $request['attempt'] || ( $job['head_sha'] ?? '' ) !== $request['sha'] ) {
 			continue;
 		}
 		if ( 'publish' === $job['name'] && 'success' === $job['conclusion'] ) {
 			$publish = true;
+		}
+		if ( 'publish' === $job['name'] ) {
+			foreach ( $job['steps'] ?? array() as $step ) {
+				if ( preg_match( '/^Confirm artifact over HTTP index=([a-f0-9]{64}) marker=([a-f0-9]{64})$/D', $step['name'] ?? '', $hashes ) ) {
+					if ( 'success' === ( $step['conclusion'] ?? '' ) && 'completed' === ( $step['status'] ?? '' ) ) {
+						$proof = array(
+							'index'  => $hashes[1],
+							'marker' => $hashes[2],
+						);
+					} else {
+						$confirmation_failed = true;
+					}
+				}
+			}
 		}
 		if ( 'build' === $job['name'] ) {
 			foreach ( $job['steps'] ?? array() as $step ) {
@@ -306,7 +396,14 @@ function blooikos_core_rebuild_process( $request, $lease ) {
 	$data = $marker['data'];
 	if ( 200 === $marker['status'] && blooikos_core_rebuild_marker_matches( $data, $request ) ) {
 		if ( 'success' === $run['conclusion'] && $publish && $data['runId'] === $request['run'] && $data['attempt'] === $request['attempt'] && $data['commitSHA'] === $request['sha'] && ( 'editorial' !== $request['source'] || ( $data['requestId'] ?? null ) === $request['id'] ) ) {
-			blooikos_core_rebuild_acknowledge( $request, $data, $lease );
+			if ( ! $proof ) {
+				$request['stage'] = 'failed';
+				blooikos_core_rebuild_save_request( $request, $lease, 'ARTIFACT_CONFIRMATION_MISSING' );
+				return;
+			}
+			$request['proof'] = $proof;
+			$request['stage'] = 'confirm';
+			blooikos_core_rebuild_save_request( $request, $lease );
 			return;
 		}
 		if ( $data['runId'] !== $request['run'] ) {
@@ -326,7 +423,13 @@ function blooikos_core_rebuild_process( $request, $lease ) {
 		return;
 	}
 
+	if ( $confirmation_failed ) {
+		$request['stage'] = 'failed';
+		blooikos_core_rebuild_save_request( $request, $lease, 'PUBLICATION_CONFIRMATION_FAILED' );
+		return;
+	}
 	if ( ! $editorial && $request['executions'] < 2 ) {
+		unset( $request['confirmationStartedAt'], $request['confirmationAttempts'], $request['proof'] );
 		++$request['executions'];
 		$request['run']      = '';
 		$request['attempt']  = '';
@@ -411,7 +514,7 @@ function blooikos_core_rebuild_tick() {
 		if ( empty( $state['projectionValid'] ) || $state['dirtySequence'] !== $state['processedSequence'] || '0' === $state['contentVersion'] || blooikos_core_rebuild_writing() ) {
 			return;
 		}
-		if ( $state['published'] && $state['published']['epoch'] === $state['epoch'] && $state['published']['version'] === $state['contentVersion'] && $state['published']['digest'] === $state['contentDigest'] ) {
+		if ( $state['published'] && 'artifact-http-v1' === ( $state['published']['verification'] ?? '' ) && $state['published']['epoch'] === $state['epoch'] && $state['published']['version'] === $state['contentVersion'] && $state['published']['digest'] === $state['contentDigest'] ) {
 			return;
 		}
 		blooikos_core_rebuild_start( $state, $lease );
