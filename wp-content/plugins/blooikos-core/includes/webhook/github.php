@@ -16,6 +16,9 @@ if ( ! defined( 'ABSPATH' ) ) {
  * @return bool
  */
 function blooikos_core_rebuild_enabled() {
+	if ( blooikos_core_content_runtime() ) {
+		return false;
+	}
 	return defined( 'BLOOIKOS_REBUILD_ENABLED' ) && true === BLOOIKOS_REBUILD_ENABLED && defined( 'BLOOIKOS_REBUILD_ENVIRONMENT' ) && 'production' === BLOOIKOS_REBUILD_ENVIRONMENT && 'https://cms.blooikos.com.br' === untrailingslashit( home_url() ) && defined( 'BLOOIKOS_REBUILD_GITHUB_TOKEN' ) && is_string( BLOOIKOS_REBUILD_GITHUB_TOKEN ) && '' !== BLOOIKOS_REBUILD_GITHUB_TOKEN;
 }
 /**

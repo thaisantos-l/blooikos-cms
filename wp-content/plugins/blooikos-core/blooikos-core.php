@@ -18,6 +18,7 @@ define( 'BLOOIKOS_CORE_VERSION', '0.4.2' );
 
 require_once __DIR__ . '/includes/dependencies.php';
 require_once __DIR__ . '/includes/admin-notices.php';
+require_once __DIR__ . '/includes/content/rest.php';
 require_once __DIR__ . '/includes/webhook/bootstrap.php';
 register_activation_hook( __FILE__, 'blooikos_core_rebuild_activate' );
 register_deactivation_hook( __FILE__, 'blooikos_core_rebuild_deactivate' );

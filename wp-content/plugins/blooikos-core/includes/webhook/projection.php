@@ -47,19 +47,16 @@ function blooikos_core_rebuild_canonical( $value ) {
 /**
  * Projeção pública sem herdar admin ou WP-CLI.
  *
- * @param string $media_revision Marcador.
- * @param string $previous_media_digest Hash anterior dos arquivos locais.
  * @return array
  * @throws RuntimeException Código seguro de diagnóstico.
  */
-function blooikos_core_rebuild_projection( $media_revision, $previous_media_digest = '' ) {
+function blooikos_core_rebuild_public_data() {
 	if ( blooikos_core_get_dependency_issues() || ! function_exists( 'blooikos_core_graphql_anonymous' ) ) {
 		throw new RuntimeException( 'DEPENDENCIES_UNAVAILABLE' );
 	}
 	acf_get_store( 'values' )->reset(); // Um tick não herda valores lidos por outra tarefa no mesmo processo.
 	// phpcs:ignore WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents -- Artefato local versionado, sem URL.
 	$operation = file_get_contents( dirname( __DIR__, 2 ) . '/contracts/graphql/v1/operations.graphql' );
-	$profile   = blooikos_core_rebuild_profile();
 	$response  = blooikos_core_graphql_anonymous(
 		static function () use ( $operation ) {
 			return graphql(
@@ -74,12 +71,28 @@ function blooikos_core_rebuild_projection( $media_revision, $previous_media_dige
 	if ( ! $result['valid'] ) {
 		throw new RuntimeException( 'GRAPHQL_RESPONSE_INVALID' );
 	}
+	return array(
+		'data'            => $response['data'],
+		'dataDigest'      => hash( 'sha256', blooikos_core_rebuild_canonical( $response['data'] ) ),
+		'operationDigest' => hash( 'sha256', $operation ),
+	);
+}
+/**
+ * Consolidate public content and local media; never called by the read API.
+ *
+ * @param string $media_revision Media revision.
+ * @param string $previous_media_digest Previous media hash.
+ * @return array
+ */
+function blooikos_core_rebuild_projection( $media_revision, $previous_media_digest = '' ) {
+	$public       = blooikos_core_rebuild_public_data();
+	$profile      = blooikos_core_rebuild_profile();
 	$media_digest = blooikos_core_rebuild_media_digest();
 	if ( $media_digest !== $previous_media_digest ) {
 		$media_revision = blooikos_core_rebuild_increment( $media_revision );
 	}
-	$data_digest      = hash( 'sha256', blooikos_core_rebuild_canonical( $response['data'] ) );
-	$operation_digest = hash( 'sha256', $operation );
+	$data_digest      = $public['dataDigest'];
+	$operation_digest = $public['operationDigest'];
 	$digest           = hash(
 		'sha256',
 		blooikos_core_rebuild_canonical(

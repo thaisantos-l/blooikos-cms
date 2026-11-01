@@ -23,6 +23,33 @@ function blooikos_core_rebuild_status() {
 			'error'  => 'STORAGE_UNAVAILABLE',
 		);
 	}
+	if ( blooikos_core_content_runtime() ) {
+		try {
+			blooikos_core_content_ready_state();
+			$ready = true;
+			$error = '';
+		} catch ( Throwable $exception ) {
+			$ready = false;
+			$error = 'CONTENT_NOT_READY' === $exception->getMessage() ? 'CONTENT_NOT_READY' : 'CONTENT_UNAVAILABLE';
+		}
+		return array(
+			'status'           => $ready ? 'Conteúdo pronto na API' : 'Aguardando conteúdo na API',
+			'delivery'         => 'runtime',
+			'enabled'          => false,
+			'apiReady'         => $ready,
+			'epoch'            => $state['epoch'],
+			'desiredVersion'   => $state['contentVersion'],
+			'published'        => $state['published'],
+			'pendingChanges'   => $state['dirtySequence'] !== $state['processedSequence'],
+			'newerPending'     => false,
+			'lastTickAt'       => $state['lastTickAt'],
+			'schedulerDelayed' => time() - $state['lastTickAt'] > 180,
+			'error'            => $error,
+			'pauseReason'      => $state['request'] ? 'LEGACY_REQUEST_REQUIRES_RESOLUTION' : '',
+			'runId'            => '',
+			'nextAttemptAt'    => null,
+		);
+	}
 	$configuration = array(
 		'activationRequested'   => defined( 'BLOOIKOS_REBUILD_ENABLED' ) && true === BLOOIKOS_REBUILD_ENABLED,
 		'productionEnvironment' => defined( 'BLOOIKOS_REBUILD_ENVIRONMENT' ) && 'production' === BLOOIKOS_REBUILD_ENVIRONMENT,
@@ -67,6 +94,9 @@ function blooikos_core_rebuild_status() {
  * @throws RuntimeException Código seguro de diagnóstico.
  */
 function blooikos_core_rebuild_action( $action, $adopt_published = false ) {
+	if ( blooikos_core_content_runtime() ) {
+		throw new RuntimeException( 'RUNTIME_DELIVERY_NO_DEPLOY_ACTIONS' );
+	}
 	if ( ! in_array( $action, array( 'reconcile', 'retry', 'pause', 'resume' ), true ) ) {
 		throw new RuntimeException( 'INVALID_ACTION' );
 	}
@@ -133,7 +163,8 @@ function blooikos_core_rebuild_admin_page() {
 	$status                   = blooikos_core_rebuild_status();
 	$status['lastProcessing'] = ! empty( $status['lastTickAt'] ) ? wp_date( 'd/m/Y H:i:s T', $status['lastTickAt'] ) : 'Ainda não executado';
 	$status['nextAttempt']    = ! empty( $status['nextAttemptAt'] ) ? wp_date( 'd/m/Y H:i:s T', $status['nextAttemptAt'] ) : 'Sem tentativa agendada';
-	echo '<div class="wrap" style="max-width:70rem;overflow-wrap:anywhere"><h1>Publicação do frontend</h1><p>Salvar no CMS registra a mudança. O site só é marcado como publicado após verificar a release disponível.</p>';
+	echo '<div class="wrap" style="max-width:70rem;overflow-wrap:anywhere"><h1>Publicação do frontend</h1>';
+	echo '<p>' . esc_html( blooikos_core_content_runtime() ? 'O CMS consolida o conteúdo público na API. Cada navegador consulta as revisões; este status não confirma que todas as abas já foram atualizadas. A release de código é independente.' : 'Salvar no CMS registra a mudança. O site só é marcado como publicado após verificar a release disponível.' ) . '</p>';
 	echo '<h2>' . esc_html( $status['status'] ) . '</h2><dl>';
 	$labels = array(
 		'lastProcessing'   => 'Último processamento',
@@ -148,7 +179,11 @@ function blooikos_core_rebuild_admin_page() {
 	foreach ( $labels as $key => $label ) {
 		echo '<dt><strong>' . esc_html( $label ) . '</strong></dt><dd>' . esc_html( is_bool( $status[ $key ] ?? null ) ? ( $status[ $key ] ? 'Sim' : 'Não' ) : ( $status[ $key ] ?? '—' ) ) . '</dd>';
 	}
-	echo '<dt><strong>Versão publicada confirmada</strong></dt><dd>' . esc_html( $status['published']['version'] ?? 'Ainda não confirmada' ) . '</dd></dl>';
+	echo '<dt><strong>' . esc_html( blooikos_core_content_runtime() ? 'Captura da última release confirmada (histórico)' : 'Versão publicada confirmada' ) . '</strong></dt><dd>' . esc_html( $status['published']['version'] ?? 'Ainda não confirmada' ) . '</dd></dl>';
+	if ( blooikos_core_content_runtime() ) {
+		echo '</div>';
+		return;
+	}
 	if ( ! empty( $status['runId'] ) && blooikos_core_rebuild_decimal( $status['runId'] ) ) {
 		echo '<p><a href="' . esc_url( 'https://github.com/thaisantos-l/blooikos-frontend/actions/runs/' . $status['runId'] ) . '">Consultar execução no GitHub</a></p>';
 	}

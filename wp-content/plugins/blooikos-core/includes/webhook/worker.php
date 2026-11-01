@@ -455,6 +455,9 @@ function blooikos_core_rebuild_tick() {
 	}
 	try {
 		blooikos_core_rebuild_consolidate( $lease );
+		if ( blooikos_core_content_runtime() ) {
+			return; // Preserve historical requests; no GitHub reads or dispatch in runtime.
+		}
 		$state = blooikos_core_rebuild_state();
 		if ( blooikos_core_rebuild_enabled() && ! empty( $state['adoptPublished'] ) ) {
 			if ( $state['request'] && 'baseline' === $state['request']['source'] ) {
