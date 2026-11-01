@@ -1,5 +1,12 @@
 # Publicação editorial automática
 
+Este documento descreve o modo legado, preservado até o corte operacional.
+Com `BLOOIKOS_CONTENT_DELIVERY=runtime`, consolidação e cron continuam, mas
+nenhum dispatch/consulta GitHub ou ação administrativa de deploy é executado.
+Consulte [conteúdo em runtime](../content/README.md) para a arquitetura vigente,
+status da API e a sequência de migração. A configuração abaixo não sobrepõe
+esse modo e não deve ser reativada para atualizar conteúdo.
+
 Salvar/publicar no CMS registra a alteração. O worker consolida a projeção pública
 e solicita o workflow existente do frontend em `main`. O GitHub Actions captura,
 compila e transfere o export estático. O editor acompanha o resultado em
