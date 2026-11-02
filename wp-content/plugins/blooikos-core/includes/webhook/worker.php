@@ -51,11 +51,13 @@ function blooikos_core_rebuild_save_request( $request, $lease, $error = '' ) {
 /** Consolida apenas projeção completa e sequência estável.
  *
  * @param array $lease Lease.
+ * @param bool  $immediate Ignora debounce somente na entrega runtime.
  * @return void
  */
-function blooikos_core_rebuild_consolidate( $lease ) {
+function blooikos_core_rebuild_consolidate( $lease, $immediate = false ) {
 	$state = blooikos_core_rebuild_state();
-	if ( $state['dirtySequence'] === $state['processedSequence'] || blooikos_core_rebuild_writing( true ) || ( time() - $state['lastChangedAt'] < 60 && time() - $state['firstPendingAt'] < 300 ) ) {
+	$wait  = ! ( $immediate && blooikos_core_content_runtime() );
+	if ( $state['dirtySequence'] === $state['processedSequence'] || blooikos_core_rebuild_writing( true ) || ( $wait && time() - $state['lastChangedAt'] < 60 && time() - $state['firstPendingAt'] < 300 ) ) {
 		return;
 	}
 	try {

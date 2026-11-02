@@ -78,7 +78,7 @@ function blooikos_core_rebuild_public_data() {
 	);
 }
 /**
- * Consolidate public content and local media; never called by the read API.
+ * Consolidate public content and local media under a fenced lease.
  *
  * @param string $media_revision Media revision.
  * @param string $previous_media_digest Previous media hash.
@@ -127,7 +127,7 @@ function blooikos_core_rebuild_version( $state ) {
 	);
 }
 
-/** Hash dos arquivos referenciados no perfil, executado somente pelo worker.
+/** Hash dos arquivos referenciados no perfil, somente ao consolidar alterações.
  *
  * @return string
  * @throws RuntimeException Mídia ausente, externa ao diretório ou grande demais.
