@@ -158,21 +158,24 @@ function blooikos_core_rebuild_change( $callback, $lease = null ) {
 /**
  * Adquire lease com fencing monotônico.
  *
+ * @param bool $heartbeat Registra tick do agendador; false para consolidação runtime.
  * @return array|null
  */
-function blooikos_core_rebuild_acquire() {
+function blooikos_core_rebuild_acquire( $heartbeat = true ) {
 	return blooikos_core_rebuild_change(
-		static function ( &$state ) {
+		static function ( &$state ) use ( $heartbeat ) {
 			if ( $state['lease'] && $state['lease']['expiresAt'] > time() ) {
 				return null;
 			}
-			$state['fence']      = blooikos_core_rebuild_increment( $state['fence'] );
-			$state['lease']      = array(
+			$state['fence'] = blooikos_core_rebuild_increment( $state['fence'] );
+			$state['lease'] = array(
 				'owner'     => wp_generate_uuid4(),
 				'fence'     => $state['fence'],
 				'expiresAt' => time() + 90,
 			);
-			$state['lastTickAt'] = time();
+			if ( $heartbeat ) {
+				$state['lastTickAt'] = time();
+			}
 			return $state['lease'];
 		}
 	);
@@ -261,6 +264,7 @@ function blooikos_core_rebuild_finish() {
 	}
 	$wpdb->get_var( $wpdb->prepare( 'SELECT RELEASE_LOCK(%s)', $writer['lock'] ) );
 	unset( $GLOBALS['blooikos_core_rebuild_writer'], $GLOBALS['blooikos_core_rebuild_media_marked'] );
+	blooikos_core_content_refresh();
 }
 
 /** Worker recupera somente locks cuja conexão morreu, sem timeout de editor.

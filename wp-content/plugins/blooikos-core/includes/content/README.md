@@ -8,10 +8,21 @@ projeção anônima. Nenhuma mensagem do formulário integra esta API.
 
 O estado persistido é conferido antes/depois da leitura, inclusive no cache e no
 304. Uma escrita ou revisão pendente retorna 409 `CONTENT_NOT_READY` e
-`Retry-After: 5`; dependência/armazenamento/projeção indisponível retorna 503
+`Retry-After: 1` em runtime (`5` no modo legado); dependência/armazenamento/projeção indisponível retorna 503
 `CONTENT_UNAVAILABLE`. Falhas não retornam payload antigo. O cache técnico usa
 uma única transient, até 2 MiB e 300 segundos, sem payload na fila. Não executa
-worker, GitHub nem hashes de arquivos no GET.
+worker nem GitHub no GET. Em runtime, o fim do salvamento consolida imediatamente
+a revisão, depois de fechar o escritor. Uma leitura pode recuperar uma revisão
+pendente com uma única consolidação local sob lease, sem esperar outro escritor
+ou disparar publicação. Escritas concorrentes são descartadas pelo controle de
+sequência; o próximo acesso tenta novamente. Nenhum conteúdo editorial é escrito
+pela API. OPTIONS não consolida.
+
+Consultas com ETag vigente retornam 304 após conferir apenas o estado, sem ler
+o payload, executar GraphQL ou calcular hashes de mídia. A consulta do frontend
+ocorre a cada 5 segundos de aba visível. O objetivo de 5–10 segundos pressupõe
+CMS/rede disponíveis e salvamento concluído; falhas mantêm a última versão
+validada e usam retentativas limitadas, sem prometer esse prazo durante falhas.
 
 Respostas válidas usam ETag, `public, max-age=0, must-revalidate` e noindex;
 erros usam no-store. CORS permite por padrão apenas `https://blooikos.com.br`.
@@ -33,8 +44,10 @@ independente e permanece inalterada.
    estiverem presentes. Nenhum acesso GitHub é permitido pelo worker nesse modo.
 6. Provar duas alterações autorizadas via API/DOM sem novos runs ou arquivos.
 
-O cron continua consolidando com debounce de 60 segundos/janela máxima de 300,
-sem token. Status informa **Conteúdo pronto na API**, revisão e heartbeat;
+O cron continua como recuperação, sem token. O debounce de 60 segundos/janela
+máxima de 300 permanece apenas no caminho legado/agendado; a entrega runtime
+não depende dele. A consolidação rápida não altera o heartbeat do cron.
+Status informa **Conteúdo pronto na API**, revisão e heartbeat;
 release anterior é histórico do código/fallback, não confirmação de abas.
 Retry/reconcile/adopt/pause/resume legados são rejeitados no modo runtime. Um
 pedido legado inesperado é preservado e sinalizado para resolução operacional.

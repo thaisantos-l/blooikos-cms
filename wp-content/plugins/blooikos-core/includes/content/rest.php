@@ -1,6 +1,6 @@
 <?php
 /**
- * Consistent, anonymous public content. No worker or outbound HTTP on reads.
+ * Consistent, anonymous public content. Runtime recovery never dispatches HTTP.
  *
  * @package BlooikosCore
  */
@@ -11,6 +11,45 @@
  */
 function blooikos_core_content_runtime() {
 	return defined( 'BLOOIKOS_CONTENT_DELIVERY' ) && 'runtime' === BLOOIKOS_CONTENT_DELIVERY;
+}
+
+/** Consolidate one stable revision after save, or recover on the next read.
+ * Never waits for another writer/lease, loops, calls the worker or dispatches HTTP.
+ * The existing fenced lease and sequence comparison discard concurrent edits.
+ *
+ * @return void
+ */
+function blooikos_core_content_refresh() {
+	global $wpdb;
+	if ( ! blooikos_core_content_runtime() || isset( $GLOBALS['blooikos_core_rebuild_fault'] ) ) {
+		return;
+	}
+	$lease = null;
+	try {
+		$state = blooikos_core_rebuild_state();
+		if ( ! $state || $wpdb->last_error || $state['dirtySequence'] === $state['processedSequence'] || blooikos_core_rebuild_writing( true ) || $wpdb->last_error ) {
+			return;
+		}
+		$lease = blooikos_core_rebuild_acquire( false );
+		if ( $lease ) {
+			blooikos_core_rebuild_consolidate( $lease, true );
+		}
+	} catch ( Throwable $error ) {
+		$GLOBALS['blooikos_core_rebuild_fault'] = 'CONTENT_UNAVAILABLE';
+	} finally {
+		if ( $lease ) {
+			try {
+				blooikos_core_rebuild_change(
+					static function ( &$state ) {
+						$state['lease'] = null;
+					},
+					$lease
+				);
+			} catch ( Throwable $error ) {
+				$GLOBALS['blooikos_core_rebuild_fault'] = 'CONTENT_UNAVAILABLE';
+			}
+		}
+	}
 }
 
 /** Route-local exact allowlist, separate from Contact.
@@ -73,7 +112,7 @@ function blooikos_core_content_error( $code, $status ) {
 	$response = new WP_REST_Response( array( 'code' => $code ), $status );
 	$response->header( 'Cache-Control', 'no-store' );
 	if ( 409 === $status ) {
-		$response->header( 'Retry-After', '5' );
+		$response->header( 'Retry-After', blooikos_core_content_runtime() ? '1' : '5' );
 	}
 	return $response;
 }
@@ -85,8 +124,22 @@ function blooikos_core_content_error( $code, $status ) {
  */
 function blooikos_core_content_get( $request ) {
 	try {
-		$before   = blooikos_core_content_ready_state();
-		$version  = blooikos_core_rebuild_version( $before );
+		blooikos_core_content_refresh();
+		$before  = blooikos_core_content_ready_state();
+		$version = blooikos_core_rebuild_version( $before );
+		$etag    = '"' . hash( 'sha256', '1:' . $version['epoch'] . ':' . $version['contentDigest'] ) . '"';
+		$matches = array_map( 'trim', explode( ',', (string) $request->get_header( 'if-none-match' ) ) );
+		if ( in_array( $etag, $matches, true ) || in_array( 'W/' . $etag, $matches, true ) || in_array( '*', $matches, true ) ) {
+			// Unchanged polls only read the revision, never GraphQL, payload or media.
+			$after = blooikos_core_content_ready_state();
+			if ( blooikos_core_rebuild_version( $after ) !== $version || $after['dirtySequence'] !== $before['dirtySequence'] ) {
+				return blooikos_core_content_error( 'CONTENT_NOT_READY', 409 );
+			}
+			$response = new WP_REST_Response( null, 304 );
+			$response->header( 'ETag', $etag );
+			$response->header( 'Cache-Control', 'public, max-age=0, must-revalidate' );
+			return $response;
+		}
 		$cached   = get_transient( 'blooikos_public_content_v1' );
 		$envelope = is_string( $cached ) && strlen( $cached ) <= 2097152 ? json_decode( $cached, true ) : null;
 		if ( ! is_array( $envelope ) || ( $envelope['schemaVersion'] ?? null ) !== 1 || ( $envelope['version'] ?? null ) !== $version || ! isset( $envelope['data'] ) || hash( 'sha256', blooikos_core_rebuild_canonical( $envelope['data'] ) ) !== $version['dataDigest'] ) {
@@ -111,10 +164,7 @@ function blooikos_core_content_get( $request ) {
 		if ( $cached !== $json ) {
 			set_transient( 'blooikos_public_content_v1', $json, 300 );
 		}
-		$etag      = '"' . hash( 'sha256', '1:' . $version['epoch'] . ':' . $version['contentDigest'] ) . '"';
-		$matches   = array_map( 'trim', explode( ',', (string) $request->get_header( 'if-none-match' ) ) );
-		$unchanged = in_array( $etag, $matches, true ) || in_array( 'W/' . $etag, $matches, true ) || in_array( '*', $matches, true );
-		$response  = new WP_REST_Response( $unchanged ? null : $envelope, $unchanged ? 304 : 200 );
+		$response = new WP_REST_Response( $envelope, 200 );
 		$response->header( 'ETag', $etag );
 		$response->header( 'Cache-Control', 'public, max-age=0, must-revalidate' );
 		return $response;
