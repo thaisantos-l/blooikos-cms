@@ -65,6 +65,10 @@ function blooikos_core_content_origin_allowed( $origin ) {
 	$canonical = $parts['scheme'] . '://' . $parts['host'] . ( isset( $parts['port'] ) ? ':' . $parts['port'] : '' );
 	$local     = 'http' === $parts['scheme'] && 'local' === wp_get_environment_type() && in_array( $parts['host'], array( 'localhost', '127.0.0.1', '[::1]' ), true );
 	$origins   = defined( 'BLOOIKOS_CONTENT_ALLOWED_ORIGINS' ) ? BLOOIKOS_CONTENT_ALLOWED_ORIGINS : array( 'https://blooikos.com.br' );
+	// Both public hosts serve this site, including when wp-config lists only one.
+	if ( is_array( $origins ) && ( in_array( 'https://blooikos.com.br', $origins, true ) || in_array( 'https://www.blooikos.com.br', $origins, true ) ) ) {
+		$origins = array_merge( $origins, array( 'https://blooikos.com.br', 'https://www.blooikos.com.br' ) );
+	}
 	return $origin === $canonical && ! preg_match( '/[\s,\\\\]/', $origin ) && ( 'https' === $parts['scheme'] || $local ) && is_array( $origins ) && in_array( $origin, $origins, true );
 }
 
