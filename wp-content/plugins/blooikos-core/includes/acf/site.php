@@ -116,7 +116,7 @@ function blooikos_core_register_site_contact_fields() {
 					),
 					'return_format'           => 'id',
 					'bidirectional'           => 0,
-					'instructions'            => __( 'Selecione empresas publicadas ou em rascunho que você pode editar. A ordem da seleção será preservada.', 'blooikos-core' ),
+					'instructions'            => __( 'O Instagram na coluna Contato do rodapé usa o @ e a URL cadastrados nesta empresa. Ela precisa estar publicada. Telefone, email e endereço continuam nos campos abaixo.', 'blooikos-core' ),
 					'allow_null'              => 1,
 					'multiple'                => 0,
 					'ui'                      => 1,
@@ -155,7 +155,7 @@ function blooikos_core_register_site_contact_fields() {
 					'type'               => 'url',
 					'required'           => 0,
 					'maxlength'          => 2048,
-					'instructions'       => __( 'URL HTTPS definitiva, até 2048 caracteres.', 'blooikos-core' ),
+					'instructions'       => __( 'URL geral usada na seção Contato da página, até 2048 caracteres, em HTTPS. No rodapé, o Instagram usa o @ e a URL da empresa de contato selecionada acima.', 'blooikos-core' ),
 				),
 				array(
 					'key'                => 'field_blooikos_site_address',
