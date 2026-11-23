@@ -185,7 +185,7 @@ function blooikos_core_content_get( $request ) {
  * @return mixed
  */
 function blooikos_core_content_guard( $result, $server, $request ) {
-	if ( '/blooikos/v1/site-content' !== rtrim( $request->get_route(), '/' ) ) {
+	if ( ! in_array( rtrim( $request->get_route(), '/' ), array( '/blooikos/v1/site-content', '/blooikos/v1/footer-social' ), true ) ) {
 		return $result;
 	}
 	if ( ! blooikos_core_content_permission( $request ) ) {
@@ -217,7 +217,7 @@ function blooikos_core_content_guard( $result, $server, $request ) {
  * @return bool
  */
 function blooikos_core_content_headers( $served, $result, $request ) {
-	if ( '/blooikos/v1/site-content' !== rtrim( $request->get_route(), '/' ) ) {
+	if ( ! in_array( rtrim( $request->get_route(), '/' ), array( '/blooikos/v1/site-content', '/blooikos/v1/footer-social' ), true ) ) {
 		return $served;
 	}
 	foreach ( array( 'Access-Control-Allow-Origin', 'Access-Control-Allow-Credentials', 'Access-Control-Allow-Methods', 'Access-Control-Allow-Headers', 'Access-Control-Expose-Headers' ) as $name ) {
