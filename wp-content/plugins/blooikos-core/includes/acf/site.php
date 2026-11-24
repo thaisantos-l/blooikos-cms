@@ -146,6 +146,17 @@ function blooikos_core_register_site_contact_fields() {
 					'instructions'       => __( 'Até 254 caracteres. Pode ficar vazio durante a preparação do rascunho.', 'blooikos-core' ),
 				),
 				array(
+					'key'             => 'field_blooikos_site_instagram_handle',
+					'show_in_graphql' => false,
+					'label'           => __( '@ do Instagram', 'blooikos-core' ),
+					'name'            => 'blooikos_site_instagram_handle',
+					'type'            => 'text',
+					'required'        => 0,
+					'maxlength'       => 31,
+					'placeholder'     => '@conta',
+					'instructions'    => __( 'Texto do link na seção Contato (Vamos conversar). Informe @ seguido do usuário; o destino continua sendo a URL do Instagram abaixo. Preencha ambos para exibir o link.', 'blooikos-core' ),
+				),
+				array(
 					'key'                => 'field_blooikos_site_instagram_url',
 					'show_in_graphql'    => true,
 					'graphql_field_name' => 'instagramUrl',
