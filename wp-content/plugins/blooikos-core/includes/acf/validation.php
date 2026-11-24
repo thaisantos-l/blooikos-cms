@@ -190,7 +190,7 @@ function blooikos_core_validate_text( $value, $field ) {
 	if ( 'field_blooikos_company_instagram_url' === $field['key'] && ! blooikos_core_footer_instagram_url( $text ) ) {
 		return __( 'Informe uma URL HTTPS de instagram.com ou www.instagram.com.', 'blooikos-core' );
 	}
-	if ( 'field_blooikos_company_instagram_handle' === $field['key'] && ! blooikos_core_footer_instagram_handle( $text ) ) {
+	if ( in_array( $field['key'], array( 'field_blooikos_company_instagram_handle', 'field_blooikos_site_instagram_handle' ), true ) && ! blooikos_core_footer_instagram_handle( $text ) ) {
 		return __( 'Informe @ seguido de 1 a 30 letras, números, pontos ou sublinhados, sem espaços.', 'blooikos-core' );
 	}
 	return true;

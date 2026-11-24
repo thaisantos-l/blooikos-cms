@@ -52,6 +52,19 @@ function blooikos_core_footer_contact_instagram() {
 	) : null;
 }
 
+/** Read the shared contact section's own label and existing destination.
+ *
+ * @return array|null No fallback to the selected company's account.
+ */
+function blooikos_core_shared_instagram() {
+	$url   = blooikos_core_footer_instagram_url( get_option( 'options_blooikos_site_instagram_url' ) );
+	$label = blooikos_core_footer_instagram_handle( get_option( 'options_blooikos_site_instagram_handle' ) );
+	return $url && $label ? array(
+		'label' => $label,
+		'href'  => $url,
+	) : null;
+}
+
 /** Read published companies with their own Instagram, independently of footer selection.
  *
  * @param WP_REST_Request $request Public request.
@@ -117,6 +130,7 @@ function blooikos_core_footer_social_get( $request ) {
 			'schemaVersion'    => 1,
 			'companies'        => $companies,
 			'contactInstagram' => blooikos_core_footer_contact_instagram(),
+			'sharedInstagram'  => blooikos_core_shared_instagram(),
 		);
 		$json = wp_json_encode( $data );
 		if ( $wpdb->last_error || false === $json || strlen( $json ) > 32768 ) {
